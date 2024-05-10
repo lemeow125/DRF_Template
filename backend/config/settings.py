@@ -87,7 +87,7 @@ EMAIL_HOST = get_secret('EMAIL_HOST')
 EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = get_secret('EMAIL_PORT')
-EMAIL_USE_TLS = get_secret('EMAIL_USE_TLS')
+EMAIL_USE_TLS = (get_secret('EMAIL_USE_TLS') == 'True')
 EMAIL_ADDRESS = (get_secret('EMAIL_ADDRESS') == 'True')
 
 # Application definition
@@ -183,7 +183,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',
+            BASE_DIR / 'emails/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

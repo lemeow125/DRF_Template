@@ -135,10 +135,9 @@ def stripe_webhook_view(request):
     if event['type'] == 'customer.subscription.created':
         subscription = event['data']['object']
         # Get the Invoice object from the Subscription object
-        invoice = stripe.Invoice.retrieve(subscription['latest_invoice'])[
-            'data']['object']
+        invoice = stripe.Invoice.retrieve(subscription['latest_invoice'])
         # Get the Charge object from the Invoice object
-        charge = stripe.Charge.retrieve(invoice['charge'])['data']['object']
+        charge = stripe.Charge.retrieve(invoice['charge'])
 
         # Get paying user
         customer = stripe.Customer.retrieve(subscription["customer"])

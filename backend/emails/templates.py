@@ -3,15 +3,15 @@ from django.utils import timezone
 
 
 class ActivationEmail(email.ActivationEmail):
-    template_name = 'templates/email_activation.html'
+    template_name = 'email_activation.html'
 
 
 class PasswordResetEmail(email.PasswordResetEmail):
-    template_name = 'templates/password_change.html'
+    template_name = 'password_change.html'
 
 
 class SubscriptionAvailedEmail(email.BaseEmailMessage):
-    template_name = "templates/subscription_availed.html"
+    template_name = "subscription_availed.html"
 
     def get_context_data(self):
         context = super().get_context_data()
@@ -25,7 +25,7 @@ class SubscriptionAvailedEmail(email.BaseEmailMessage):
 
 
 class SubscriptionRefundedEmail(email.BaseEmailMessage):
-    template_name = "templates/subscription_refunded.html"
+    template_name = "subscription_refunded.html"
 
     def get_context_data(self):
         context = super().get_context_data()
@@ -38,7 +38,7 @@ class SubscriptionRefundedEmail(email.BaseEmailMessage):
 
 
 class SubscriptionCancelledEmail(email.BaseEmailMessage):
-    template_name = "templates/subscription_cancelled.html"
+    template_name = "subscription_cancelled.html"
 
     def get_context_data(self):
         context = super().get_context_data()
