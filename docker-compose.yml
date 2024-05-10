@@ -1,24 +1,115 @@
 version: "3.9"
 
 services:
-  # Django App
-  django_backend:
+  # Django Backend
+  # http://localhost:8000
+  django:
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile
-    image: test_backend:latest
+    image: drf_template:latest
     ports:
-      - "8092:8000"
+      - "8000:8000"
     environment:
       - PYTHONBUFFERED=1
-    command:
-      [
-        "sh",
-        "-c",
-        "python backend/manage.py spectacular --color --file backend/schema.yml && python backend/manage.py collectstatic --noinput && python backend/manage.py makemigrations && python backend/manage.py migrate && python backend/manage.py runserver 127.0.0.1:8000",
-      ]
+      - RUN_TYPE=web
     volumes:
-      - .:/code # For hotreloading
+      - .:/code
+    depends_on:
+      - postgres
+
+  # Django Celery Worker
+  celery:
+    env_file: .env
+    environment:
+      - RUN_TYPE=worker
+    image: drf_template:latest
+    volumes:
+      - .:/code
+      - ./chrome:/chrome
+      - ./firefox:/firefox
+      - ./dumps:/dumps
+    depends_on:
+      - django
+      - postgres
+      - redis
+    ## Runs multiple worker instances
+    scale: 4
+
+  # Django Celery Beat
+  celery_beat:
+    env_file: .env
+    environment:
+      - RUN_TYPE=beat
+    image: drf_template:latest
+    volumes:
+      - .:/code
+    depends_on:
+      - celery
+      - django
+      - postgres
+      - redis
+
+  # Django Celery Monitor
+  # http://localhost:5000
+  celery_monitor:
+    env_file: .env
+    environment:
+      - RUN_TYPE=monitor
+    image: drf_template:latest
+    ports:
+      - "5555:5555"
+    volumes:
+      - .:/code
+    depends_on:
+      - celery
+      - django
+      - redis
+
+  # SQL Database
+  postgres:
+    env_file: .env
+    image: postgres
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  # Redis Server
+  redis:
+    image: redis:latest
+    ports:
+      - "${REDIS_PORT}:6379"
+
+  # Stripe CLI Webhook Listener
+  stripe-listener:
+    env_file: .env
+    image: stripe/stripe-cli:latest
+    environment:
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_SECRET_WEBHOOK}
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY}
+    command: listen --forward-to django:8000/api/v1/stripe/webhook/
+
+  # Email Testing Server
+  # http://localhost:8025
+  inbucket:
+    image: inbucket/inbucket:latest
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    environment:
+      - INBUCKET_LOGLEVEL=error
+      - INBUCKET_MAILBOXNAMING=domain
+      - INBUCKET_SMTP_ADDR=0.0.0.0:1025
+      - INBUCKET_SMTP_MAXRECIPIENTS=1000
+      - INBUCKET_WEB_ADDR=0.0.0.0:8025
+      - INBUCKET_STORAGE_TYPE=memory
+      - INBUCKET_STORAGE_MAILBOXMSGCAP=2000
 
 volumes:
-  test_backend:
+  db-data:

@@ -61,15 +61,14 @@ cover/
 
 # Django stuff:
 *.log
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-backend/db.sqlite3
-backend/.env
-backend/static/*
-backend/static/
-backend/media/
+.env
+media/*
+static/
+dumps/
+firefox/
+chrome/
 
 # Flask stuff:
 instance/

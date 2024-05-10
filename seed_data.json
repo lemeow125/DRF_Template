@@ -1,0 +1,97 @@
+{
+  "schedules": [
+    {
+      "type": "crontab",
+      "minute": "0",
+      "hour": "0",
+      "day_of_week": "*",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "type": "crontab",
+      "minute": "0",
+      "hour": "1",
+      "day_of_week": "*",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "type": "crontab",
+      "minute": "0",
+      "hour": "12",
+      "day_of_week": "*",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "type": "crontab",
+      "minute": "0",
+      "hour": "13",
+      "day_of_week": "*",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Asia/Manila"
+    }
+  ],
+  "scheduled_tasks": [
+    {
+      "name": "Delete notifications older than 3 days every 1 AM",
+      "task": "notifications.tasks.cleanup_notifications",
+      "schedule": {
+        "type": "crontab",
+        "minute": "0",
+        "hour": "1",
+        "day_of_week": "*",
+        "day_of_month": "*",
+        "month_of_year": "*",
+        "timezone": "Asia/Manila"
+      },
+      "enabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "drf-template_admin",
+      "email": "admin@drf-template.com",
+      "password": "USE_ADMIN",
+      "is_superuser": true,
+      "first_name": "DRF-Template",
+      "last_name": "Admin"
+    },
+    {
+      "username": "drf-template_testuser1",
+      "email": "testuser1@drf-template.com",
+      "password": "USE_REGULAR",
+      "is_superuser": false,
+      "first_name": "DRF-Template",
+      "last_name": "Test User 1"
+    },
+    {
+      "username": "drf-template_testuser2",
+      "email": "testuser2@drf-template.com",
+      "password": "USE_REGULAR",
+      "is_superuser": false,
+      "first_name": "DRF-Template",
+      "last_name": "Test User 2"
+    },
+    {
+      "username": "drf-template_testuser3",
+      "email": "testuser3@drf-template.com",
+      "password": "USE_REGULAR",
+      "is_superuser": false,
+      "first_name": "DRF-Template",
+      "last_name": "Test User 3"
+    }
+  ],
+  "user_groups": [
+    {
+      "name": "DRF-Template Test Group",
+      "managers": "drf-template_testuser2",
+      "members": ["drf-template_testuser3"]
+    }
+  ]
+}

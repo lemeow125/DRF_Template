@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}Subscription Refunded on {{ site_name }}{% endblocktrans %}
+{% endblock subject %}
+
+{% block text_body %}
+{% blocktrans %}You're receiving this email because your subscription for the {{ subscription_plan.name }} Plan has been refunded at {{ site_name }}. You have been refunded {{ refund.amount }}{{ refund.currency }}{% endblocktrans %}
+
+{% trans "Thanks for using our site!" %}
+
+{% endblock text_body %}
+
+{% block html_body %}
+
+<p>{% blocktrans %}You're receiving this email because your subscription for the {{ subscription_plan.name }} Plan has been refunded at {{ site_name }}. You have been refunded {{ refund.amount }}{{ refund.currency }}{% endblocktrans %}</p>
+
+<p>{% trans "Thanks for using our site!" %}</p>
+
+{% endblock html_body %}

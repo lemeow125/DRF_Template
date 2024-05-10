@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: Test Backend
+  title: DRF-Template
   version: 1.0.0
-  description: A Project by Keannu Bernasol
+  description: A Template Project by Keannu Bernasol
 paths:
   /api/v1/accounts/jwt/create/:
     post:
@@ -141,6 +141,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -173,6 +174,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -204,6 +206,7 @@ paths:
               $ref: '#/components/schemas/PatchedCustomUser'
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -261,6 +264,7 @@ paths:
       - api
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -286,6 +290,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -310,6 +315,7 @@ paths:
               $ref: '#/components/schemas/PatchedCustomUser'
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -426,7 +432,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -453,7 +458,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -513,6 +517,250 @@ paths:
               schema:
                 $ref: '#/components/schemas/SetUsername'
           description: ''
+  /api/v1/billing/:
+    get:
+      operationId: api_v1_billing_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/notifications/:
+    get:
+      operationId: api_v1_notifications_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+          description: ''
+  /api/v1/notifications/{id}/:
+    get:
+      operationId: api_v1_notifications_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this notification.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+    patch:
+      operationId: api_v1_notifications_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this notification.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+    delete:
+      operationId: api_v1_notifications_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this notification.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/stripe/checkout_session/:
+    post:
+      operationId: api_v1_stripe_checkout_session_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checkout'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Checkout'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Checkout'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/stripe/webhook/:
+    post:
+      operationId: api_v1_stripe_webhook_create
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/subscriptions/plans/:
+    get:
+      operationId: api_v1_subscriptions_plans_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionPlan'
+          description: ''
+  /api/v1/subscriptions/plans/{id}/:
+    get:
+      operationId: api_v1_subscriptions_plans_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this subscription plan.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionPlan'
+          description: ''
+  /api/v1/subscriptions/self/:
+    get:
+      operationId: api_v1_subscriptions_self_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserSubscription'
+          description: ''
+  /api/v1/subscriptions/self/{id}/:
+    get:
+      operationId: api_v1_subscriptions_self_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user subscription.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSubscription'
+          description: ''
+  /api/v1/subscriptions/user_group/:
+    get:
+      operationId: api_v1_subscriptions_user_group_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserSubscription'
+          description: ''
+  /api/v1/subscriptions/user_group/{id}/:
+    get:
+      operationId: api_v1_subscriptions_user_group_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user subscription.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSubscription'
+          description: ''
 components:
   schemas:
     Activation:
@@ -525,6 +773,16 @@ components:
       required:
       - token
       - uid
+    Checkout:
+      type: object
+      properties:
+        subscription_id:
+          type: integer
+        annual:
+          type: boolean
+      required:
+      - annual
+      - subscription_id
     CustomUser:
       type: object
       properties:
@@ -539,8 +797,8 @@ components:
         email:
           type: string
           format: email
+          readOnly: true
           title: Email address
-          maxLength: 254
         avatar:
           type: string
           format: uri
@@ -550,10 +808,48 @@ components:
         last_name:
           type: string
           maxLength: 150
+        user_group:
+          type: integer
+          readOnly: true
+          nullable: true
+        group_member:
+          type: string
+          readOnly: true
+        group_owner:
+          type: string
+          readOnly: true
       required:
       - avatar
+      - email
+      - group_member
+      - group_owner
       - id
+      - user_group
       - username
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        content:
+          type: string
+          readOnly: true
+          nullable: true
+        dismissed:
+          type: boolean
+        recipient:
+          type: integer
+          readOnly: true
+      required:
+      - content
+      - id
+      - recipient
+      - timestamp
     PasswordResetConfirm:
       type: object
       properties:
@@ -581,8 +877,8 @@ components:
         email:
           type: string
           format: email
+          readOnly: true
           title: Email address
-          maxLength: 254
         avatar:
           type: string
           format: uri
@@ -592,6 +888,35 @@ components:
         last_name:
           type: string
           maxLength: 150
+        user_group:
+          type: integer
+          readOnly: true
+          nullable: true
+        group_member:
+          type: string
+          readOnly: true
+        group_owner:
+          type: string
+          readOnly: true
+    PatchedNotification:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        content:
+          type: string
+          readOnly: true
+          nullable: true
+        dismissed:
+          type: boolean
+        recipient:
+          type: integer
+          readOnly: true
     SendEmailReset:
       type: object
       properties:
@@ -625,6 +950,30 @@ components:
       required:
       - current_password
       - new_username
+    SubscriptionPlan:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          maxLength: 1024
+        annual_price:
+          type: integer
+          nullable: true
+        monthly_price:
+          type: integer
+          nullable: true
+        group_exclusive:
+          type: boolean
+      required:
+      - id
+      - name
     TokenObtainPair:
       type: object
       properties:
@@ -668,32 +1017,52 @@ components:
     UserRegistration:
       type: object
       properties:
-        username:
-          type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
-          pattern: ^[\w.@+-]+$
-          maxLength: 150
         email:
           type: string
           format: email
+        username:
+          type: string
         password:
           type: string
           writeOnly: true
-        avatar:
-          type: string
-          format: uri
-          nullable: true
         first_name:
           type: string
-          maxLength: 150
         last_name:
           type: string
-          maxLength: 150
       required:
       - email
+      - first_name
+      - last_name
       - password
       - username
+    UserSubscription:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          nullable: true
+        user_group:
+          type: integer
+          nullable: true
+        subscription:
+          type: integer
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          readOnly: true
+        valid:
+          type: boolean
+        annual:
+          type: boolean
+      required:
+      - annual
+      - date
+      - id
+      - valid
     UsernameResetConfirm:
       type: object
       properties:

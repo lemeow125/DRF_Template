@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}Subscription Availed on {{ site_name }}{% endblocktrans %}
+{% endblock subject %}
+
+{% block text_body %}
+{% blocktrans %}You're receiving this email because you availed the {{ subscription_plan.name }} amounting to {{ price_paid.amount }}{{ price_paid.currency}} at {{ site_name }}.{% endblocktrans %}
+
+{% trans "Thanks for using our site!" %}
+
+{% endblock text_body %}
+
+{% block html_body %}
+
+<p>{% blocktrans %}You're receiving this email because you availed the {{ subscription_plan.name }} at {{ site_name }}.{% endblocktrans %}</p>
+
+<p>{% trans "Thanks for using our site!" %}</p>
+
+{% endblock html_body %}
