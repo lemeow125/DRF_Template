@@ -67,22 +67,18 @@ class StripeCheckoutView(APIView):
                 }, status=status.HTTP_404_NOT_FOUND)
 
             # Get the stripe_price_id from the related StripePrice instances
-            PRICE = None
-            PRICE_ID = None
-
             if annual:
                 PRICE = SUBSCRIPTION.annual_price
-                PRICE_ID = PRICE.stripe_price_id
             else:
                 PRICE = SUBSCRIPTION.monthly_price
-                PRICE_ID = PRICE.stripe_price_id
 
             # Return 404 if no price is set
-            if not PRICE or PRICE_ID:
+            if not PRICE:
                 return Response({
                     'error': 'Specified price does not exist for plan'
                 }, status=status.HTTP_404_NOT_FOUND)
 
+            PRICE_ID = PRICE.stripe_price_id
             prorated = PRICE.prorated
 
             # Return an error if a user is in a user_group and is availing pro-rated plans
