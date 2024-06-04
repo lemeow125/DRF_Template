@@ -34,6 +34,7 @@ pygraphviz = "*"
 gunicorn = "*"
 django-silk = "*"
 django-redis = "*"
+granian = "*"
 
 [dev-packages]
 

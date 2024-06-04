@@ -69,6 +69,7 @@ static/
 dumps/
 firefox/
 chrome/
+TODO.md
 
 # Flask stuff:
 instance/

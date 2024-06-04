@@ -12,7 +12,7 @@ if [ "$RUN_TYPE" = "web" ]; then
     python backend/manage.py graph_models -o documentation/erd/app_models.png
     cd backend
     # python manage.py runserver 0.0.0.0:8000
-    python -m gunicorn --bind 0.0.0.0:8000 -w 4 config.wsgi:application
+    python -m granian --host 0.0.0.0 --workers 8 --interface wsgi config.wsgi:application
 elif [ "$RUN_TYPE" = "worker" ]; then
     cd backend && celery -A config worker -l INFO -E --concurrency 1
 elif [ "$RUN_TYPE" = "beat" ]; then
@@ -32,5 +32,5 @@ else
     python backend/manage.py graph_models -o documentation/erd/app_models.png
     cd backend
     # python manage.py runserver 0.0.0.0:8000
-    python -m gunicorn --bind 0.0.0.0:8000 -w 4 config.wsgi:application
+    python -m granian --host 0.0.0.0 --workers 8 --interface wsgi config.wsgi:application
 fi

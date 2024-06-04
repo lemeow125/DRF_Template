@@ -42,7 +42,7 @@ drf-spectacular[sidecar]==0.27.2
 drf-spectacular-sidecar==2024.5.1
 flower==2.0.1
 gprof2dot==2022.7.29; python_version >= '2.7'
-gunicorn==22.0.0
+granian==1.4.1
 h11==0.14.0; python_version >= '3.7'
 humanize==4.9.0; python_version >= '3.8'
 hyperlink==21.0.0
