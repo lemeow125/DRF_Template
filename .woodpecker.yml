@@ -22,12 +22,11 @@ steps:
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh root@10.0.10.4 '
-        cd /mnt/nvme/files/docker projects/EquipmentTracker-Backend;
+        cd /mnt/sdb1/files/docker projects/DRF-Template;
         docker-compose down;
         docker image rm git.keannu1.duckdns.org/keannu125/drf_template;
         docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data;
         docker compose up -d'
-      - scp -r dist/* root@10.0.10.4:/mnt/nvme/www/equipment_tracker_frontend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [SSH_KEY, REGISTRY_USERNAME, REGISTRY_PASSWORD]
