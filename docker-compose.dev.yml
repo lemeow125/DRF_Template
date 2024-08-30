@@ -33,7 +33,7 @@ services:
       - django
       - postgres
       - redis
-    ## Runs multiple worker instances
+    # Runs multiple worker instances
     scale: 4
 
   # Django Celery Beat

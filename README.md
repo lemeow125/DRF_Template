@@ -13,11 +13,11 @@ This is a Django template that I personally use for my projects. This covers the
 - Selenium (Optional, for webscraping with support for Chrome and Firefox drivers)
 - Stripe Subscriptions (Optional, with regular and pro-rated subscription support)
 - Notifications (via traditional RESTful endpoints)
-- CI/CD pipeline templating with Woodpecker for automated deployments
+- A working Woodpecker CI/CD template for automated deployments
 
 A live API demo can be found [here](https://api.template.06222001.xyz/swagger)
 
-## Development
+### Development
 
 - Create a copy of the `.env.sample` file and name it as `.env` in the same directory
 - Populate .env with values
@@ -25,10 +25,10 @@ A live API demo can be found [here](https://api.template.06222001.xyz/swagger)
 
 Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
 
-## URLs
+### URLs
 
-- [Django Admin](http://localhost:8000/admin)
-- [OpenAPI Swagger](http://localhost:8000/swagger) (For testing endpoints)
+- [Django Admin Panel](http://localhost:8000/admin)
+- [OpenAPI Swagger](http://localhost:8000/swagger) (For documenting endpoints)
 - [Inbucket](http://localhost:8025) (For email testing)
-- [Flower](http://localhost:5555/) (For task monitoring)
+- [Flower](http://localhost:5555/) (For monitoring Celery tasks)
 - [Django Silk](http://localhost:8000/silk) (For performance profiling)
