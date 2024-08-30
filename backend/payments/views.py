@@ -1,4 +1,4 @@
-from config.settings import STRIPE_SECRET_KEY, DOMAIN, STRIPE_SECRET_WEBHOOK, CLOUD, BACKEND_URL, FRONTEND_URL
+from config.settings import STRIPE_SECRET_KEY, STRIPE_SECRET_WEBHOOK, FRONTEND_URL
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response

@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
-from config.settings import DEBUG, CLOUD, MEDIA_ROOT
+from config.settings import DEBUG, SERVE_MEDIA, MEDIA_ROOT
 urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('subscriptions/', include('subscriptions.urls')),
@@ -11,7 +11,7 @@ urlpatterns = [
 ]
 
 # URLs for local development
-if DEBUG and not CLOUD:
+if DEBUG and SERVE_MEDIA:
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(
         'media/', document_root=MEDIA_ROOT)
