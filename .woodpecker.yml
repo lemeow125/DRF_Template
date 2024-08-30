@@ -1,17 +1,18 @@
 # .woodpecker.yml
 steps:
-  - name: build & push
-    image: debian:12.6-slim
+  - name: build-push
+    image: docker
     when:
       - branch: master
       - event: push
     commands:
-      - apt update && apt install -y docker
       - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
       - cat "$GITEA_PASSWORD" | docker login git.keannu1.duckdns.org --username "$GITEA_USERNAME" --pasword-stdin
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   - name: update deployment and reset database
-    image: debian:12.6-slim
+    image: docker
     when:
       - branch: master
       - event: push
@@ -27,4 +28,6 @@ steps:
         docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data;
         docker compose up -d'
       - scp -r dist/* root@10.0.10.4:/mnt/nvme/www/equipment_tracker_frontend
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     secrets: [SSH_KEY, REGISTRY_USERNAME, REGISTRY_PASSWORD]
