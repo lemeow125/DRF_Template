@@ -13,12 +13,15 @@ This is a Django template that I personally use for my projects. This covers the
 - Selenium (Optional, for webscraping with support for Chrome and Firefox drivers)
 - Stripe Subscriptions (Optional, with regular and pro-rated subscription support)
 - Notifications (via traditional RESTful endpoints)
+- CI/CD pipeline templating with Woodpecker for automated deployments
+
+A live API demo can be found [here](https://api.template.06222001.xyz/swagger)
 
 ## Development
 
 - Create a copy of the `.env.sample` file and name it as `.env` in the same directory
 - Populate .env with values
-- Run `docker-compose up -f docker-compose.dev.yml`
+- Run `docker-compose -f docker-compose.dev.yml up`
 
 Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
 
