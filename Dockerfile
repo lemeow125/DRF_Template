@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /code
 COPY . /code/
+COPY start.sh /code/
 RUN chmod +x /code/start.sh
 
 # Install packages
