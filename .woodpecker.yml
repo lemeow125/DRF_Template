@@ -23,7 +23,7 @@ steps:
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh root@10.0.10.4 '
-        cd $PROJECT_DIR;
+        cd "$PROJECT_DIR";
         docker-compose down;
         docker image rm "$IMAGE_TAG" || true;
         docker pull "$IMAGE_TAG":latest;
