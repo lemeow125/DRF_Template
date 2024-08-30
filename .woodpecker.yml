@@ -7,7 +7,7 @@ steps:
       - event: push
     commands:
       - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
-      - echo "$GITEA_PASSWORD" | docker login git.keannu1.duckdns.org --username "$GITEA_USERNAME" --password-stdin
+      - echo "$REGISTRY_PASSWORD" | docker login git.keannu1.duckdns.org --username "$REGISTRY_USERNAME" --password-stdin
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
