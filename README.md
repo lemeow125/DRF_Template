@@ -1,5 +1,7 @@
 ## DRF-Template
 
+![Build Status](https://woodpecker.06222001.xyz/api/badges/3/status.svg)
+
 This is a Django template that I personally use for my projects. This covers the following
 
 - Emails (and templated email designs)

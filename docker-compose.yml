@@ -59,7 +59,7 @@ services:
       - RUN_TYPE=monitor
     image: drf_template:latest
     ports:
-      - "5555:5555"
+      - "${CELERY_FLOWER_PORT}:5555"
     volumes:
       - .:/code
     depends_on:

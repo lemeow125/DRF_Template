@@ -7,7 +7,7 @@ steps:
       - event: push
     commands:
       - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
-      - echo "$REGISTRY_PASSWORD" | docker login --password-stdin -u "$REGISTRY_USERNAME" -- "$CI_REGISTRY"
+      - echo "$REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" --password-stdin -u "$REGISTRY_USERNAME"
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -23,7 +23,7 @@ steps:
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh root@10.0.10.4 '
-        cd /mnt/sdb1/files/docker projects/DRF-Template;
+        cd $PROJECT_DIR;
         docker-compose down;
         docker image rm git.keannu1.duckdns.org/keannu125/drf_template;
         docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data;

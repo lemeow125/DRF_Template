@@ -35,17 +35,20 @@ def get_secret(secret_name):
 
 
 # URL Prefixes
-USE_HTTPS = (get_secret('USE_HTTPS') == 'True')
-URL_PREFIX = 'https://' if USE_HTTPS else 'http://'
-BACKEND_URL = URL_PREFIX + \
-    get_secret('BACKEND_ADDRESS') + ':' + get_secret('BACKEND_PORT')
-FRONTEND_URL = URL_PREFIX + \
-    get_secret('FRONTEND_ADDRESS') + ':' + get_secret('FRONTEND_PORT')
+URL_SCHEME = 'https' if (get_secret('USE_HTTPS') == 'True') else 'http'
+# Backend
+BACKEND_ADDRESS = get_secret('BACKEND_ADDRESS')
+BACKEND_PORT = get_secret('BACKEND_PORT')
+# Frontend
+FRONTEND_ADDRESS = get_secret('FRONTEND_ADDRESS')
+FRONTEND_PORT = get_secret('FRONTEND_PORT')
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
-    BACKEND_URL,
-    FRONTEND_URL
+    # Frontend
+    f'{URL_SCHEME}://{FRONTEND_ADDRESS}:{FRONTEND_PORT}',
+    # Backend
+    f'{URL_SCHEME}://{BACKEND_ADDRESS}:{BACKEND_PORT}',
     # You can also set up https://*.name.xyz for wildcards here
 ]
 

@@ -1,4 +1,4 @@
-from config.settings import STRIPE_SECRET_KEY, STRIPE_SECRET_WEBHOOK, FRONTEND_URL
+from config.settings import STRIPE_SECRET_KEY, STRIPE_SECRET_WEBHOOK, URL_SCHEME, FRONTEND_ADDRESS, FRONTEND_PORT
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -87,9 +87,10 @@ class StripeCheckoutView(APIView):
                     'error': 'Regular users cannot avail prorated plans'
                 }, status=status.HTTP_403_FORBIDDEN)
 
-            success_url = FRONTEND_URL + \
+            success_url = f'{URL_SCHEME}://{FRONTEND_ADDRESS}:{FRONTEND_PORT}' + \
                 '/user/subscription/payment?success=true&agency=False&session_id={CHECKOUT_SESSION_ID}'
-            cancel_url = FRONTEND_URL + '/user/subscription/payment?success=false&user_group=False'
+            cancel_url = f'{URL_SCHEME}://{FRONTEND_ADDRESS}:{FRONTEND_PORT}' + \
+                '/user/subscription/payment?success=false&user_group=False'
 
             checkout_session = stripe.checkout.Session.create(
                 line_items=[
