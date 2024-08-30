@@ -25,8 +25,9 @@ steps:
       - ssh root@10.0.10.4 '
         cd $PROJECT_DIR;
         docker-compose down;
-        docker image rm git.keannu1.duckdns.org/keannu125/drf_template;
-        docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data;
+        docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
+        docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
+        docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data || true;
         docker compose up -d'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
