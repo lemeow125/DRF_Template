@@ -21,10 +21,6 @@ services:
     environment:
       - RUN_TYPE=worker
     image: git.keannu1.duckdns.org/keannu125/drf_template:latest
-    volumes:
-      - ./chrome:/chrome
-      - ./firefox:/firefox
-      - ./dumps:/dumps
     depends_on:
       - django
       - postgres
@@ -38,8 +34,6 @@ services:
     environment:
       - RUN_TYPE=beat
     image: git.keannu1.duckdns.org/keannu125/drf_template:latest
-    volumes:
-      - .:/code
     depends_on:
       - celery
       - django

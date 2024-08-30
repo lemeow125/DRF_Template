@@ -6,7 +6,7 @@ steps:
       - branch: master
       - event: push
     commands:
-      - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
+      - docker build --no-cache -t git.keannu1.duckdns.org/keannu125/drf_template .
       - echo "$REGISTRY_PASSWORD" | docker login git.keannu1.duckdns.org --password-stdin -u "$REGISTRY_USERNAME"
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
     volumes:
