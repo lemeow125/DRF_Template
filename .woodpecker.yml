@@ -1,7 +1,7 @@
 # .woodpecker.yml
 steps:
   - name: build & push
-    image: alpine:3.20.2
+    image: debian:12.6
     when:
       - branch: master
       - event: push
@@ -11,7 +11,7 @@ steps:
       - cat "$GITEA_PASSWORD" | docker login git.keannu1.duckdns.org --username "$GITEA_USERNAME" --pasword-stdin
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
   - name: update deployment and reset database
-    image: alpine:3.20.2
+    image: debian:12.6
     when:
       - branch: master
       - event: push
