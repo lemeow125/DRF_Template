@@ -27,6 +27,6 @@ steps:
         docker-compose down;
         docker image rm "$IMAGE_TAG" || true;
         docker pull "$IMAGE_TAG":latest;
-        docker volume rm "$IMAGE_TAG"_db_data || true;
+        docker volume rm "${IMAGE_TAG}_db_data" || true;
         docker compose up -d'
     secrets: [IMAGE_TAG, SSH_KEY, PROJECT_DIR]
