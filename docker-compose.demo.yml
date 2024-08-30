@@ -6,12 +6,12 @@ services:
     env_file: .env
     image: git.keannu1.duckdns.org/keannu125/drf_template:latest
     ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
+      - "${BACKEND_PORT}:8000"
     environment:
       - PYTHONBUFFERED=1
       - RUN_TYPE=web
     volumes:
-      - .:/code
+      - ./backend/static:/backend/static
     depends_on:
       - postgres
 
@@ -22,7 +22,6 @@ services:
       - RUN_TYPE=worker
     image: git.keannu1.duckdns.org/keannu125/drf_template:latest
     volumes:
-      - .:/code
       - ./chrome:/chrome
       - ./firefox:/firefox
       - ./dumps:/dumps
@@ -30,7 +29,7 @@ services:
       - django
       - postgres
       - redis
-    ## Runs multiple worker instances
+    # Run multiple worker instances
     scale: 4
 
   # Django Celery Beat

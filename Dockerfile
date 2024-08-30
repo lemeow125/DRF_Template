@@ -3,13 +3,8 @@ FROM python:3.11.4-bookworm
 ENV PYTHONBUFFERED 1
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN mkdir /code
 WORKDIR /code
-# Directory mirroring
-ADD . /code/
 COPY . /code/
-COPY start.sh /code/
-RUN chmod +x /code/start.sh
 
 # Install packages
 RUN apt-get update && apt-get install -y graphviz libgraphviz-dev graphviz-dev wget zip

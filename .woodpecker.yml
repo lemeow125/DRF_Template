@@ -24,9 +24,9 @@ steps:
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh root@10.0.10.4 '
         cd "/mnt/nvme/files/docker projects/DRF-Template";
-        docker-compose down;
+        docker-compose -f docker-compose.demo.yml down;
         docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
         docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
         docker volume rm "git.keannu1.duckdns.org/keannu125/drf_template_db_data" || true;
-        docker compose up -f docker-compose.prod.yml -d;'
+        docker compose -f docker-compose.demo.yml up -d;'
     secrets: [SSH_KEY]
