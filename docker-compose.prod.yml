@@ -1,0 +1,79 @@
+version: "3.9"
+
+services:
+  # Django Backend
+  django:
+    env_file: .env
+    image: git.keannu1.duckdns.org/keannu125/drf_template:latest
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    environment:
+      - PYTHONBUFFERED=1
+      - RUN_TYPE=web
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
+
+  # Django Celery Worker
+  celery:
+    env_file: .env
+    environment:
+      - RUN_TYPE=worker
+    image: git.keannu1.duckdns.org/keannu125/drf_template:latest
+    volumes:
+      - .:/code
+      - ./chrome:/chrome
+      - ./firefox:/firefox
+      - ./dumps:/dumps
+    depends_on:
+      - django
+      - postgres
+      - redis
+    ## Runs multiple worker instances
+    scale: 4
+
+  # Django Celery Beat
+  celery_beat:
+    env_file: .env
+    environment:
+      - RUN_TYPE=beat
+    image: git.keannu1.duckdns.org/keannu125/drf_template:latest
+    volumes:
+      - .:/code
+    depends_on:
+      - celery
+      - django
+      - postgres
+      - redis
+
+  # SQL Database
+  postgres:
+    env_file: .env
+    image: postgres
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  # Redis Server
+  redis:
+    image: redis:latest
+    ports:
+      - "${REDIS_PORT}:6379"
+
+  # Stripe CLI Webhook Listener
+  stripe-listener:
+    env_file: .env
+    image: stripe/stripe-cli:latest
+    environment:
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_SECRET_WEBHOOK}
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY}
+    command: listen --forward-to django:8000/api/v1/stripe/webhook/
+
+volumes:
+  db-data:

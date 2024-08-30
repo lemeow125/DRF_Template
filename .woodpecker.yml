@@ -1,18 +1,18 @@
 # .woodpecker.yml
 steps:
-  - name: build-push
+  - name: build
     image: docker
     when:
       - branch: master
       - event: push
     commands:
-      - docker build . -t "$IMAGE_TAG"
-      - echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY" --password-stdin -u "$REGISTRY_USERNAME"
-      - docker push "$IMAGE_TAG"
+      - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
+      - echo "$REGISTRY_PASSWORD" | docker login git.keannu1.duckdns.org --password-stdin -u "$REGISTRY_USERNAME"
+      - docker push git.keannu1.duckdns.org/keannu125/drf_template
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    secrets: [IMAGE_TAG, REGISTRY, REGISTRY_USERNAME, REGISTRY_PASSWORD]
-  - name: update deployment and reset database
+    secrets: [REGISTRY_USERNAME, REGISTRY_PASSWORD]
+  - name: deploy
     image: docker
     when:
       - branch: master
@@ -23,10 +23,10 @@ steps:
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh root@10.0.10.4 '
-        cd "${PROJECT_DIR}";
+        cd "/mnt/nvme/files/docker projects/DRF-Template";
         docker-compose down;
-        docker image rm "${IMAGE_TAG}" || true;
-        docker pull "${IMAGE_TAG}:latest";
-        docker volume rm "${IMAGE_TAG}_db_data" || true;
-        docker compose up -d'
-    secrets: [IMAGE_TAG, SSH_KEY, PROJECT_DIR]
+        docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
+        docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
+        docker volume rm "git.keannu1.duckdns.org/keannu125/drf_template_db_data" || true;
+        docker compose up -f docker-compose.prod.yml -d;'
+    secrets: [SSH_KEY]

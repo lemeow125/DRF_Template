@@ -18,7 +18,7 @@ This is a Django template that I personally use for my projects. This covers the
 
 - Create a copy of the `.env.sample` file and name it as `.env` in the same directory
 - Populate .env with values
-- Run `docker-compose up`
+- Run `docker-compose up -f docker-compose.dev.yml`
 
 Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
 

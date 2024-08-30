@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   # Django Backend
-  # http://localhost:8000
   django:
     env_file: .env
     build:
