@@ -1,17 +1,17 @@
 # .woodpecker.yml
 steps:
   - name: build & push
-    image: debian:12.6
+    image: debian:12.6-slim
     when:
       - branch: master
       - event: push
     commands:
-      - apt update && apt install -y docker docker-buildx-plugin
-      - docker buildx build . -t git.keannu1.duckdns.org/keannu125/drf_template
+      - apt update && apt install -y docker
+      - docker build . -t git.keannu1.duckdns.org/keannu125/drf_template
       - cat "$GITEA_PASSWORD" | docker login git.keannu1.duckdns.org --username "$GITEA_USERNAME" --pasword-stdin
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
   - name: update deployment and reset database
-    image: debian:12.6
+    image: debian:12.6-slim
     when:
       - branch: master
       - event: push
