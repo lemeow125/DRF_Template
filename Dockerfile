@@ -17,11 +17,11 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install Chrome
-ENV CHROMEDRIVER_VERSION=124.0.6367.155
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
 
 # Install Chromedriver
+ENV CHROMEDRIVER_VERSION=114.0.5735.90
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
   && unzip chromedriver-linux64.zip && rm -dfr chromedriver_linux64.zip \
   && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
