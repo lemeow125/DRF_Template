@@ -11,6 +11,7 @@ steps:
       - docker push git.keannu1.duckdns.org/keannu125/drf_template
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    secrets: [REGISTRY_USERNAME, REGISTRY_PASSWORD]
   - name: update deployment and reset database
     image: docker
     when:
@@ -29,4 +30,4 @@ steps:
         docker compose up -d'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    secrets: [SSH_KEY, REGISTRY_USERNAME, REGISTRY_PASSWORD]
+    secrets: [SSH_KEY]
