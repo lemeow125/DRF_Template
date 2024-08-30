@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /code
 COPY . /code/
+RUN chmod +x /code/start.sh
 
 # Install packages
 RUN apt-get update && apt-get install -y graphviz libgraphviz-dev graphviz-dev wget zip
