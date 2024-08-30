@@ -1,0 +1,30 @@
+# .woodpecker.yml
+steps:
+  - name: build & push
+    image: alpine:3.20.2
+    when:
+      - branch: master
+      - event: push
+    commands:
+      - apt update && apt install -y docker docker-buildx-plugin
+      - docker buildx build . -t git.keannu1.duckdns.org/keannu125/drf_template
+      - cat "$GITEA_PASSWORD" | docker login git.keannu1.duckdns.org --username "$GITEA_USERNAME" --pasword-stdin
+      - docker push git.keannu1.duckdns.org/keannu125/drf_template
+  - name: update deployment and reset database
+    image: alpine:3.20.2
+    when:
+      - branch: master
+      - event: push
+    commands:
+      - mkdir -p /root/.ssh/
+      - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
+      - chmod 600 /root/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
+      - ssh root@10.0.10.4 '
+        cd /mnt/nvme/files/docker projects/EquipmentTracker-Backend;
+        docker-compose down;
+        docker image rm git.keannu1.duckdns.org/keannu125/drf_template;
+        docker volume rm git.keannu1.duckdns.org/keannu125/drf_template_db_data;
+        docker compose up -d'
+      - scp -r dist/* root@10.0.10.4:/mnt/nvme/www/equipment_tracker_frontend
+    secrets: [SSH_KEY, REGISTRY_USERNAME, REGISTRY_PASSWORD]

@@ -3,3 +3,4 @@ chrome/
 dumps/
 media/
 TODO.md
+.env

@@ -37,8 +37,10 @@ def get_secret(secret_name):
 # URL Prefixes
 USE_HTTPS = (get_secret('USE_HTTPS') == 'True')
 URL_PREFIX = 'https://' if USE_HTTPS else 'http://'
-BACKEND_URL = URL_PREFIX + get_secret('BACKEND_URL')
-FRONTEND_URL = URL_PREFIX + get_secret('FRONTEND_URL')
+BACKEND_URL = URL_PREFIX + \
+    get_secret('BACKEND_ADDRESS') + ':' + get_secret('BACKEND_PORT')
+FRONTEND_URL = URL_PREFIX + \
+    get_secret('FRONTEND_ADDRESS') + ':' + get_secret('FRONTEND_PORT')
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [

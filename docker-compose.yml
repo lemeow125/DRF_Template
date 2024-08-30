@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     image: drf_template:latest
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
       - PYTHONBUFFERED=1
       - RUN_TYPE=web
