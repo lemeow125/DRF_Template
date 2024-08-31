@@ -26,7 +26,7 @@ steps:
         cd "/mnt/nvme/files/docker projects/DRF-Template";
         docker-compose -f docker-compose.demo.yml down;
         docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
-        docker volume rm "git.keannu1.duckdns.org/keannu125/drf_template_db_data" || true;
+        docker volume rm drf_template_db_data || true;
         docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
         docker compose -f docker-compose.demo.yml up -d;'
     secrets: [SSH_KEY]
