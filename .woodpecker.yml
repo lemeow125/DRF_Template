@@ -16,7 +16,7 @@ steps:
     image: docker
     when:
       - branch: master
-      - event: push
+        event: push
     commands:
       - mkdir -p /root/.ssh/
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
