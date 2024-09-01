@@ -47,8 +47,10 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     # Frontend
     f'{URL_SCHEME}://{FRONTEND_ADDRESS}:{FRONTEND_PORT}',
+    f'{URL_SCHEME}://{FRONTEND_ADDRESS}',  # For external domains
     # Backend
     f'{URL_SCHEME}://{BACKEND_ADDRESS}:{BACKEND_PORT}',
+    f'{URL_SCHEME}://{BACKEND_ADDRESS}'  # For external domains
     # You can also set up https://*.name.xyz for wildcards here
 ]
 
