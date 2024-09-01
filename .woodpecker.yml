@@ -1,0 +1,32 @@
+# .woodpecker.yml
+steps:
+  - name: build
+    image: docker
+    when:
+      - branch: master
+        event: push
+    commands:
+      - docker build --no-cache -t git.keannu1.duckdns.org/keannu125/drf_template .
+      - echo "$REGISTRY_PASSWORD" | docker login git.keannu1.duckdns.org --password-stdin -u "$REGISTRY_USERNAME"
+      - docker push git.keannu1.duckdns.org/keannu125/drf_template
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    secrets: [REGISTRY_USERNAME, REGISTRY_PASSWORD]
+  - name: deploy
+    image: docker
+    when:
+      - branch: master
+        event: push
+    commands:
+      - mkdir -p /root/.ssh/
+      - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
+      - chmod 600 /root/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
+      - ssh root@10.0.10.4 '
+        cd "/mnt/nvme/files/docker projects/DRF-Template";
+        docker-compose -f docker-compose.demo.yml down;
+        docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
+        docker volume rm drf_template_db_data || true;
+        docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
+        docker compose -f docker-compose.demo.yml up -d;'
+    secrets: [SSH_KEY]
