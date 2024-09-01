@@ -1,6 +1,4 @@
 #!/bin/bash
-# read .env values
-awk -F= '$1 == "BACKEND_DEBUG" {print $2}' .env
 
 echo "Running as: $RUN_TYPE"
 cd backend/
