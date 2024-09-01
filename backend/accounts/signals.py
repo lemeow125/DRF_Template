@@ -21,7 +21,7 @@ def create_users(sender, **kwargs):
                     if user['password'] == 'USE_REGULAR':
                         password = get_secret('SEED_DATA_PASSWORD')
                     elif user['password'] == 'USE_ADMIN':
-                        password = get_secret('DJANGO_ADMIN_PASSWORD')
+                        password = get_secret('SEED_DATA_ADMIN_PASSWORD')
                     else:
                         password = user['password']
                     if (user['is_superuser'] == True):
