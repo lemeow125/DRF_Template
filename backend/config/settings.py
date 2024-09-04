@@ -227,7 +227,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         # Set to True to avoid issues with pgbouncer when pooling connections
-        'DISABLE_SERVER_SIDE_CURSORS': True,
+        'DISABLE_SERVER_SIDE_CURSORS': get_secret("DB_DISABLE_SERVER_SIDE_CURSORS"),
         "NAME": get_secret("DB_DATABASE"),
         "USER": get_secret("DB_USERNAME"),
         "PASSWORD": get_secret("DB_PASSWORD"),
