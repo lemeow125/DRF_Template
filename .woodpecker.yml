@@ -6,12 +6,12 @@ steps:
       - branch: master
         event: push
     commands:
-      - docker build --platform linux/arm64 --no-cache -t git.keannu1.duckdns.org/keannu125/drf_template .
-      - echo "$REGISTRY_PASSWORD" | docker login git.keannu1.duckdns.org --password-stdin -u "$REGISTRY_USERNAME"
-      - docker push git.keannu1.duckdns.org/keannu125/drf_template
+      - docker build --platform linux/arm64 --no-cache -t "$IMAGE" .
+      - echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY" --password-stdin -u "$REGISTRY_USERNAME"
+      - docker push "$IMAGE"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    secrets: [REGISTRY_USERNAME, REGISTRY_PASSWORD]
+    secrets: [REGISTRY, REGISTRY_USERNAME, REGISTRY_PASSWORD, IMAGE]
   - name: deploy
     image: docker
     when:
@@ -22,12 +22,11 @@ steps:
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
-      - ssh $"REMOTE_HOST" '
-        cd "/mnt/nvme/files/docker projects/DRF-Template";
+      - ssh "$REMOTE_HOST" "
+        cd $PROJECT_DIRECTORY;
         docker-compose -f docker-compose.demo.yml down;
-        docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
-        docker volume rm drf_template_db_data || true;
-        docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
-        curl "https://raw.githubusercontent.com/lemeow125/DRF_Template/master/docker-compose.demo.yml" | tee docker-compose.demo.yml > /dev/null
-        docker compose -f docker-compose.demo.yml up -d;'
-    secrets: [SSH_KEY, REMOTE_HOST]
+        docker image rm "$IMAGE" || true;
+        docker volume rm "$VOLUME" || true;
+        docker pull "$IMAGE";
+        docker compose -f docker-compose.demo.yml up -d;"
+    secrets: [SSH_KEY, REMOTE_HOST, PROJECT_DIRECTORY, IMAGE, VOLUME]
