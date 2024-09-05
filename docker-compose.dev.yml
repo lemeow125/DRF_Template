@@ -82,6 +82,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data
+    command: postgres -c max_connections=512
 
   # DB Bouncer
   pgbouncer:
