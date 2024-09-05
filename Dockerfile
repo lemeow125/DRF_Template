@@ -9,7 +9,12 @@ ADD . /code/
 COPY start.sh /code/
 RUN chmod +x /code/start.sh
 
+# Fix permissions with /tmp
+RUN chown root:root /tmp
+RUN chmod 1777 /tmp
+
 # Install packages
+RUN apt clean
 RUN apt update
 RUN apt install -y graphviz libgraphviz-dev graphviz-dev wget zip
 RUN pip3 install --upgrade pip
