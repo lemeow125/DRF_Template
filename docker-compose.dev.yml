@@ -17,6 +17,8 @@ services:
       - .:/code
     depends_on:
       - postgres
+      - pgbouncer
+      - redis
 
   # Django Celery Worker
   celery:
@@ -32,6 +34,7 @@ services:
     depends_on:
       - django
       - postgres
+      - pgbouncer
       - redis
     # Runs multiple worker instances
     scale: 4
@@ -45,9 +48,10 @@ services:
     volumes:
       - .:/code
     depends_on:
-      - celery
       - django
+      - celery
       - postgres
+      - pgbouncer
       - redis
 
   # Django Celery Monitor
@@ -62,8 +66,10 @@ services:
     volumes:
       - .:/code
     depends_on:
-      - celery
       - django
+      - celery
+      - postgres
+      - pgbouncer
       - redis
 
   # SQL Database
@@ -77,11 +83,20 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  # DB Bouncer
+  pgbouncer:
+    image: bitnami/pgbouncer:latest
+    environment:
+      - POSTGRESQL_HOST=postgres
+      - PGBOUNCER_DATABASE=${DB_DATABASE}
+      - POSTGRESQL_USERNAME=${DB_USERNAME}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - postgres
+
   # Redis Server
   redis:
     image: redis:latest
-    ports:
-      - "${REDIS_PORT}:6379"
 
   # Stripe CLI Webhook Listener
   stripe-listener:
