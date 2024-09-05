@@ -18,15 +18,22 @@ steps:
       - branch: master
         event: push
     commands:
+      # SSH Setup
       - mkdir -p /root/.ssh/
+      # Add SSH key to remote machine
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
-      - ssh root@10.0.10.4 '
+      # SSH to remote machine and execute commands
+      - ssh $"REMOTE_HOST" '
         cd "/mnt/nvme/files/docker projects/DRF-Template";
+        # Pull latest image and reset the DB
         docker-compose -f docker-compose.demo.yml down;
         docker image rm git.keannu1.duckdns.org/keannu125/drf_template || true;
         docker volume rm drf_template_db_data || true;
         docker pull git.keannu1.duckdns.org/keannu125/drf_template:latest;
+        # Download and overwrite docker-compose.demo.yml
+        curl https://raw.githubusercontent.com/lemeow125/DRF_Template/master/docker-compose.demo.yml | tee docker-compose.demo.yml > /dev/null
+        # Start with new configs
         docker compose -f docker-compose.demo.yml up -d;'
-    secrets: [SSH_KEY]
+    secrets: [SSH_KEY, REMOTE_HOST]
