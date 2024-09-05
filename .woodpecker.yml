@@ -18,14 +18,11 @@ steps:
       - branch: master
         event: push
     commands:
-      # SSH Setup
-      - mkdir -p /root/.ssh/
-      # Add SSH key to remote machine
+      - mkdir -p /root/.ssh/ # Add SSH key to remote machine
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
-      # SSH to remote machine and execute commands
-      - ssh $"REMOTE_HOST" '
+      - ssh $"REMOTE_HOST" ' # SSH to remote machine and execute commands
         cd "/mnt/nvme/files/docker projects/DRF-Template";
         # Pull latest image and reset the DB
         docker-compose -f docker-compose.demo.yml down;
