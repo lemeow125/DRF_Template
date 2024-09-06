@@ -1,5 +1,5 @@
 """
-WSGI config for equipment_tracker project.
+WSGI config for DRF-Template project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

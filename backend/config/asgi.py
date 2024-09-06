@@ -1,5 +1,5 @@
 """
-ASGI config for equipment_tracker project.
+ASGI config for DRF-Template project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

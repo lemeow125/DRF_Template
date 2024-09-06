@@ -6,10 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# Static Media Stuff
-equipment_tracker/media/*
-equipment_tracker/static/*
-
 # Distribution / packaging
 .Python
 build/
@@ -64,7 +60,7 @@ cover/
 db.sqlite3
 db.sqlite3-journal
 .env
-media/*
+media/
 static/
 dumps/
 firefox/
