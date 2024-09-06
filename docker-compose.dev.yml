@@ -115,7 +115,6 @@ services:
     image: inbucket/inbucket:latest
     ports:
       - "8025:8025"
-      - "1025:1025"
     environment:
       - INBUCKET_LOGLEVEL=error
       - INBUCKET_MAILBOXNAMING=domain
