@@ -23,7 +23,11 @@ A live API demo can be found [here](https://api.template.06222001.xyz/swagger)
 - Populate .env with values
 - Run `docker-compose -f docker-compose.dev.yml up`
 
-Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
+When using `docker-compose.dev.yml`, the entire project directory is mounted onto the container allowing for hot-reloading. Make sure DEBUG is set to True for this to work! Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
+
+### Deployment
+
+A sample `docker-compose.demo.yml` is provided which I use to host in hosting the demo. DEBUG should be set to False when deploying as to not expose the URLs fro Celery Flower and the Django Silk Profiler. The local Inbucket container is not present as well so make sure to specify an external SMTP server to process emails properly.
 
 ### URLs
 
