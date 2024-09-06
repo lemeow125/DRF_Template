@@ -83,7 +83,6 @@ EMAIL_ADDRESS = (get_secret('EMAIL_ADDRESS') == 'True')
 # Application definition
 
 INSTALLED_APPS = [
-    'silk' if DEBUG else None,
     'config',
     'unfold',
     'unfold.contrib.filters',
@@ -116,6 +115,7 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
+    INSTALLED_APPS += ['silk']
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
         "silk.middleware.SilkyMiddleware",
