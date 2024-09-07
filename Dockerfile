@@ -20,17 +20,9 @@ RUN apt install -y graphviz libgraphviz-dev graphviz-dev wget zip
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Chrome has no install candidate on ARM64
-# If you plan on running on x86 you can comment this out
-# Install Chrome
-# RUN apt install chromium-browser
-# Install Chromedriver
-# ENV CHROMEDRIVER_VERSION=124.0.6367.155
-# RUN wget https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
-#   && unzip chromedriver-linux64.zip && rm -dfr chromedriver_linux64.zip \
-#   && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
-#   && chmod +x /usr/bin/chromedriver
-  
+# Install Chrome & Chromedriver
+RUN apt install -y chromium-browser chromium-driver
+
 # Install Firefox and Geckodriver
 RUN apt install -y firefox-esr
 # Download the latest Geckodriver and install it
