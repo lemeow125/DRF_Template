@@ -21,7 +21,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install Chrome & Chromedriver
-RUN apt install -y chromium-browser chromium-driver
+RUN apt install -y chromium chromium-driver
 
 # Install Firefox and Geckodriver
 RUN apt install -y firefox-esr
