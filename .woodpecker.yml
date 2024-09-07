@@ -28,5 +28,6 @@ steps:
         docker image rm "$IMAGE" || true;
         docker volume rm "$VOLUME" || true;
         docker pull "$IMAGE";
-        docker compose -f docker-compose.demo.yml up -d;"
+        docker compose -f docker-compose.demo.yml up -d;
+        docker image prune -af;"
     secrets: [SSH_KEY, REMOTE_HOST, PROJECT_DIRECTORY, IMAGE, VOLUME]
