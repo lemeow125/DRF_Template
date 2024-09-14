@@ -4,7 +4,7 @@ services:
   # Django Backend
   django:
     env_file: .env
-    image: keannu125/drf_template:latest
+    image: keannu125/drf-template:latest
     ports:
       - "${BACKEND_PORT}:8000"
     environment:
@@ -20,7 +20,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=worker
-    image: keannu125/drf_template:latest
+    image: keannu125/drf-template:latest
     depends_on:
       - django
       - postgres
@@ -33,7 +33,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=beat
-    image: keannu125/drf_template:latest
+    image: keannu125/drf-template:latest
     depends_on:
       - celery
       - django
