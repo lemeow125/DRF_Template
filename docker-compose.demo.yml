@@ -10,8 +10,6 @@ services:
     environment:
       - PYTHONBUFFERED=1
       - RUN_TYPE=web
-    volumes:
-      - ./backend/static:/code/backend/static
     depends_on:
       - postgres
 

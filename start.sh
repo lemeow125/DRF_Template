@@ -13,8 +13,9 @@ if [ "$RUN_TYPE" = "web" ]; then
     if [ "$BACKEND_DEBUG" = 'True' ]; then   
         python manage.py runserver "0.0.0.0:8000"
     else
-        gunicorn --workers 8 --bind 0.0.0.0:8000 config.wsgi:application
-        # python -m granian --host 0.0.0.0 --port 8000 --workers 8 --interface wsgi config.wsgi:application
+        # Feel free to replace the WSGI server here with something else
+        # gunicorn --workers 8 --bind 0.0.0.0:8000 config.wsgi:application # Gunicorn
+        python -m granian --host 0.0.0.0 --port 8000 --workers 8 --interface wsgi config.wsgi:application # Granian
     fi
 elif [ "$RUN_TYPE" = "worker" ]; then
     celery -A config worker -l INFO -E --concurrency 1
