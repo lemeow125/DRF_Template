@@ -1,7 +1,7 @@
 ## DRF-Template
 
 ![Build Status](https://woodpecker.06222001.xyz/api/badges/1/status.svg)
-![Demo Page Status](https://kuma.keannu5.duckdns.org/api/badge/119/status)
+![Demo Page Status](https://stats.keannu5.duckdns.org/api/badge/119/status)
 
 This is a Django template that I personally use for my projects. This covers the following
 
