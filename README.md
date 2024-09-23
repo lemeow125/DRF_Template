@@ -27,7 +27,7 @@ When using `docker-compose.dev.yml`, the entire project directory is mounted ont
 
 ### Deployment
 
-A sample `docker-compose.demo.yml` is provided which I use to host in hosting the demo. DEBUG should be set to False when deploying as to not expose the URLs fro Celery Flower and the Django Silk Profiler. The local Inbucket container is not present as well so make sure to specify an external SMTP server to process emails properly.
+A sample `docker-compose.demo.yml` is provided which I use in hosting the demo. DEBUG should be set to False when deploying as to not expose the URLs fro Celery Flower and the Django Silk Profiler. The local Inbucket container is not present so make sure to specify an external SMTP server to process emails properly.
 
 ### URLs
 
