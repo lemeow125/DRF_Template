@@ -111,7 +111,8 @@ INSTALLED_APPS = [
     'payments',
     'billing',
     'emails',
-    'notifications'
+    'notifications',
+    'search_results'
 ]
 
 if DEBUG:
@@ -393,5 +394,5 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20480
 
 GRAPH_MODELS = {
-    'app_labels': ['accounts', 'user_groups', 'billing', 'emails', 'payments', 'subscriptions']
+    'app_labels': ['accounts', 'user_groups', 'billing', 'emails', 'payments', 'subscriptions', 'search_results']
 }

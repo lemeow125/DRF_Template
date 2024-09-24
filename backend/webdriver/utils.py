@@ -3,9 +3,7 @@ Settings file to hold constants and functions
 """
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-import os
 from config.settings import get_secret
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import FirefoxOptions
@@ -16,6 +14,8 @@ from config.settings import get_secret
 from twocaptcha import TwoCaptcha
 from whois import whois
 from whois.parser import PywhoisError
+import os
+import random
 
 
 def take_snapshot(driver, filename='dump.png'):
@@ -135,23 +135,19 @@ def setup_webdriver(driver_type="chrome", use_proxy=True, use_saved_session=Fals
     print(f'External IP: {ip_address}')
     return driver
 
+# These are  wrapper function for quickly automating multiple steps in webscraping (logins, button presses, text inputs, etc.)
+# Depending on your use case, you may have to opt out of using this
+
+
 # Function to get the element once it has loaded in
 
 
 def get_element(driver, by, key, hidden_element=False, timeout=8):
     try:
-        if by == "xpath":
-            by = By.XPATH
-        elif by == "css":
-            by = By.CSS_SELECTOR
-        elif by == "id":
-            by = By.ID
-        elif by == "tagname":
-            by = By.TAG_NAME
-        elif by == "name":
-            by = By.NAME
-        elif by == "classname":
-            by == By.CLASS_NAME
+        # Convert string-based locators to By objects (By.XPATH, By.CSS, etc.)
+        if isinstance(by, str):
+            by = getattr(By, by.upper())
+
         wait = WebDriverWait(driver, timeout=timeout)
         if not hidden_element:
             element = wait.until(
@@ -161,7 +157,37 @@ def get_element(driver, by, key, hidden_element=False, timeout=8):
                 (by, key)))
         return element
     except Exception:
+        dump_html(driver)
+        take_snapshot(driver)
+        driver.close()
+        driver.quit()
         raise Exception(f"Unable to get element of {by} value: {key}")
+
+
+def get_elements(driver, by, key, hidden_element=False, timeout=8):
+    try:
+        # Convert string-based locators to By objects (By.XPATH, By.CSS, etc.)
+        if isinstance(by, str):
+            by = getattr(By, by.upper())
+
+        wait = WebDriverWait(driver, timeout=timeout)
+
+        if hidden_element:
+            elements = wait.until(
+                EC.presence_of_all_elements_located((by, key)))
+        else:
+            visible_elements = wait.until(
+                EC.visibility_of_any_elements_located((by, key)))
+            elements = [
+                element for element in visible_elements if element.is_enabled()]
+
+        return elements
+    except Exception:
+        dump_html(driver)
+        take_snapshot(driver)
+        driver.close()
+        driver.quit()
+        raise Exception(f"Unable to get elements of {by} value: {key}")
 
 
 def execute_selenium_elements(driver, timeout, elements):
@@ -265,7 +291,7 @@ def solve_captcha(site_key, url, retry_attempts=3, version='v2', enterprise=Fals
         use_proxy = False
     if CAPTCHA_TESTING:
         print('Initializing CAPTCHA solver in dummy mode')
-        code = "12345"
+        code = random.randint()
         print("CAPTCHA Successful")
         return code
 
@@ -340,6 +366,7 @@ def save_browser_session(driver):
 
 
 def selenium_action_template(driver):
+    # Data that might need to be entered during webscraping
     info = {
         "sample_field1": "sample_data",
         "sample_field2": "sample_data",
@@ -350,7 +377,7 @@ def selenium_action_template(driver):
         {
             "name": "Enter data for sample field 1",
             "type": "input",
-            "input": "{first_name}",
+            "input": "{sample_field1}",
             # If a site implements canary design releases, you can place the ID for the element in the new design
             "default": {
                 # See get_element() for possible selector types
@@ -387,4 +414,55 @@ def selenium_action_template(driver):
                 element['input'] = str(value)
 
     # Execute the selenium actions
+    execute_selenium_elements(driver, 8, elements)
+
+# Sample task for Google search
+
+
+def google_search(driver, search_term):
+    info = {
+        "search_term": search_term,
+    }
+
+    elements = [
+        {
+            "name": "Type in search term",
+            "type": "input",
+            "input": "{search_term}",
+            "default": {
+                "type": "xpath",
+                "key": '//*[@id="APjFqb"]'
+            },
+            "failover": {
+                "type": "xpath",
+                "key": '//*[@id="APjFqb"]'
+            }
+        },
+        {
+            "name": "Press enter",
+            "type": "input_enter",
+            "default": {
+                "type": "xpath",
+                "key": '//*[@id="APjFqb"]'
+            },
+            "failover": {
+                "type": "xpath",
+                "key": '//*[@id="APjFqb"]'
+            }
+        },
+    ]
+
+    site_form_values = {}
+
+    for element in elements:
+        if 'input' in element and '{' in element['input']:
+            a = element['input'].strip('{}')
+            if a in info:
+                value = info[a]
+                if callable(value):
+                    if a not in site_form_values:
+                        site_form_values[a] = value()
+                    value = site_form_values[a]
+                element['input'] = str(value)
+
     execute_selenium_elements(driver, 8, elements)
