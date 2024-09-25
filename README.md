@@ -31,8 +31,8 @@ A sample `docker-compose.demo.yml` is provided which I use in hosting the demo. 
 
 ### URLs
 
-- [Django Admin Panel](http://localhost:8000/admin)
-- [OpenAPI Swagger](http://localhost:8000/swagger) (For documenting endpoints)
+- [Django Admin Panel](http://localhost:8000/api/v1/admin)
+- [OpenAPI Swagger](http://localhost:8000/api/v1/swagger) (For documenting endpoints)
 - [Inbucket](http://localhost:8025) (For email testing)
 - [Flower](http://localhost:5555/) (For monitoring Celery tasks)
-- [Django Silk](http://localhost:8000/silk) (For performance profiling)
+- [Django Silk](http://localhost:8000/api/v1/silk) (For performance profiling)
