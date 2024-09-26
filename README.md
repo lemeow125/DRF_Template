@@ -15,7 +15,7 @@ This is a Django template that I personally use for my projects. This covers the
 - Notifications (via traditional RESTful endpoints)
 - A working Woodpecker CI/CD template for automated deployments
 
-A live API demo can be found [here](https://api.template.06222001.xyz/swagger)
+A live API demo can be found [here](https://api.template.06222001.xyz/api/v1/swagger)
 
 ### Development
 
