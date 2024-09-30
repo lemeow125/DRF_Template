@@ -6,12 +6,12 @@ info:
 paths:
   /api/v1/accounts/jwt/create/:
     post:
-      operationId: api_v1_accounts_jwt_create_create
+      operationId: accounts_jwt_create_create
       description: |-
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -33,12 +33,12 @@ paths:
           description: ''
   /api/v1/accounts/jwt/refresh/:
     post:
-      operationId: api_v1_accounts_jwt_refresh_create
+      operationId: accounts_jwt_refresh_create
       description: |-
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -60,12 +60,12 @@ paths:
           description: ''
   /api/v1/accounts/jwt/verify/:
     post:
-      operationId: api_v1_accounts_jwt_verify_create
+      operationId: accounts_jwt_verify_create
       description: |-
         Takes a token and indicates if it is valid.  This view provides no
         information about a token's fitness for a particular use.
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -87,9 +87,9 @@ paths:
           description: ''
   /api/v1/accounts/users/:
     get:
-      operationId: api_v1_accounts_users_list
+      operationId: accounts_users_list
       tags:
-      - api
+      - accounts
       security:
       - jwtAuth: []
       responses:
@@ -102,9 +102,9 @@ paths:
                   $ref: '#/components/schemas/CustomUser'
           description: ''
     post:
-      operationId: api_v1_accounts_users_create
+      operationId: accounts_users_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -129,7 +129,7 @@ paths:
           description: ''
   /api/v1/accounts/users/{id}/:
     get:
-      operationId: api_v1_accounts_users_retrieve
+      operationId: accounts_users_retrieve
       parameters:
       - in: path
         name: id
@@ -138,7 +138,7 @@ paths:
         description: A unique integer value identifying this user.
         required: true
       tags:
-      - api
+      - accounts
       security:
       - jwtAuth: []
       - {}
@@ -150,7 +150,7 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     put:
-      operationId: api_v1_accounts_users_update
+      operationId: accounts_users_update
       parameters:
       - in: path
         name: id
@@ -159,7 +159,7 @@ paths:
         description: A unique integer value identifying this user.
         required: true
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -183,7 +183,7 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     patch:
-      operationId: api_v1_accounts_users_partial_update
+      operationId: accounts_users_partial_update
       parameters:
       - in: path
         name: id
@@ -192,7 +192,7 @@ paths:
         description: A unique integer value identifying this user.
         required: true
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -215,7 +215,7 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     delete:
-      operationId: api_v1_accounts_users_destroy
+      operationId: accounts_users_destroy
       parameters:
       - in: path
         name: id
@@ -224,7 +224,7 @@ paths:
         description: A unique integer value identifying this user.
         required: true
       tags:
-      - api
+      - accounts
       security:
       - jwtAuth: []
       responses:
@@ -232,9 +232,9 @@ paths:
           description: No response body
   /api/v1/accounts/users/activation/:
     post:
-      operationId: api_v1_accounts_users_activation_create
+      operationId: accounts_users_activation_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -259,9 +259,9 @@ paths:
           description: ''
   /api/v1/accounts/users/me/:
     get:
-      operationId: api_v1_accounts_users_me_retrieve
+      operationId: accounts_users_me_retrieve
       tags:
-      - api
+      - accounts
       security:
       - jwtAuth: []
       - {}
@@ -273,9 +273,9 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     put:
-      operationId: api_v1_accounts_users_me_update
+      operationId: accounts_users_me_update
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -299,9 +299,9 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     patch:
-      operationId: api_v1_accounts_users_me_partial_update
+      operationId: accounts_users_me_partial_update
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -324,9 +324,9 @@ paths:
                 $ref: '#/components/schemas/CustomUser'
           description: ''
     delete:
-      operationId: api_v1_accounts_users_me_destroy
+      operationId: accounts_users_me_destroy
       tags:
-      - api
+      - accounts
       security:
       - jwtAuth: []
       responses:
@@ -334,9 +334,9 @@ paths:
           description: No response body
   /api/v1/accounts/users/resend_activation/:
     post:
-      operationId: api_v1_accounts_users_resend_activation_create
+      operationId: accounts_users_resend_activation_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -361,9 +361,9 @@ paths:
           description: ''
   /api/v1/accounts/users/reset_password/:
     post:
-      operationId: api_v1_accounts_users_reset_password_create
+      operationId: accounts_users_reset_password_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -388,9 +388,9 @@ paths:
           description: ''
   /api/v1/accounts/users/reset_password_confirm/:
     post:
-      operationId: api_v1_accounts_users_reset_password_confirm_create
+      operationId: accounts_users_reset_password_confirm_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -415,9 +415,9 @@ paths:
           description: ''
   /api/v1/accounts/users/reset_username/:
     post:
-      operationId: api_v1_accounts_users_reset_username_create
+      operationId: accounts_users_reset_username_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -441,9 +441,9 @@ paths:
           description: ''
   /api/v1/accounts/users/reset_username_confirm/:
     post:
-      operationId: api_v1_accounts_users_reset_username_confirm_create
+      operationId: accounts_users_reset_username_confirm_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -467,9 +467,9 @@ paths:
           description: ''
   /api/v1/accounts/users/set_password/:
     post:
-      operationId: api_v1_accounts_users_set_password_create
+      operationId: accounts_users_set_password_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -493,9 +493,9 @@ paths:
           description: ''
   /api/v1/accounts/users/set_username/:
     post:
-      operationId: api_v1_accounts_users_set_username_create
+      operationId: accounts_users_set_username_create
       tags:
-      - api
+      - accounts
       requestBody:
         content:
           application/json:
@@ -519,9 +519,9 @@ paths:
           description: ''
   /api/v1/billing/:
     get:
-      operationId: api_v1_billing_retrieve
+      operationId: billing_retrieve
       tags:
-      - api
+      - billing
       security:
       - jwtAuth: []
       responses:
@@ -529,9 +529,9 @@ paths:
           description: No response body
   /api/v1/notifications/:
     get:
-      operationId: api_v1_notifications_list
+      operationId: notifications_list
       tags:
-      - api
+      - notifications
       security:
       - jwtAuth: []
       - {}
@@ -546,7 +546,7 @@ paths:
           description: ''
   /api/v1/notifications/{id}/:
     get:
-      operationId: api_v1_notifications_retrieve
+      operationId: notifications_retrieve
       parameters:
       - in: path
         name: id
@@ -555,7 +555,7 @@ paths:
         description: A unique integer value identifying this notification.
         required: true
       tags:
-      - api
+      - notifications
       security:
       - jwtAuth: []
       - {}
@@ -567,7 +567,7 @@ paths:
                 $ref: '#/components/schemas/Notification'
           description: ''
     patch:
-      operationId: api_v1_notifications_partial_update
+      operationId: notifications_partial_update
       parameters:
       - in: path
         name: id
@@ -576,7 +576,7 @@ paths:
         description: A unique integer value identifying this notification.
         required: true
       tags:
-      - api
+      - notifications
       requestBody:
         content:
           application/json:
@@ -599,7 +599,7 @@ paths:
                 $ref: '#/components/schemas/Notification'
           description: ''
     delete:
-      operationId: api_v1_notifications_destroy
+      operationId: notifications_destroy
       parameters:
       - in: path
         name: id
@@ -608,7 +608,7 @@ paths:
         description: A unique integer value identifying this notification.
         required: true
       tags:
-      - api
+      - notifications
       security:
       - jwtAuth: []
       - {}
@@ -617,9 +617,9 @@ paths:
           description: No response body
   /api/v1/stripe/checkout_session/:
     post:
-      operationId: api_v1_stripe_checkout_session_create
+      operationId: stripe_checkout_session_create
       tags:
-      - api
+      - stripe
       requestBody:
         content:
           application/json:
@@ -639,9 +639,9 @@ paths:
           description: No response body
   /api/v1/stripe/webhook/:
     post:
-      operationId: api_v1_stripe_webhook_create
+      operationId: stripe_webhook_create
       tags:
-      - api
+      - stripe
       security:
       - jwtAuth: []
       - {}
@@ -650,9 +650,9 @@ paths:
           description: No response body
   /api/v1/subscriptions/plans/:
     get:
-      operationId: api_v1_subscriptions_plans_list
+      operationId: subscriptions_plans_list
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       - {}
@@ -667,7 +667,7 @@ paths:
           description: ''
   /api/v1/subscriptions/plans/{id}/:
     get:
-      operationId: api_v1_subscriptions_plans_retrieve
+      operationId: subscriptions_plans_retrieve
       parameters:
       - in: path
         name: id
@@ -676,7 +676,7 @@ paths:
         description: A unique integer value identifying this subscription plan.
         required: true
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       - {}
@@ -689,9 +689,9 @@ paths:
           description: ''
   /api/v1/subscriptions/self/:
     get:
-      operationId: api_v1_subscriptions_self_list
+      operationId: subscriptions_self_list
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       responses:
@@ -705,7 +705,7 @@ paths:
           description: ''
   /api/v1/subscriptions/self/{id}/:
     get:
-      operationId: api_v1_subscriptions_self_retrieve
+      operationId: subscriptions_self_retrieve
       parameters:
       - in: path
         name: id
@@ -714,7 +714,7 @@ paths:
         description: A unique integer value identifying this user subscription.
         required: true
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       responses:
@@ -726,9 +726,9 @@ paths:
           description: ''
   /api/v1/subscriptions/user_group/:
     get:
-      operationId: api_v1_subscriptions_user_group_list
+      operationId: subscriptions_user_group_list
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       responses:
@@ -742,7 +742,7 @@ paths:
           description: ''
   /api/v1/subscriptions/user_group/{id}/:
     get:
-      operationId: api_v1_subscriptions_user_group_retrieve
+      operationId: subscriptions_user_group_retrieve
       parameters:
       - in: path
         name: id
@@ -751,7 +751,7 @@ paths:
         description: A unique integer value identifying this user subscription.
         required: true
       tags:
-      - api
+      - subscriptions
       security:
       - jwtAuth: []
       responses:
