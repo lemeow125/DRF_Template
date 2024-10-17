@@ -1,6 +1,6 @@
 steps:
   - name: deploy
-    image: docker
+    image: debian:stable-slim
     when:
       - branch: master
         event: push
