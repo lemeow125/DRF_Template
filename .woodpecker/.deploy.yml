@@ -1,6 +1,6 @@
 steps:
   - name: deploy
-    image: debian:stable-slim
+    image: debian:12.7
     when:
       - branch: master
         event: push
