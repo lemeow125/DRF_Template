@@ -23,7 +23,8 @@ def sample_selenium_task():
 
 @shared_task(autoretry_for=(Exception,), retry_kwargs={'max_retries': 3, 'countdown': 5})
 def simple_google_search():
-    driver = setup_webdriver(use_proxy=False, use_saved_session=False)
+    driver = setup_webdriver(driver_type="firefox",
+                             use_proxy=False, use_saved_session=False)
     driver.get(f"https://google.com/")
 
     google_search(driver, search_term="cat blog posts")
