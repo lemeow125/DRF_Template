@@ -14,18 +14,10 @@ RUN chown root:root /tmp
 RUN chmod 1777 /tmp
 
 # Install packages
-RUN apt clean
-RUN apt update
-RUN apt install -y graphviz libgraphviz-dev graphviz-dev wget zip
-RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN apt update && apt install -y graphviz libgraphviz-dev graphviz-dev wget zip chromium chromium-driver firefox-esr
+RUN pip3 install --upgrade pip && pip3 install --no-cache-dir -r requirements.txt
 
-# Install Chrome & Chromedriver
-RUN apt install -y chromium chromium-driver
-
-# Install Firefox and Geckodriver
-RUN apt install -y firefox-esr
-# Download the latest Geckodriver and install it
+# (Firefox) Download the latest Geckodriver and install it
 ENV GECKODRIVER_VERSION=latest
 RUN wget -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz
 RUN tar -zxf geckodriver.tar.gz -C /usr/bin
