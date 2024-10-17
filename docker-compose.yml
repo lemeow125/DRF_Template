@@ -2,7 +2,7 @@ services:
   # Django Backend
   django:
     env_file: .env
-    image: keannu125/drf-template:latest
+    image: git.06222001.xyz/keannu125/drf_template:latest
     ports:
       - "${BACKEND_PORT}:8000"
     environment:
@@ -17,7 +17,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=worker
-    image: keannu125/drf-template:latest
+    image: git.06222001.xyz/keannu125/drf_template:latest
     depends_on:
       - django
       - postgres
@@ -31,7 +31,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=beat
-    image: keannu125/drf-template:latest
+    image: git.06222001.xyz/keannu125/drf_template:latest
     depends_on:
       - celery
       - django
@@ -48,7 +48,7 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     command: postgres -c max_connections=200
 
   # DB Bouncer
@@ -77,4 +77,4 @@ services:
     command: listen --forward-to django:8000/api/v1/stripe/webhook/
 
 volumes:
-  db-data:
+  db_data:
