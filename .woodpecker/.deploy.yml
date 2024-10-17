@@ -1,10 +1,11 @@
 steps:
   - name: deploy
-    image: debian:12.7
+    image: alpine:3.20
     when:
       - branch: master
         event: push
     commands:
+      - apk add openssh
       - mkdir -p /root/.ssh/
       - echo "$WOODPECKER_SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
