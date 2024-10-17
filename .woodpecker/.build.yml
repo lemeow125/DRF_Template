@@ -10,7 +10,7 @@ steps:
     commands:
       - docker build -t "$REGISTRY_IMAGE_TAG" .
       - echo "$FORGEJO_REGISTRY_PASSWORD" | docker login "$FORGEJO_REGISTRY_URL" --password-stdin -u "$FORGEJO_REGISTRY_USERNAME"
-      - docker push "$REGISTRY_IMAGE_TAG"
+      - docker push "$FORGEJO_REGISTRY_URL"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets:
