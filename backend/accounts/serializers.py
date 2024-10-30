@@ -8,13 +8,14 @@ from django.core.cache import cache
 from django.core import exceptions as django_exceptions
 from rest_framework.settings import api_settings
 from django.contrib.auth.password_validation import validate_password
+
 # There can be multiple subject instances with the same name, only differing in course, year level, and semester. We filter them here
 
 
 class SimpleCustomUserSerializer(ModelSerializer):
     class Meta(BaseUserSerializer.Meta):
         model = CustomUser
-        fields = ('id', 'username', 'email', 'full_name')
+        fields = ("id", "username", "email", "full_name")
 
 
 class CustomUserSerializer(BaseUserSerializer):
@@ -22,19 +23,36 @@ class CustomUserSerializer(BaseUserSerializer):
 
     class Meta(BaseUserSerializer.Meta):
         model = CustomUser
-        fields = ('id', 'username', 'email', 'avatar', 'first_name',
-                  'last_name', 'user_group', 'group_member', 'group_owner')
-        read_only_fields = ('id', 'username', 'email', 'user_group',
-                            'group_member', 'group_owner')
+        fields = (
+            "id",
+            "username",
+            "email",
+            "avatar",
+            "first_name",
+            "is_new",
+            "last_name",
+            "user_group",
+            "group_member",
+            "group_owner",
+        )
+        read_only_fields = (
+            "id",
+            "username",
+            "email",
+            "user_group",
+            "group_member",
+            "group_owner",
+        )
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['user_group'] = SimpleUserGroupSerializer(
-            instance.user_group, many=False).data
+        representation["user_group"] = SimpleUserGroupSerializer(
+            instance.user_group, many=False
+        ).data
         return representation
 
     def update(self, instance, validated_data):
-        cache.delete(f'user:{instance.id}')
+        cache.delete(f"user:{instance.id}")
         return super().update(instance, validated_data)
 
 
@@ -42,16 +60,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
     password = serializers.CharField(
-        write_only=True, style={'input_type': 'password', 'placeholder': 'Password'})
+        write_only=True, style={"input_type": "password", "placeholder": "Password"}
+    )
     first_name = serializers.CharField(
-        required=True, allow_blank=False, allow_null=False)
+        required=True, allow_blank=False, allow_null=False
+    )
     last_name = serializers.CharField(
-        required=True, allow_blank=False, allow_null=False)
+        required=True, allow_blank=False, allow_null=False
+    )
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'password',
-                  'first_name', 'last_name']
+        fields = ["email", "username", "password", "first_name", "last_name"]
 
     def validate(self, attrs):
         user_attrs = attrs.copy()
@@ -69,14 +89,15 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({"password": errors})
         if self.Meta.model.objects.filter(username=attrs.get("username")).exists():
             raise serializers.ValidationError(
-                "A user with that username already exists.")
+                "A user with that username already exists."
+            )
         return super().validate(attrs)
 
     def create(self, validated_data):
         user = self.Meta.model(**validated_data)
-        user.username = validated_data['username']
+        user.username = validated_data["username"]
         user.is_active = False
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data["password"])
         user.save()
 
         return user

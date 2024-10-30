@@ -9,5 +9,4 @@ def cleanup_notifications():
     three_days_ago = timezone.now() - timezone.timedelta(days=3)
 
     # Delete notifications that are older than 3 days and dismissed
-    Notification.objects.filter(
-        dismissed=True, timestamp__lte=three_days_ago).delete()
+    Notification.objects.filter(dismissed=True, timestamp__lte=three_days_ago).delete()

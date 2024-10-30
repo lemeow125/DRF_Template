@@ -6,5 +6,5 @@ from .models import Notification
 @admin.register(Notification)
 class NotificationAdmin(ModelAdmin):
     model = Notification
-    search_fields = ('id', 'content')
-    list_display = ['id', 'dismissed']
+    search_fields = ("id", "content")
+    list_display = ["id", "dismissed"]

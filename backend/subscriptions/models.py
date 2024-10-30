@@ -1,4 +1,3 @@
-
 from django.db import models
 from accounts.models import CustomUser
 from user_groups.models import UserGroup
@@ -25,9 +24,11 @@ class SubscriptionPlan(models.Model):
     description = models.TextField(max_length=1024, null=True)
     stripe_product_id = models.CharField(max_length=100)
     annual_price = models.ForeignKey(
-        StripePrice, on_delete=models.SET_NULL, related_name='annual_plan', null=True)
+        StripePrice, on_delete=models.SET_NULL, related_name="annual_plan", null=True
+    )
     monthly_price = models.ForeignKey(
-        StripePrice, on_delete=models.SET_NULL, related_name='monthly_plan', null=True)
+        StripePrice, on_delete=models.SET_NULL, related_name="monthly_plan", null=True
+    )
     group_exclusive = models.BooleanField(default=False)
 
     def __str__(self):
@@ -39,11 +40,14 @@ class SubscriptionPlan(models.Model):
 
 class UserSubscription(models.Model):
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, blank=True, null=True)
+        CustomUser, on_delete=models.CASCADE, blank=True, null=True
+    )
     user_group = models.ForeignKey(
-        UserGroup, on_delete=models.CASCADE, blank=True, null=True)
+        UserGroup, on_delete=models.CASCADE, blank=True, null=True
+    )
     subscription = models.ForeignKey(
-        SubscriptionPlan, on_delete=models.SET_NULL, blank=True, null=True)
+        SubscriptionPlan, on_delete=models.SET_NULL, blank=True, null=True
+    )
     stripe_id = models.CharField(max_length=100)
     date = models.DateTimeField(default=now, editable=False)
     valid = models.BooleanField()
@@ -51,6 +55,6 @@ class UserSubscription(models.Model):
 
     def __str__(self):
         if self.user:
-            return f'Subscription {self.subscription.name} for {self.user}'
+            return f"Subscription {self.subscription.name} for {self.user}"
         else:
-            return f'Subscription {self.subscription.name} for {self.user_group}'
+            return f"Subscription {self.subscription.name} for {self.user_group}"

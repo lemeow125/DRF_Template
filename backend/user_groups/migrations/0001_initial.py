@@ -8,16 +8,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='UserGroup',
+            name="UserGroup",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('date_created', models.DateTimeField(default=django.utils.timezone.now, editable=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                (
+                    "date_created",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, editable=False
+                    ),
+                ),
             ],
         ),
     ]

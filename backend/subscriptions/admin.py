@@ -6,10 +6,24 @@ from unfold.contrib.filters.admin import RangeDateFilter
 
 @admin.register(StripePrice)
 class StripePriceAdmin(ModelAdmin):
-    search_fields = ["id", "lookup_key",
-                     "stripe_price_id","price","currency", "prorated", "annual"]
-    list_display = ["id", "lookup_key",
-                    "stripe_price_id", "price", "currency", "prorated", "annual"]
+    search_fields = [
+        "id",
+        "lookup_key",
+        "stripe_price_id",
+        "price",
+        "currency",
+        "prorated",
+        "annual",
+    ]
+    list_display = [
+        "id",
+        "lookup_key",
+        "stripe_price_id",
+        "price",
+        "currency",
+        "prorated",
+        "annual",
+    ]
 
 
 @admin.register(SubscriptionPlan)
@@ -21,9 +35,6 @@ class SubscriptionPlanAdmin(ModelAdmin):
 @admin.register(UserSubscription)
 class UserSubscriptionAdmin(ModelAdmin):
     list_filter_submit = True
-    list_filter = ((
-        "date", RangeDateFilter
-    ),)
-    list_display = ["id", "__str__", "valid", "annual",
-                    "date"]
+    list_filter = (("date", RangeDateFilter),)
+    list_display = ["id", "__str__", "valid", "annual", "date"]
     search_fields = ["id", "date"]

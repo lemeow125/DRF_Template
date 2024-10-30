@@ -805,6 +805,9 @@ components:
         first_name:
           type: string
           maxLength: 150
+        is_new:
+          type: string
+          readOnly: true
         last_name:
           type: string
           maxLength: 150
@@ -824,6 +827,7 @@ components:
       - group_member
       - group_owner
       - id
+      - is_new
       - user_group
       - username
     Notification:
@@ -885,6 +889,9 @@ components:
         first_name:
           type: string
           maxLength: 150
+        is_new:
+          type: string
+          readOnly: true
         last_name:
           type: string
           maxLength: 150

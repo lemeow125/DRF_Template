@@ -2,8 +2,7 @@ from django.db import models
 
 
 class Notification(models.Model):
-    recipient = models.ForeignKey(
-        'accounts.CustomUser', on_delete=models.CASCADE)
+    recipient = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
     content = models.CharField(max_length=1000, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
     dismissed = models.BooleanField(default=False)

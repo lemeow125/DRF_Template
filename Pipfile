@@ -35,6 +35,7 @@ gunicorn = "*"
 django-silk = "*"
 django-redis = "*"
 granian = "*"
+black = "*"
 
 [dev-packages]
 

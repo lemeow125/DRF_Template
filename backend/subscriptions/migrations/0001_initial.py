@@ -11,46 +11,118 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user_groups', '0001_initial'),
+        ("user_groups", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StripePrice',
+            name="StripePrice",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('annual', models.BooleanField(default=False)),
-                ('stripe_price_id', models.CharField(max_length=100)),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=10)),
-                ('currency', models.CharField(max_length=20)),
-                ('lookup_key', models.CharField(blank=True, max_length=100, null=True)),
-                ('prorated', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("annual", models.BooleanField(default=False)),
+                ("stripe_price_id", models.CharField(max_length=100)),
+                (
+                    "price",
+                    models.DecimalField(decimal_places=2, default=0.0, max_digits=10),
+                ),
+                ("currency", models.CharField(max_length=20)),
+                ("lookup_key", models.CharField(blank=True, max_length=100, null=True)),
+                ("prorated", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='SubscriptionPlan',
+            name="SubscriptionPlan",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField(max_length=1024, null=True)),
-                ('stripe_product_id', models.CharField(max_length=100)),
-                ('group_exclusive', models.BooleanField(default=False)),
-                ('annual_price', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='annual_plan', to='subscriptions.stripeprice')),
-                ('monthly_price', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='monthly_plan', to='subscriptions.stripeprice')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField(max_length=1024, null=True)),
+                ("stripe_product_id", models.CharField(max_length=100)),
+                ("group_exclusive", models.BooleanField(default=False)),
+                (
+                    "annual_price",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="annual_plan",
+                        to="subscriptions.stripeprice",
+                    ),
+                ),
+                (
+                    "monthly_price",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="monthly_plan",
+                        to="subscriptions.stripeprice",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UserSubscription',
+            name="UserSubscription",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('stripe_id', models.CharField(max_length=100)),
-                ('date', models.DateTimeField(default=django.utils.timezone.now, editable=False)),
-                ('valid', models.BooleanField()),
-                ('annual', models.BooleanField()),
-                ('subscription', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='subscriptions.subscriptionplan')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('user_group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='user_groups.usergroup')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("stripe_id", models.CharField(max_length=100)),
+                (
+                    "date",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, editable=False
+                    ),
+                ),
+                ("valid", models.BooleanField()),
+                ("annual", models.BooleanField()),
+                (
+                    "subscription",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="subscriptions.subscriptionplan",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "user_group",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="user_groups.usergroup",
+                    ),
+                ),
             ],
         ),
     ]

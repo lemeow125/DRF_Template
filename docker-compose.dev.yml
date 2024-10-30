@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: drf_template:latest
+    image: drf_template
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
@@ -23,7 +23,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=worker
-    image: drf_template:latest
+    image: drf_template
     volumes:
       - .:/code
       - ./chrome:/chrome
@@ -42,7 +42,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=beat
-    image: drf_template:latest
+    image: drf_template
     volumes:
       - .:/code
     depends_on:
@@ -58,7 +58,7 @@ services:
     env_file: .env
     environment:
       - RUN_TYPE=monitor
-    image: drf_template:latest
+    image: drf_template
     ports:
       - "${CELERY_FLOWER_PORT}:5555"
     volumes:

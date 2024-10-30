@@ -15,14 +15,16 @@ class CustomUser(AbstractUser):
     # is_admin inherited from base user class
 
     avatar = ResizedImageField(
-        null=True, force_format="WEBP", quality=100, upload_to='avatars/')
+        null=True, force_format="WEBP", quality=100, upload_to="avatars/"
+    )
 
     # Used for onboarding processes
     # Set this to False later on once the user makes actions
     onboarding = models.BooleanField(default=True)
 
     user_group = models.ForeignKey(
-        'user_groups.UserGroup', on_delete=models.SET_NULL, null=True)
+        "user_groups.UserGroup", on_delete=models.SET_NULL, null=True
+    )
 
     @property
     def group_member(self):
@@ -57,4 +59,4 @@ class CustomUser(AbstractUser):
 
     @property
     def admin_url(self):
-        return reverse('admin:users_customuser_change', args=(self.pk,))
+        return reverse("admin:users_customuser_change", args=(self.pk,))

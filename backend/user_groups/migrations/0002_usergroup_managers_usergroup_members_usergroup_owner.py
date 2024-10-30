@@ -8,24 +8,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user_groups', '0001_initial'),
+        ("user_groups", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='usergroup',
-            name='managers',
-            field=models.ManyToManyField(related_name='usergroup_managers', to=settings.AUTH_USER_MODEL),
+            model_name="usergroup",
+            name="managers",
+            field=models.ManyToManyField(
+                related_name="usergroup_managers", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='usergroup',
-            name='members',
-            field=models.ManyToManyField(related_name='usergroup_members', to=settings.AUTH_USER_MODEL),
+            model_name="usergroup",
+            name="members",
+            field=models.ManyToManyField(
+                related_name="usergroup_members", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='usergroup',
-            name='owner',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='usergroup_owner', to=settings.AUTH_USER_MODEL),
+            model_name="usergroup",
+            name="owner",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="usergroup_owner",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

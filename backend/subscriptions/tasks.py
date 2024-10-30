@@ -12,10 +12,10 @@ def get_user_subscription(user_id):
     active_subscriptions = None
     if USER.user_group:
         active_subscriptions = UserSubscription.objects.filter(
-            user_group=USER.user_group, valid=True)
+            user_group=USER.user_group, valid=True
+        )
     else:
-        active_subscriptions = UserSubscription.objects.filter(
-            user=USER, valid=True)
+        active_subscriptions = UserSubscription.objects.filter(user=USER, valid=True)
 
     # Return first valid subscription if there is one
     if len(active_subscriptions) > 0:
@@ -33,7 +33,8 @@ def get_user_group_subscription(user_group):
     # Get a list of subscriptions for the specified user
     active_subscriptions = None
     active_subscriptions = UserSubscription.objects.filter(
-        user_group=USER_GROUP, valid=True)
+        user_group=USER_GROUP, valid=True
+    )
 
     # Return first valid subscription if there is one
     if len(active_subscriptions) > 0:

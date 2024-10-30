@@ -9,5 +9,5 @@ from django.core.cache import cache
 @receiver(post_save, sender=Notification)
 def clear_cache_after_notification_update(sender, instance, **kwargs):
     # Clear cache
-    cache.delete('notifications')
-    cache.delete(f'notifications_user:{instance.recipient.id}')
+    cache.delete("notifications")
+    cache.delete(f"notifications_user:{instance.recipient.id}")

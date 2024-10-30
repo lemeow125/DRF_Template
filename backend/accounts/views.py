@@ -22,28 +22,27 @@ class CustomUserViewSet(DjoserUserViewSet):
         user = self.request.user
         # If user is admin, show all active users
         if user.is_superuser:
-            key = 'users'
+            key = "users"
             # Get cache
             queryset = cache.get(key)
             # Set cache if stale or does not exist
             if not queryset:
                 queryset = CustomUser.objects.filter(is_active=True)
-                cache.set(key, queryset, 60*60)
+                cache.set(key, queryset, 60 * 60)
             return queryset
         elif not user.user_group:
-            key = f'user:{user.id}'
+            key = f"user:{user.id}"
             queryset = cache.get(key)
             if not queryset:
                 queryset = CustomUser.objects.filter(is_active=True)
-                cache.set(key, queryset, 60*60)
+                cache.set(key, queryset, 60 * 60)
             return queryset
         elif user.user_group:
-            key = f'usergroup_users:{user.user_group.id}'
+            key = f"usergroup_users:{user.user_group.id}"
             queryset = cache.get(key)
             if not queryset:
-                queryset = CustomUser.objects.filter(
-                    user_group=user.user_group)
-                cache.set(key, queryset, 60*60)
+                queryset = CustomUser.objects.filter(user_group=user.user_group)
+                cache.set(key, queryset, 60 * 60)
             return queryset
         else:
             return CustomUser.objects.none()
@@ -52,10 +51,10 @@ class CustomUserViewSet(DjoserUserViewSet):
         user = self.request.user
 
         # Clear cache
-        cache.delete(f'users')
-        cache.delete(f'user:{user.id}')
+        cache.delete(f"users")
+        cache.delete(f"user:{user.id}")
         if user.user_group:
-            cache.delete(f'usergroup_users:{user.user_group.id}')
+            cache.delete(f"usergroup_users:{user.user_group.id}")
 
         super().perform_update(serializer, *args, **kwargs)
         user = serializer.instance
@@ -84,16 +83,18 @@ class CustomUserViewSet(DjoserUserViewSet):
                 settings.EMAIL.confirmation(self.request, context).send(to)
 
             # Clear cache
-            cache.delete('users')
-            cache.delete(f'user:{user.id}')
+            cache.delete("users")
+            cache.delete(f"user:{user.id}")
             if user.user_group:
-                cache.delete(f'usergroup_users:{user.user_group.id}')
+                cache.delete(f"usergroup_users:{user.user_group.id}")
 
         except Exception as e:
-            print('Warning: Unable to send email')
+            print("Warning: Unable to send email")
             print(e)
 
-    @action(methods=['post'], detail=False, url_path='activation', url_name='activation')
+    @action(
+        methods=["post"], detail=False, url_path="activation", url_name="activation"
+    )
     def activation(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -103,16 +104,16 @@ class CustomUserViewSet(DjoserUserViewSet):
 
         # Construct a response with user's first name, last name, and email
         user_data = {
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'email': user.email,
-            'username': user.username
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "username": user.username,
         }
 
         # Clear cache
-        cache.delete('users')
-        cache.delete(f'user:{user.id}')
+        cache.delete("users")
+        cache.delete(f"user:{user.id}")
         if user.user_group:
-            cache.delete(f'usergroup_users:{user.user_group.id}')
+            cache.delete(f"usergroup_users:{user.user_group.id}")
 
         return Response(user_data, status=status.HTTP_200_OK)

@@ -8,15 +8,16 @@ from config.settings import STRIPE_SECRET_KEY, ROOT_DIR
 import os
 import json
 import stripe
+
 stripe.api_key = STRIPE_SECRET_KEY
 
 
 @receiver(m2m_changed, sender=UserGroup.managers.through)
 def update_group_managers(sender, instance, action, **kwargs):
     # When adding new managers to a UserGroup, associate them with it
-    if action == 'post_add':
+    if action == "post_add":
         # Get the newly added managers
-        new_managers = kwargs.get('pk_set', set())
+        new_managers = kwargs.get("pk_set", set())
         for manager in new_managers:
             # Retrieve the member
             USER = CustomUser.objects.get(pk=manager)
@@ -27,8 +28,8 @@ def update_group_managers(sender, instance, action, **kwargs):
             if USER not in instance.members.all():
                 instance.members.add(USER)
     # When removing managers from a UserGroup, remove their association with it
-    elif action == 'post_remove':
-        for manager in kwargs['pk_set']:
+    elif action == "post_remove":
+        for manager in kwargs["pk_set"]:
             # Retrieve the manager
             USER = CustomUser.objects.get(pk=manager)
             if USER not in instance.members.all():
@@ -39,9 +40,9 @@ def update_group_managers(sender, instance, action, **kwargs):
 @receiver(m2m_changed, sender=UserGroup.members.through)
 def update_group_members(sender, instance, action, **kwargs):
     # When adding new members to a UserGroup, associate them with it
-    if action == 'post_add':
+    if action == "post_add":
         # Get the newly added members
-        new_members = kwargs.get('pk_set', set())
+        new_members = kwargs.get("pk_set", set())
         for member in new_members:
             # Retrieve the member
             USER = CustomUser.objects.get(pk=member)
@@ -50,10 +51,13 @@ def update_group_members(sender, instance, action, **kwargs):
                 USER.user_group = instance
                 USER.save()
     # When removing members from a UserGroup, remove their association with it
-    elif action == 'post_remove':
-        for client in kwargs['pk_set']:
+    elif action == "post_remove":
+        for client in kwargs["pk_set"]:
             USER = CustomUser.objects.get(pk=client)
-            if USER not in instance.members.all() and USER not in instance.managers.all():
+            if (
+                USER not in instance.members.all()
+                and USER not in instance.managers.all()
+            ):
                 USER.user_group = None
                 USER.save()
     # Update usage records
@@ -66,42 +70,42 @@ def update_group_members(sender, instance, action, **kwargs):
             stripe.SubscriptionItem.create_usage_record(
                 SUBSCRIPTION_ITEM.stripe_id,
                 quantity=len(instance.members.all()),
-                action="set"
+                action="set",
             )
         except:
             print(
-                f'Warning: Unable to update usage record for SubscriptionGroup ID:{instance.id}')
+                f"Warning: Unable to update usage record for SubscriptionGroup ID:{instance.id}"
+            )
 
 
 @receiver(post_migrate)
 def create_groups(sender, **kwargs):
     if sender.name == "agencies":
-        with open(os.path.join(ROOT_DIR, 'seed_data.json'), "r") as f:
+        with open(os.path.join(ROOT_DIR, "seed_data.json"), "r") as f:
             seed_data = json.loads(f.read())
-            for user_group in seed_data['user_groups']:
-                OWNER = CustomUser.objects.filter(
-                    email=user_group['owner']).first()
+            for user_group in seed_data["user_groups"]:
+                OWNER = CustomUser.objects.filter(email=user_group["owner"]).first()
                 USER_GROUP, CREATED = UserGroup.objects.get_or_create(
                     owner=OWNER,
-                    agency_name=user_group['name'],
+                    agency_name=user_group["name"],
                 )
                 if CREATED:
                     print(f"Created UserGroup {USER_GROUP.agency_name}")
 
                 # Add managers
-                USERS = CustomUser.objects.filter(
-                    email__in=user_group['managers'])
+                USERS = CustomUser.objects.filter(email__in=user_group["managers"])
                 for USER in USERS:
                     if USER not in USER_GROUP.managers.all():
                         print(
-                            f"Adding User {USER.full_name} as manager to UserGroup {USER_GROUP.agency_name}")
+                            f"Adding User {USER.full_name} as manager to UserGroup {USER_GROUP.agency_name}"
+                        )
                         USER_GROUP.managers.add(USER)
                 # Add members
-                USERS = CustomUser.objects.filter(
-                    email__in=user_group['members'])
+                USERS = CustomUser.objects.filter(email__in=user_group["members"])
                 for USER in USERS:
                     if USER not in USER_GROUP.members.all():
                         print(
-                            f"Adding User {USER.full_name} as member to UserGroup {USER_GROUP.agency_name}")
+                            f"Adding User {USER.full_name} as member to UserGroup {USER_GROUP.agency_name}"
+                        )
                         USER_GROUP.clients.add(USER)
                 USER_GROUP.save()

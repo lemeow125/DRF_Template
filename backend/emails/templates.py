@@ -3,11 +3,11 @@ from django.utils import timezone
 
 
 class ActivationEmail(email.ActivationEmail):
-    template_name = 'email_activation.html'
+    template_name = "email_activation.html"
 
 
 class PasswordResetEmail(email.PasswordResetEmail):
-    template_name = 'password_change.html'
+    template_name = "password_change.html"
 
 
 class SubscriptionAvailedEmail(email.BaseEmailMessage):
@@ -19,7 +19,7 @@ class SubscriptionAvailedEmail(email.BaseEmailMessage):
         context["subscription_plan"] = context.get("subscription_plan")
         context["subscription"] = context.get("subscription")
         context["price_paid"] = context.get("price_paid")
-        context['date'] = timezone.now().strftime("%B %d, %I:%M %p")
+        context["date"] = timezone.now().strftime("%B %d, %I:%M %p")
         context.update(self.context)
         return context
 
@@ -32,7 +32,7 @@ class SubscriptionRefundedEmail(email.BaseEmailMessage):
         context["user"] = context.get("user")
         context["subscription_plan"] = context.get("subscription_plan")
         context["refund"] = context.get("refund")
-        context['date'] = timezone.now().strftime("%B %d, %I:%M %p")
+        context["date"] = timezone.now().strftime("%B %d, %I:%M %p")
         context.update(self.context)
         return context
 
@@ -44,6 +44,6 @@ class SubscriptionCancelledEmail(email.BaseEmailMessage):
         context = super().get_context_data()
         context["user"] = context.get("user")
         context["subscription_plan"] = context.get("subscription_plan")
-        context['date'] = timezone.now().strftime("%B %d, %I:%M %p")
+        context["date"] = timezone.now().strftime("%B %d, %I:%M %p")
         context.update(self.context)
         return context

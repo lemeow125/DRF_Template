@@ -24,7 +24,7 @@ class BillingHistoryView(APIView):
             email = requesting_user.email
 
         # Check cache
-        key = f'billing_user:{requesting_user.id}'
+        key = f"billing_user:{requesting_user.id}"
         billing_history = cache.get(key)
 
         if not billing_history:
@@ -39,23 +39,25 @@ class BillingHistoryView(APIView):
 
                 if len(customers.data) > 0:
                     # Retrieve the customer's charges (billing history)
-                    charges = stripe.Charge.list(
-                        limit=10, customer=customer.id)
+                    charges = stripe.Charge.list(limit=10, customer=customer.id)
 
                     # Prepare the response
                     billing_history = [
                         {
-                            'email': charge['billing_details']['email'],
-                            'amount_charged': int(charge['amount']/100),
-                            'paid': charge['paid'],
-                            'refunded': int(charge['amount_refunded']/100) > 0,
-                            'amount_refunded': int(charge['amount_refunded']/100),
-                            'last_4': charge['payment_method_details']['card']['last4'],
-                            'receipt_link': charge['receipt_url'],
-                            'timestamp': datetime.fromtimestamp(charge['created']).strftime("%m-%d-%Y %I:%M %p"),
-                        } for charge in charges.auto_paging_iter()
+                            "email": charge["billing_details"]["email"],
+                            "amount_charged": int(charge["amount"] / 100),
+                            "paid": charge["paid"],
+                            "refunded": int(charge["amount_refunded"] / 100) > 0,
+                            "amount_refunded": int(charge["amount_refunded"] / 100),
+                            "last_4": charge["payment_method_details"]["card"]["last4"],
+                            "receipt_link": charge["receipt_url"],
+                            "timestamp": datetime.fromtimestamp(
+                                charge["created"]
+                            ).strftime("%m-%d-%Y %I:%M %p"),
+                        }
+                        for charge in charges.auto_paging_iter()
                     ]
 
-                    cache.set(key, billing_history, 60*60)
+                    cache.set(key, billing_history, 60 * 60)
 
         return Response(billing_history, status=status.HTTP_200_OK)
