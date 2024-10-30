@@ -1,4 +1,4 @@
-FROM python:3.11.9-bookworm
+FROM python:3.13.0-bullseye
 
 ENV PYTHONBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
@@ -6,12 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /code
 COPY . /code/
 ADD . /code/
-COPY start.sh /code/
-RUN chmod +x /code/start.sh
-
-# Fix permissions with /tmp
-RUN chown root:root /tmp
-RUN chmod 1777 /tmp
+COPY scripts/ /code/scripts/
+RUN chmod +x /code/scripts/start.sh
 
 # Install packages
 RUN apt update && apt install -y graphviz libgraphviz-dev graphviz-dev wget zip chromium chromium-driver firefox-esr
@@ -26,4 +22,4 @@ RUN chmod +x /usr/bin/geckodriver
 # Expose port 8000 for the web server
 EXPOSE 8000
 
-ENTRYPOINT [ "/code/start.sh" ]
+ENTRYPOINT [ "/code/scripts/start.sh" ]
