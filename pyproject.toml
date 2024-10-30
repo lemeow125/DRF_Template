@@ -1,0 +1,6 @@
+[tool.isort]
+profile = "black"
+
+[tool.autoflake]
+check = true
+imports = ["django", "requests", "urllib3"]
