@@ -1,7 +1,8 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
-from .models import UserGroup
 from unfold.contrib.filters.admin import RangeDateFilter
+
+from .models import UserGroup
 
 
 @admin.register(UserGroup)

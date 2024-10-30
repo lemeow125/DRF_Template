@@ -1,7 +1,8 @@
+import os
 from datetime import timedelta
 from pathlib import Path
-from dotenv import load_dotenv, find_dotenv  # Python dotenv
-import os
+
+from dotenv import find_dotenv, load_dotenv  # Python dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Backend folder (/backend)

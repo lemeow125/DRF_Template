@@ -2,21 +2,20 @@
 Settings file to hold constants and functions
 """
 
+import os
+import random
+
+import undetected_chromedriver as uc
+from config.settings import CAPTCHA_TESTING, USE_PROXY, get_secret
+from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from config.settings import get_secret
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver import FirefoxOptions
-from selenium import webdriver
-import undetected_chromedriver as uc
-from config.settings import USE_PROXY, CAPTCHA_TESTING
-from config.settings import get_secret
+from selenium.webdriver.support.ui import WebDriverWait
 from twocaptcha import TwoCaptcha
 from whois import whois
 from whois.parser import PywhoisError
-import os
-import random
 
 
 def take_snapshot(driver, filename="dump.png"):
@@ -249,7 +248,7 @@ def execute_selenium_elements(driver, timeout, elements):
                         element["default"]["key"],
                         timeout=timeout,
                     )
-            except Exception as e:
+            except Exception:
                 print(f"Failed to find primary element")
                 # If that fails, try to get the failover one
                 print("Trying to find legacy element")

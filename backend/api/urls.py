@@ -1,13 +1,13 @@
+from config.settings import DEBUG, MEDIA_ROOT, SERVE_MEDIA
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include
+from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-from django.contrib import admin
-from config.settings import DEBUG, SERVE_MEDIA, MEDIA_ROOT
 
 urlpatterns = [
     path("accounts/", include("accounts.urls")),

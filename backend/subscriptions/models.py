@@ -1,7 +1,7 @@
-from django.db import models
 from accounts.models import CustomUser
-from user_groups.models import UserGroup
+from django.db import models
 from django.utils.timezone import now
+from user_groups.models import UserGroup
 
 
 class StripePrice(models.Model):

@@ -1,5 +1,5 @@
-from djoser import email
 from django.utils import timezone
+from djoser import email
 
 
 class ActivationEmail(email.ActivationEmail):

@@ -1,7 +1,7 @@
+import stripe
+from config.settings import STRIPE_SECRET_KEY
 from django.db import models
 from django.utils.timezone import now
-from config.settings import STRIPE_SECRET_KEY
-import stripe
 
 stripe.api_key = STRIPE_SECRET_KEY
 

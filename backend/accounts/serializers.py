@@ -1,12 +1,12 @@
-from djoser.serializers import UserSerializer as BaseUserSerializer
-from rest_framework.serializers import ModelSerializer, ImageField
-from rest_framework import serializers
 from accounts.models import CustomUser
-from user_groups.serializers import SimpleUserGroupSerializer
-from django.core.cache import cache
-from django.core import exceptions as django_exceptions
-from rest_framework.settings import api_settings
 from django.contrib.auth.password_validation import validate_password
+from django.core import exceptions as django_exceptions
+from django.core.cache import cache
+from djoser.serializers import UserSerializer as BaseUserSerializer
+from rest_framework import serializers
+from rest_framework.serializers import ImageField, ModelSerializer
+from rest_framework.settings import api_settings
+from user_groups.serializers import SimpleUserGroupSerializer
 
 # There can be multiple subject instances with the same name, only differing in course, year level, and semester. We filter them here
 

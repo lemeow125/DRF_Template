@@ -1,15 +1,15 @@
-from rest_framework import status
-from accounts.models import CustomUser
 from accounts import serializers
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from djoser.conf import settings
-from djoser.views import UserViewSet as DjoserUserViewSet
+from accounts.models import CustomUser
 from django.contrib.auth.tokens import default_token_generator
+from django.core.cache import cache
 from djoser import signals
 from djoser.compat import get_user_email
-from django.core.cache import cache
+from djoser.conf import settings
+from djoser.views import UserViewSet as DjoserUserViewSet
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 
 class CustomUserViewSet(DjoserUserViewSet):

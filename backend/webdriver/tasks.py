@@ -1,13 +1,13 @@
 from celery import shared_task
+from search_results.tasks import create_search_result
+from selenium.webdriver.common.by import By
 from webdriver.utils import (
-    setup_webdriver,
-    selenium_action_template,
-    google_search,
     get_element,
     get_elements,
+    google_search,
+    selenium_action_template,
+    setup_webdriver,
 )
-from selenium.webdriver.common.by import By
-from search_results.tasks import create_search_result
 
 
 # Task template

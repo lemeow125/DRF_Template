@@ -1,9 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.urls import reverse
-from django_resized import ResizedImageField
-from django.utils import timezone
 from datetime import timedelta
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
+from django_resized import ResizedImageField
 
 
 class CustomUser(AbstractUser):

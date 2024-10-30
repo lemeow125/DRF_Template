@@ -1,10 +1,12 @@
+import json
+import os
+
+from config.settings import ROOT_DIR, SEED_DATA, get_secret
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
-from config.settings import SEED_DATA, ROOT_DIR, get_secret
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
+
 from .models import CustomUser
-import os
-import json
 
 # Function to fill in users table with test data on dev/staging
 

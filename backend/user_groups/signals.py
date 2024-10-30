@@ -1,13 +1,15 @@
-from subscriptions.models import SubscriptionPlan
+import json
+import os
+
+import stripe
 from accounts.models import CustomUser
-from .models import UserGroup
-from subscriptions.tasks import get_user_group_subscription
+from config.settings import ROOT_DIR, STRIPE_SECRET_KEY
 from django.db.models.signals import m2m_changed, post_migrate
 from django.dispatch import receiver
-from config.settings import STRIPE_SECRET_KEY, ROOT_DIR
-import os
-import json
-import stripe
+from subscriptions.models import SubscriptionPlan
+from subscriptions.tasks import get_user_group_subscription
+
+from .models import UserGroup
 
 stripe.api_key = STRIPE_SECRET_KEY
 

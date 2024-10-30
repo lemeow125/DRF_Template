@@ -3,8 +3,8 @@ from celery import shared_task
 
 @shared_task
 def get_user_subscription(user_id):
-    from subscriptions.models import UserSubscription
     from accounts.models import CustomUser
+    from subscriptions.models import UserSubscription
 
     USER = CustomUser.objects.get(id=user_id)
 

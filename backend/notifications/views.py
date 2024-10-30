@@ -1,8 +1,8 @@
-from rest_framework import viewsets
+from django.core.cache import cache
 from notifications.models import Notification
 from notifications.serializers import NotificationSerializer
+from rest_framework import viewsets
 from rest_framework.exceptions import PermissionDenied
-from django.core.cache import cache
 
 
 class NotificationViewSet(viewsets.ModelViewSet):
