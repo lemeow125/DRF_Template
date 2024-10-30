@@ -1,8 +1,7 @@
 from djoser.serializers import UserSerializer as BaseUserSerializer
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ImageField
 from rest_framework import serializers
 from accounts.models import CustomUser
-from drf_extra_fields.fields import Base64ImageField
 from user_groups.serializers import SimpleUserGroupSerializer
 from django.core.cache import cache
 from django.core import exceptions as django_exceptions
@@ -19,7 +18,7 @@ class SimpleCustomUserSerializer(ModelSerializer):
 
 
 class CustomUserSerializer(BaseUserSerializer):
-    avatar = Base64ImageField()
+    avatar = ImageField()
 
     class Meta(BaseUserSerializer.Meta):
         model = CustomUser
