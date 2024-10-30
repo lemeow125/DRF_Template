@@ -7,7 +7,7 @@ from .models import SearchResult
     autoretry_for=(Exception,), retry_kwargs={"max_retries": 0, "countdown": 5}
 )
 def create_search_result(title, link):
-    if SearchResult.objects.filter(title=title, link=link).exists():
+    if SearchResult.objects.filter(title=title).exists():
         return "SearchResult entry already exists"
     else:
         SearchResult.objects.create(title=title, link=link)
