@@ -2,5 +2,12 @@ firefox/
 chrome/
 dumps/
 media/
-TODO.md
+static/
+documentation/
 .env
+.venv/
+.vscode/
+.git/
+.gitignore
+.woodpecker/
+**/__pycache__/

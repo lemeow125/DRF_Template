@@ -9,6 +9,8 @@ class ActivationEmail(email.ActivationEmail):
 class PasswordResetEmail(email.PasswordResetEmail):
     template_name = "password_change.html"
 
+# TODO: Fix email template values not filling in properly
+
 
 class SubscriptionAvailedEmail(email.BaseEmailMessage):
     template_name = "subscription_availed.html"

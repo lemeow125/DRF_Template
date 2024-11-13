@@ -41,7 +41,8 @@ class CustomUserViewSet(DjoserUserViewSet):
             key = f"usergroup_users:{user.user_group.id}"
             queryset = cache.get(key)
             if not queryset:
-                queryset = CustomUser.objects.filter(user_group=user.user_group)
+                queryset = CustomUser.objects.filter(
+                    user_group=user.user_group)
                 cache.set(key, queryset, 60 * 60)
             return queryset
         else:

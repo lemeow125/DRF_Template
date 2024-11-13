@@ -6,8 +6,7 @@
       "hour": "0",
       "day_of_week": "*",
       "day_of_month": "*",
-      "month_of_year": "*",
-      "timezone": "Asia/Manila"
+      "month_of_year": "*"
     },
     {
       "type": "crontab",
@@ -15,8 +14,7 @@
       "hour": "1",
       "day_of_week": "*",
       "day_of_month": "*",
-      "month_of_year": "*",
-      "timezone": "Asia/Manila"
+      "month_of_year": "*"
     },
     {
       "type": "crontab",
@@ -24,8 +22,7 @@
       "hour": "12",
       "day_of_week": "*",
       "day_of_month": "*",
-      "month_of_year": "*",
-      "timezone": "Asia/Manila"
+      "month_of_year": "*"
     },
     {
       "type": "crontab",
@@ -33,8 +30,7 @@
       "hour": "13",
       "day_of_week": "*",
       "day_of_month": "*",
-      "month_of_year": "*",
-      "timezone": "Asia/Manila"
+      "month_of_year": "*"
     }
   ],
   "scheduled_tasks": [
@@ -47,8 +43,7 @@
         "hour": "1",
         "day_of_week": "*",
         "day_of_month": "*",
-        "month_of_year": "*",
-        "timezone": "Asia/Manila"
+        "month_of_year": "*"
       },
       "enabled": true
     }

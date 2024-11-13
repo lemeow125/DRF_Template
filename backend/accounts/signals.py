@@ -1,7 +1,7 @@
 import json
 import os
 
-from config.settings import ROOT_DIR, SEED_DATA, get_secret
+from config.settings import ROOT_DIR, SEED_DATA, TIME_ZONE, get_secret
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
@@ -64,7 +64,7 @@ def create_celery_beat_schedules(sender, **kwargs):
                         day_of_week=schedule["day_of_week"],
                         day_of_month=schedule["day_of_month"],
                         month_of_year=schedule["month_of_year"],
-                        timezone=schedule["timezone"],
+                        timezone=TIME_ZONE,
                     ).first()
                     # If it does not exist, create a new Schedule
                     if not SCHEDULE:
@@ -74,14 +74,16 @@ def create_celery_beat_schedules(sender, **kwargs):
                             day_of_week=schedule["day_of_week"],
                             day_of_month=schedule["day_of_month"],
                             month_of_year=schedule["month_of_year"],
-                            timezone=schedule["timezone"],
+                            timezone=TIME_ZONE,
                         )
                         print(
-                            f"Created Crontab Schedule for Hour:{SCHEDULE.hour},Minute:{SCHEDULE.minute}"
+                            f"Created Crontab Schedule for Hour:{
+                                SCHEDULE.hour},Minute:{SCHEDULE.minute}"
                         )
                     else:
                         print(
-                            f"Crontab Schedule for Hour:{SCHEDULE.hour},Minute:{SCHEDULE.minute} already exists"
+                            f"Crontab Schedule for Hour:{SCHEDULE.hour},Minute:{
+                                SCHEDULE.minute} already exists"
                         )
             for task in seed_data["scheduled_tasks"]:
                 TASK = PeriodicTask.objects.filter(name=task["name"]).first()
@@ -93,7 +95,7 @@ def create_celery_beat_schedules(sender, **kwargs):
                             day_of_week=task["schedule"]["day_of_week"],
                             day_of_month=task["schedule"]["day_of_month"],
                             month_of_year=task["schedule"]["month_of_year"],
-                            timezone=task["schedule"]["timezone"],
+                            timezone=TIME_ZONE,
                         ).first()
                         TASK = PeriodicTask.objects.create(
                             crontab=SCHEDULE,
