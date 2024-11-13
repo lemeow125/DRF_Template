@@ -23,11 +23,13 @@ A live API demo can be found [here](https://api.template.06222001.xyz/api/v1/swa
 - Populate .env with values
 - Run `docker-compose -f docker-compose.dev.yml up`
 
-When using `docker-compose.dev.yml`, the entire project directory is mounted onto the container allowing for hot-reloading. Make sure DEBUG is set to True for this to work! Be sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe!
+When using `docker-compose.dev.yml`, the entire project directory is mounted onto the container allowing for hot-reloading. This requires `DEBUG` to be set to `True`.
+
+Also make sure to follow through the steps shown in the `stripe-listener` container for initial setup with Stripe.
 
 ### Deployment
 
-A sample `docker-compose.yml` is provided which I use in hosting the demo. DEBUG should be set to False when deploying as to not expose the URLs fro Celery Flower and the Django Silk Profiler. The local Inbucket container is not present so make sure to specify an external SMTP server to process emails properly.
+A sample `docker-compose.yml` is provided which I use in hosting the demo. `DEBUG` should be set to `False` when deploying as to not expose the URLs fro Celery Flower and the Django Silk Profiler. The local Inbucket container is not present with `DEBUG` turned off so make sure to specify an external SMTP server to process emails properly.
 
 ### URLs
 
