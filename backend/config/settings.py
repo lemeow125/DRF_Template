@@ -12,7 +12,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
 # If you're hosting this with a secret provider, have this set to True
 USE_VAULT = bool(os.getenv("USE_VAULT", False) == "True")
-# Have this set to True to serve media and static contents directly via Django
+# Have this set to True to serve media and static contents directly via the Django backend
 SERVE_MEDIA = bool(os.getenv("SERVE_MEDIA", False) == "True")
 
 load_dotenv(find_dotenv())
@@ -32,40 +32,51 @@ def get_secret(secret_name):
     if secret_value is None:
         raise ValueError(f"Secret '{secret_name}' not found.")
     else:
+        # Parse Boolean values
+        if secret_value == "True":
+            secret_value = True
+        elif secret_value == "False":
+            secret_value = False
         return secret_value
 
 
 # URL Prefixes
-URL_SCHEME = "https" if (get_secret("USE_HTTPS") == "True") else "http"
-# Backend
+USE_HTTPS = get_secret("USE_HTTPS")
+URL_SCHEME = "https" if USE_HTTPS else "http"
+# Building Backend URL
 BACKEND_ADDRESS = get_secret("BACKEND_ADDRESS")
 BACKEND_PORT = get_secret("BACKEND_PORT")
-# Frontend
+# Building Frontend URL
 FRONTEND_ADDRESS = get_secret("FRONTEND_ADDRESS")
 FRONTEND_PORT = get_secret("FRONTEND_PORT")
+# Full URLs
+BACKEND_URL = f"{URL_SCHEME}://{BACKEND_ADDRESS}"
+FRONTEND_URL = f"{URL_SCHEME}://{BACKEND_ADDRESS}"
+
+# Append port to full URLs if deployed locally
+if not USE_HTTPS:
+    BACKEND_URL += f":{BACKEND_PORT}"
+    FRONTEND_URL += f":{FRONTEND_PORT}"
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    # Frontend
-    f"{URL_SCHEME}://{FRONTEND_ADDRESS}:{FRONTEND_PORT}",
-    f"{URL_SCHEME}://{FRONTEND_ADDRESS}",  # For external domains
-    # Backend
-    f"{URL_SCHEME}://{BACKEND_ADDRESS}:{BACKEND_PORT}",
-    f"{URL_SCHEME}://{BACKEND_ADDRESS}",  # For external domains
+    FRONTEND_URL,
+    BACKEND_URL,
     # You can also set up https://*.name.xyz for wildcards here
 ]
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_secret("BACKEND_DEBUG") == "True"
+DEBUG = get_secret("BACKEND_DEBUG")
 # Determines whether or not to insert test data within tables
-SEED_DATA = get_secret("SEED_DATA") == "True"
+SEED_DATA = get_secret("SEED_DATA")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
 # Selenium Config
 # Initiate CAPTCHA solver in test mode
-CAPTCHA_TESTING = get_secret("CAPTCHA_TESTING") == "True"
+CAPTCHA_TESTING = get_secret("CAPTCHA_TESTING")
 # If using Selenium and/or the provided CAPTCHA solver, determines whether or not to use proxies
-USE_PROXY = get_secret("USE_PROXY") == "True"
+USE_PROXY = get_secret("USE_PROXY")
 
 # Stripe (For payments)
 STRIPE_SECRET_KEY = get_secret("STRIPE_SECRET_KEY")
@@ -77,8 +88,8 @@ EMAIL_HOST = get_secret("EMAIL_HOST")
 EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = get_secret("EMAIL_PORT")
-EMAIL_USE_TLS = get_secret("EMAIL_USE_TLS") == "True"
-EMAIL_ADDRESS = get_secret("EMAIL_ADDRESS") == "True"
+EMAIL_USE_TLS = get_secret("EMAIL_USE_TLS")
+EMAIL_ADDRESS = get_secret("EMAIL_ADDRESS")
 
 # Application definition
 
@@ -192,12 +203,12 @@ if SERVE_MEDIA:
         },
     }
 else:
-    STATIC_URL = "static/"
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    MEDIA_URL = "api/v1/media/"
+    MEDIA_URL = f"{BACKEND_URL}/api/v1/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     ROOT_URLCONF = "config.urls"
+    STATIC_URL = "static/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEMPLATES = [
     {
