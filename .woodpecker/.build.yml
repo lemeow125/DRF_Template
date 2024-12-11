@@ -1,5 +1,5 @@
 labels:
-  platform: linux/amd64
+  platform: linux/arm64
 
 steps:
   - name: build
