@@ -10,7 +10,7 @@ steps:
       - echo "$WOODPECKER_SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
-      - echo "heh $PROJECT_DIRECTORY"
+      - echo "$PROJECT_DIRECTORY"
       - ssh "$SSH_HOST" '
         cd "$PROJECT_DIRECTORY";
         docker-compose down;
