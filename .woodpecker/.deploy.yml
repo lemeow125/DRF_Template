@@ -12,6 +12,8 @@ steps:
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
       - ssh "$SSH_HOST" '
         cd "$PROJECT_DIRECTORY";
+        pwd;
+        ls -a;
         docker-compose down;
         docker image rm "$REGISTRY_IMAGE_TAG" || true;
         docker volume rm "$DOCKER_DB_VOLUME" || true;
