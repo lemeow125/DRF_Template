@@ -13,10 +13,12 @@ steps:
       - docker push "$REGISTRY_IMAGE_TAG"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    secrets:
-      [
-        FORGEJO_REGISTRY_URL,
-        FORGEJO_REGISTRY_USERNAME,
-        FORGEJO_REGISTRY_PASSWORD,
-        REGISTRY_IMAGE_TAG,
-      ]
+    environment:
+      FORGEJO_REGISTRY_URL:
+        from_secret: FORGEJO_REGISTRY_URL
+      FORGEJO_REGISTRY_USERNAME:
+        from_secret: FORGEJO_REGISTRY_USERNAME
+      FORGEJO_REGISTRY_PASSWORD:
+        from_secret: FORGEJO_REGISTRY_PASSWORD
+      REGISTRY_IMAGE_TAG:
+        from_secret: REGISTRY_IMAGE_TAG

@@ -18,14 +18,17 @@ steps:
         docker pull "$REGISTRY_IMAGE_TAG";
         docker-compose up -d;
         docker image prune -af;"
-    secrets:
-      [
-        SSH_HOST,
-        PROJECT_DIRECTORY,
-        WOODPECKER_SSH_KEY,
-        REGISTRY_IMAGE_TAG,
-        DOCKER_DB_VOLUME,
-      ]
+    environment:
+      SSH_HOST:
+        from_secret: SSH_HOST
+      PROJECT_DIRECTORY:
+        from_secret: PROJECT_DIRECTORY
+      WOODPECKER_SSH_KEY:
+        from_secret: WOODPECKER_SSH_KEY
+      REGISTRY_IMAGE_TAG:
+        from_secret: REGISTRY_IMAGE_TAG
+      DOCKER_DB_VOLUME:
+        from_secret: DOCKER_DB_VOLUME
 
 depends_on:
   - build
