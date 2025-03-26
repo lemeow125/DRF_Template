@@ -26,18 +26,6 @@ steps:
         docker pull "$REGISTRY_IMAGE_TAG";
         docker-compose up -d;
         docker image prune -af;"
-  - name: ntfy
-    image: codeberg.org/l-x/woodpecker-ntfy
-    settings:
-      url:
-        from_secret: NTFY_URL
-      title: "${CI_REPO_NAME} deploy ${CI_PREV_PIPELINE_STATUS}"
-      priority: urgent
-      click: https://api.template.06222001.xyz
-      icon: https://github.com/woodpecker-ci/woodpecker/blob/main/docs/static/img/logo.svg
-      tags: robot,${CI_REPO_NAME}
-      message: ${CI_COMMIT_MESSAGE}
-    depends_on: deploy
   - name: discord
     image: appleboy/drone-discord
     settings:
@@ -45,7 +33,10 @@ steps:
         from_secret: DISCORD_WEBHOOK_ID
       webhook_token:
         from_secret: DISCORD_WEBHOOK_TOKEN
-      message: "${CI_REPO_NAME} deploy ${CI_PREV_PIPELINE_STATUS}"
+      message: >
+        {{#success build.status}}
+          {{repo.name}} deployment #{{build.number}} {{build.status}}
+        {{/success}}
     depends_on: deploy
 
 when:
