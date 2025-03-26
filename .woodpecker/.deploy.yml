@@ -33,8 +33,8 @@ steps:
         from_secret: NTFY_URL
       title: "${CI_REPO_NAME} deploy ${CI_PREV_PIPELINE_STATUS}"
       priority: urgent
-      click: https://blog.06222001.xyz
-      icon: https://blog.06222001.xyz/img/logo.svg
+      click: https://api.template.06222001.xyz
+      icon: https://github.com/woodpecker-ci/woodpecker/blob/main/docs/static/img/logo.svg
       tags: robot,${CI_REPO_NAME}
       message: ${CI_COMMIT_MESSAGE}
     depends_on: deploy
