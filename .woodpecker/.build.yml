@@ -24,7 +24,7 @@ steps:
     settings:
       url:
         from_secret: NTFY_URL
-      title: "${CI_REPO_NAME} build ${CI_PREV_PIPELINE_STATUS}"
+      title: "${CI_REPO_NAME} build ${build.status}"
       priority: urgent
       click: https://api.template.06222001.xyz
       icon: https://github.com/woodpecker-ci/woodpecker/blob/main/docs/static/img/logo.svg
@@ -38,7 +38,7 @@ steps:
         from_secret: DISCORD_WEBHOOK_ID
       webhook_token:
         from_secret: DISCORD_WEBHOOK_TOKEN
-      message: "${CI_REPO_NAME} build ${CI_PREV_PIPELINE_STATUS}"
+      message: "${CI_REPO_NAME} build ${build.status}"
     depends_on: build
 
 when:
