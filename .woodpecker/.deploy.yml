@@ -28,8 +28,6 @@ steps:
         docker image prune -af;"
   - name: ntfy
     image: codeberg.org/l-x/woodpecker-ntfy
-    when:
-      - event: push
     settings:
       url:
         from_secret: NTFY_URL

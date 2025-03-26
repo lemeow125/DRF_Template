@@ -21,8 +21,6 @@ steps:
       - /var/run/docker.sock:/var/run/docker.sock
   - name: ntfy
     image: codeberg.org/l-x/woodpecker-ntfy
-    when:
-      - event: push
     settings:
       url:
         from_secret: NTFY_URL
