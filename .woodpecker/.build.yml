@@ -30,6 +30,16 @@ steps:
       icon: https://blog.06222001.xyz/img/logo.svg
       tags: robot,${CI_REPO_NAME}
       message: ${CI_COMMIT_MESSAGE}
+    depends_on: build
+  - name: discord
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: DISCORD_WEBHOOK_ID
+      webhook_token:
+        from_secret: DISCORD_WEBHOOK_TOKEN
+      message: "${CI_REPO_NAME} build ${CI_PREV_PIPELINE_STATUS}"
+    depends_on: build
 
 when:
   - branch: master
