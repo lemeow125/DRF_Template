@@ -10,3 +10,5 @@ services:
       - "${BACKEND_PORT}:8000"
     environment:
       - RUN_TYPE=api
+    volumes:
+      - ./src:/app/src # Bind mount for persistent schema.yml and static files
