@@ -18,6 +18,7 @@ steps:
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
+      - wget -O $DOCKER_COMPOSE_URL
       - ssh "$SSH_HOST" "
         cd "$PROJECT_DIRECTORY";
         docker-compose down;

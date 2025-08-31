@@ -5,8 +5,7 @@
 
 A Django REST Framework template for personal use in projects.
 
-- Emails (and templated email designs)
-- Caching (via Redis)
+- Pre-templated emails
 - Debug mode profiling (via Django Silk)
 - A working Woodpecker CI/CD template for automated deployments
 
