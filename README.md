@@ -3,11 +3,11 @@
 ![Build Status](https://woodpecker.06222001.xyz/api/badges/2/status.svg)
 ![Demo Page Status](https://stats.06222001.xyz/api/badge/119/status)
 
-A Django REST Framework template for personal use in projects.
+A barebones Django REST Framework template for personal use in projects.
 
 - Pre-templated emails
 - Debug mode profiling (via Django Silk)
-- A working Woodpecker CI/CD template for automated deployments
+- A working Woodpecker CI/CD template for automated deployments (see [service_queue](https://github.com/lemeow125/Service_Queue) for more info)
 
 A live API demo can be found [here](https://api.template.06222001.xyz/api/v1/swagger)
 
