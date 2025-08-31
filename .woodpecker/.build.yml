@@ -1,0 +1,39 @@
+labels:
+  platform: linux/amd64
+
+steps:
+  - name: build
+    image: docker
+    environment:
+      FORGEJO_REGISTRY_URL:
+        from_secret: FORGEJO_REGISTRY_URL
+      FORGEJO_REGISTRY_USERNAME:
+        from_secret: FORGEJO_REGISTRY_USERNAME
+      FORGEJO_REGISTRY_PASSWORD:
+        from_secret: FORGEJO_REGISTRY_PASSWORD
+      REGISTRY_IMAGE_TAG:
+        from_secret: REGISTRY_IMAGE_TAG
+    commands:
+      - docker build -t "$REGISTRY_IMAGE_TAG" .
+      - echo "$FORGEJO_REGISTRY_PASSWORD" | docker login "$FORGEJO_REGISTRY_URL" --password-stdin -u "$FORGEJO_REGISTRY_USERNAME"
+      - docker push "$REGISTRY_IMAGE_TAG"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  - name: discord
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: DISCORD_WEBHOOK_ID
+      webhook_token:
+        from_secret: DISCORD_WEBHOOK_TOKEN
+      message: >
+        {{#success build.status}}
+          {{repo.name}} build #{{build.number}} {{build.status}}
+        {{/success}}
+    depends_on: build
+
+when:
+  - branch: master
+    event:
+      - push
+      - manual

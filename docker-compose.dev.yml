@@ -1,0 +1,32 @@
+services:
+  # API
+  django:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: drf_template:dev
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      - RUN_TYPE=api
+    volumes:
+      - ./src:/app/src # NOTE: Do not hot reload the entire /app folder as it will break the .venv
+
+  # Email Testing Server
+  # http://localhost:8025
+  inbucket:
+    image: inbucket/inbucket:latest
+    ports:
+      - "8025:8025"
+    environment:
+      - INBUCKET_LOGLEVEL=error
+      - INBUCKET_MAILBOXNAMING=domain
+      - INBUCKET_SMTP_ADDR=0.0.0.0:1025
+      - INBUCKET_SMTP_MAXRECIPIENTS=1000
+      - INBUCKET_WEB_ADDR=0.0.0.0:8025
+      - INBUCKET_STORAGE_TYPE=memory
+      - INBUCKET_STORAGE_MAILBOXMSGCAP=2000
+
+volumes:
+  db-data:

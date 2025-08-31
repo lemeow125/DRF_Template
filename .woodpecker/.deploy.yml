@@ -1,0 +1,49 @@
+steps:
+  - name: deploy
+    image: alpine:3.20
+    environment:
+      SSH_HOST:
+        from_secret: SSH_HOST
+      PROJECT_DIRECTORY:
+        from_secret: PROJECT_DIRECTORY
+      SSH_KEY:
+        from_secret: SSH_KEY
+      REGISTRY_IMAGE_TAG:
+        from_secret: REGISTRY_IMAGE_TAG
+      DOCKER_VOLUME_DB:
+        from_secret: DOCKER_VOLUME_DB
+    commands:
+      - apk add openssh
+      - mkdir -p /root/.ssh/
+      - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
+      - chmod 600 /root/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
+      - ssh "$SSH_HOST" "
+        cd "$PROJECT_DIRECTORY";
+        docker-compose down;
+        docker image rm "$REGISTRY_IMAGE_TAG" || true;
+        docker volume rm "$DOCKER_VOLUME_DB" || true;
+        docker pull "$REGISTRY_IMAGE_TAG";
+        docker-compose up -d;
+        docker image prune -af;"
+  - name: discord
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: DISCORD_WEBHOOK_ID
+      webhook_token:
+        from_secret: DISCORD_WEBHOOK_TOKEN
+      message: >
+        {{#success build.status}}
+          {{repo.name}} deployment #{{build.number}} {{build.status}}
+        {{/success}}
+    depends_on: deploy
+
+when:
+  - branch: master
+    event:
+      - push
+      - manual
+
+depends_on:
+  - build

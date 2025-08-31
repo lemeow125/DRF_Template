@@ -1,0 +1,10 @@
+uploads/
+static/
+.assets/
+.env
+.venv/
+.vscode/
+.git/
+.gitignore
+.woodpecker/
+**/__pycache__/
