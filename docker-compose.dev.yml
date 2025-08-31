@@ -28,5 +28,3 @@ services:
       - INBUCKET_STORAGE_TYPE=memory
       - INBUCKET_STORAGE_MAILBOXMSGCAP=2000
 
-volumes:
-  db-data:

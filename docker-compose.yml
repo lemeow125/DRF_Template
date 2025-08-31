@@ -1,0 +1,12 @@
+services:
+  # API
+  django:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: git.06222001.xyz/keannu125/drf_template:latest
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      - RUN_TYPE=api
