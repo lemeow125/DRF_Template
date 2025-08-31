@@ -26,6 +26,9 @@ FROM python:3.13.7-slim AS runtime
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
 WORKDIR /app
+
+RUN chmod +x /app/.docker/start.sh
+
 # Copy the virtual environment from the builder stage
 COPY --from=builder /app /app
 
