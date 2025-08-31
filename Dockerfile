@@ -27,8 +27,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN chmod +x /app/.docker/start.sh
-
 # Copy the virtual environment from the builder stage
 COPY --from=builder /app /app
 
@@ -37,6 +35,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy project files
 COPY . /app/
+RUN chmod +x /app/.docker/start.sh
 
 # Expose Django's default port
 EXPOSE 8000
