@@ -12,6 +12,8 @@ services:
       - RUN_TYPE=api
     volumes:
       - ./src:/app/src # NOTE: Do not hot reload the entire /app folder as it will break the .venv
+    depends_on:
+      - redis
 
   # Cache
   redis:
