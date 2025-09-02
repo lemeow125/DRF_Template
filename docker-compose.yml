@@ -16,6 +16,7 @@ services:
 
   # Cache
   redis:
+    env_file: .env
     image: redis:latest
     restart: always
     environment:
