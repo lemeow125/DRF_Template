@@ -12,10 +12,10 @@ services:
     environment:
       - RUN_TYPE=api
     volumes:
-      - ./src:/app/src # Bind mount for persistent schema.yml and static files
+      - ./src/static:/app/src/static # Bind mount for persistent static files
     depends_on:
       - redis
-      
+
   # Cache
   redis:
     env_file: .env
