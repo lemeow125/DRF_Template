@@ -32,13 +32,15 @@ class CustomUserViewSet(DjoserUserViewSet):
                 queryset = CustomUser.objects.all()
                 cache.set(cache_key, queryset, 60 * 60)
             return queryset
-        else:
+        elif user.id:
             cache_key = f"users:{user.id}"
             queryset = cache.get(cache_key)
             if not queryset:
                 queryset = CustomUser.objects.filter(id=user.id)
                 cache.set(cache_key, queryset, 60 * 60)
             return queryset
+        else:
+            return CustomUser.objects.none()
 
     def perform_update(self, serializer, *args, **kwargs):
         user = self.request.user
