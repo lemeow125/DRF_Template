@@ -12,6 +12,8 @@ steps:
         from_secret: REGISTRY_IMAGE_TAG
       DOCKER_VOLUME_DB:
         from_secret: DOCKER_VOLUME_DB
+      DOCKER_COMPOSE_URL:
+        from_secret: DOCKER_COMPOSE_URL
     commands:
       - apk add openssh
       - mkdir -p /root/.ssh/
