@@ -1,4 +1,3 @@
-from core.settings import config
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (
@@ -7,8 +6,10 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from core.settings import config
+
 urlpatterns = [
-    # path("accounts/", include("accounts.urls")),
+    path("accounts/", include("accounts.urls")),
     # Admin Panel
     path("admin/", admin.site.urls),
     # Swagger and Redoc API Doc URLs

@@ -12,13 +12,18 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+
 from core.config import Config
 
 # Config initialization
 config = Config().get_config()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Directory where manage.py file is located
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Directory where docker-compose.yml file is located
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+# Directory where test files are located
+TESTS_DIR = os.path.join(BASE_DIR, "tests")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config.SECRET_KEY
@@ -48,6 +53,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "djoser",
     "drf_spectacular",
+    "drf_spectacular_sidecar",
+    "accounts",
     *(["silk"] if config.DEBUG else []),
 ]
 
@@ -227,6 +234,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Swagger / OpenAPI
 SPECTACULAR_SETTINGS = {

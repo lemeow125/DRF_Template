@@ -6,9 +6,11 @@ For use in the immediate parent app/directory.
 
 import os
 from typing import Optional
-from pydantic.fields import FieldInfo
-from .models import Config as ConfigModel
+
 from dotenv import find_dotenv, load_dotenv
+from pydantic.fields import FieldInfo
+
+from .models import Config as ConfigModel
 
 
 class Config:

@@ -3,13 +3,14 @@ Common model schemas
 """
 
 import re
-from typing import Literal
 from datetime import timedelta
+from typing import Literal
+
 from pydantic import (
     BaseModel,
-    StrictStr,
     EmailStr,
     Field,
+    StrictStr,
     field_validator,
     model_validator,
 )
@@ -42,10 +43,8 @@ class Config(BaseModel):
         default=False,
         description="Whether to serve media files locally as oppossed to using a cloud storage solution.",
     )
-    SMTP_HOST: StrictStr = Field(
-        required=True, description="SMTP server address")
-    SMTP_PORT: int = Field(
-        default=587, description="SMTP server port (default: 587)")
+    SMTP_HOST: StrictStr = Field(required=True, description="SMTP server address")
+    SMTP_PORT: int = Field(default=587, description="SMTP server port (default: 587)")
     SMTP_USE_TLS: bool = Field(
         default=True, description="Whether to use TLS for SMTP connections"
     )
@@ -63,6 +62,9 @@ class Config(BaseModel):
     )
     REFRESH_TOKEN_LIFETIME_DAYS: timedelta = Field(
         default=timedelta(days=3), description="Refresh token lifetime in days"
+    )
+    DEBUG_USER_PASSWORD: StrictStr = Field(
+        required=True, description="Password for test users created during development"
     )
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")
