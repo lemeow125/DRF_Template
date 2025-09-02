@@ -43,8 +43,10 @@ class Config(BaseModel):
         default=False,
         description="Whether to serve media files locally as oppossed to using a cloud storage solution.",
     )
-    SMTP_HOST: StrictStr = Field(required=True, description="SMTP server address")
-    SMTP_PORT: int = Field(default=587, description="SMTP server port (default: 587)")
+    SMTP_HOST: StrictStr = Field(
+        required=True, description="SMTP server address")
+    SMTP_PORT: int = Field(
+        default=587, description="SMTP server port (default: 587)")
     SMTP_USE_TLS: bool = Field(
         default=True, description="Whether to use TLS for SMTP connections"
     )
@@ -65,6 +67,18 @@ class Config(BaseModel):
     )
     DEBUG_USER_PASSWORD: StrictStr = Field(
         required=True, description="Password for test users created during development"
+    )
+    CACHE_USERNAME: StrictStr = Field(
+        required=True, description="Cache server authentication username"
+    )
+    CACHE_PASSWORD: StrictStr = Field(
+        required=True, description="Cache server authentication password"
+    )
+    CACHE_HOST: StrictStr = Field(
+        required=True, description="Server host used for caching"
+    )
+    CACHE_PORT: int = Field(
+        required=True, description="Server port used for caching"
     )
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")

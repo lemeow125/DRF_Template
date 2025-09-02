@@ -242,8 +242,21 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
+
 # Pygraphviz
 GRAPH_MODELS = {
     "all_applications": True,
     "group_models": True,
+}
+
+
+# Caching
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{config.CACHE_USERNAME}:{config.CACHE_PASSWORD}@{config.CACHE_HOST}:{config.CACHE_PORT}/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
 }

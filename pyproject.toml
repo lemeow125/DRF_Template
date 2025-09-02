@@ -22,4 +22,5 @@ dependencies = [
     "django-unfold>=0.65.0",
     "gunicorn>=23.0.0",
     "django-cors-headers>=4.7.0",
+    "django-redis>=6.0.0",
 ]

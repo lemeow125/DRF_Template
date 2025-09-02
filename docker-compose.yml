@@ -6,9 +6,19 @@ services:
       context: .
       dockerfile: Dockerfile
     image: git.06222001.xyz/keannu125/drf_template:latest
+    restart: always
     ports:
       - "${BACKEND_PORT}:8000"
     environment:
       - RUN_TYPE=api
     volumes:
       - ./src:/app/src # Bind mount for persistent schema.yml and static files
+
+  # Cache
+  redis:
+    image: redis:latest
+    restart: always
+    environment:
+      - REDIS_USERNAME=${CACHE_USERNAME}
+      - REDIS_PASSWORD=${CACHE_PASSWORD}
+      - REDIS_DISABLE_DEFAULT_USER="true"

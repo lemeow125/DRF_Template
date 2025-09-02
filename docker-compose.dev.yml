@@ -13,6 +13,15 @@ services:
     volumes:
       - ./src:/app/src # NOTE: Do not hot reload the entire /app folder as it will break the .venv
 
+  # Cache
+  redis:
+    image: redis:latest
+    restart: always
+    environment:
+      - REDIS_USERNAME=${CACHE_USERNAME}
+      - REDIS_PASSWORD=${CACHE_PASSWORD}
+      - REDIS_DISABLE_DEFAULT_USER="true"
+      
   # Email Testing Server
   # http://localhost:8025
   inbucket:
@@ -27,4 +36,3 @@ services:
       - INBUCKET_WEB_ADDR=0.0.0.0:8025
       - INBUCKET_STORAGE_TYPE=memory
       - INBUCKET_STORAGE_MAILBOXMSGCAP=2000
-
