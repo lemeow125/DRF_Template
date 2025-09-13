@@ -2,7 +2,7 @@ labels:
   platform: linux/amd64
 
 steps:
-  - name: build
+  - name: test
     image: python:3.13.7-slim
     environment:
       BACKEND_SECRET_KEY:
@@ -50,7 +50,7 @@ steps:
       CACHE_PASSWORD:
         from_secret: CACHE_PASSWORD
     commands:
-      - curl -LsSf https://astral.sh/uv/install.sh | sh
+      - wget -qO- https://astral.sh/uv/install.sh | sh
       - uv sync --frozen --compile-bytecode
       - pytest src/
   - name: discord
