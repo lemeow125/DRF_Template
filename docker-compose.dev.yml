@@ -21,9 +21,7 @@ services:
     image: redis:latest
     restart: always
     environment:
-      - REDIS_USERNAME=${CACHE_USERNAME}
       - REDIS_PASSWORD=${CACHE_PASSWORD}
-      - REDIS_DISABLE_DEFAULT_USER="true"
 
   # Email Testing Server
   # http://localhost:8025
