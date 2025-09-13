@@ -3,7 +3,7 @@ labels:
 
 steps:
   - name: test
-    image: python:3.13.7-slim
+    image: astral/uv:python3.13-trixie-slim
     environment:
       BACKEND_SECRET_KEY:
         from_secret: BACKEND_SECRET_KEY
@@ -50,9 +50,7 @@ steps:
       CACHE_PASSWORD:
         from_secret: CACHE_PASSWORD
     commands:
-      - apt-get update && apt-get install -y --no-install-recommends curl build-essential && rm -rf /var/lib/apt/lists/*
-      - curl -LsSf https://astral.sh/uv/install.sh | sh
-      - uv sync --frozen --compile-bytecode
+      - uv sync --frozen
       - pytest src/
   - name: discord
     image: appleboy/drone-discord
