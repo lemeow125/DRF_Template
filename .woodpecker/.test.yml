@@ -64,7 +64,6 @@ steps:
         {{#success build.status}}
           {{repo.name}} Test #{{build.number}} {{build.status}}
         {{/success}}
-    depends_on: build
 
 when:
   - branch: master
