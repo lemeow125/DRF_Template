@@ -58,7 +58,7 @@ steps:
       - export PATH=".venv/bin:$PATH"
       - pytest --cov
     volumes:
-      - /tmp/.uv:/.cache/uv
+      - /tmp/.uv:/.cache/uv # Optimization: Shared UV cache on local build server
   - name: discord
     image: appleboy/drone-discord
     settings:

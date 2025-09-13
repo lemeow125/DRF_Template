@@ -10,7 +10,7 @@ steps:
       - ruff check src/. --no-fix --diff
       - isort --check --diff src/.
     volumes:
-      - /tmp/.uv:/.cache/uv
+      - /tmp/.uv:/.cache/uv # Optimization: Shared UV cache on local build server
   - name: discord
     image: appleboy/drone-discord
     settings:
