@@ -50,7 +50,8 @@ steps:
       CACHE_PASSWORD:
         from_secret: CACHE_PASSWORD
     commands:
-      - wget -qO- https://astral.sh/uv/install.sh | sh
+      - apt-get update && apt-get install -y --no-install-recommends curl build-essential && rm -rf /var/lib/apt/lists/*
+      - curl -LsSf https://astral.sh/uv/install.sh | sh
       - uv sync --frozen --compile-bytecode
       - pytest src/
   - name: discord
