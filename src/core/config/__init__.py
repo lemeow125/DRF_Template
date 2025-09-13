@@ -28,7 +28,7 @@ class Config:
         """
         load_dotenv(find_dotenv())
 
-        self.prefix = prefix.lower()
+        self.prefix = prefix.upper()
 
         for field in ConfigModel.model_fields.items():
             setattr(self, field[0], self.set_env_var(field))

@@ -37,7 +37,7 @@ steps:
         from_secret: DISCORD_WEBHOOK_TOKEN
       message: >
         {{#success build.status}}
-          {{repo.name}} deployment #{{build.number}} {{build.status}}
+          {{repo.name}}: Deployment step for build #{{build.number}} outputs {{build.status}}
         {{/success}}
     depends_on: deploy
 

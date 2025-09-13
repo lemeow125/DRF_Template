@@ -62,7 +62,7 @@ steps:
         from_secret: DISCORD_WEBHOOK_TOKEN
       message: >
         {{#success build.status}}
-          {{repo.name}} Test #{{build.number}} {{build.status}}
+          {{repo.name}}: Test step for build #{{build.number}} output {{build.status}}
         {{/success}}
 
 when:
