@@ -5,7 +5,7 @@ steps:
   - name: lint
     image: astral/uv:python3.13-trixie-slim
     commands:
-      - uv sync --frozen --cache-dir /.cache/uv
+      - uv sync --frozen --cache-dir /.cache/uv --link-mode=copy
       - export PATH=".venv/bin:$PATH"
       - ruff check src/. --no-fix --diff
       - isort --check --diff src/.
