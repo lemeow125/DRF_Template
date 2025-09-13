@@ -20,6 +20,6 @@ def generate_test_users(sender, **kwargs):
     """
     if sender.name == "accounts" and config.DEBUG:
         try:
-            users.generate_test_users()
+            users.generate_test_users(active=True)
         except Exception as e:
             logger.error(f"Error creating test users post-migration: {e}")
