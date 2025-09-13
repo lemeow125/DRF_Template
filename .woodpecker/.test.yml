@@ -52,7 +52,7 @@ steps:
     commands:
       - uv sync --frozen
       - export PATH=".venv/bin:$PATH"
-      - pytest src/
+      - pytest
   - name: discord
     image: appleboy/drone-discord
     settings:

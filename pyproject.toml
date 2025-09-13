@@ -30,3 +30,5 @@ dependencies = [
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
+testpaths = ["src/tests"]
+pythonpath = ["src"]
