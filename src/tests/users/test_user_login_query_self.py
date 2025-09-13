@@ -1,9 +1,8 @@
 import pytest
-from core.settings import config
 import users
-
-
 from rest_framework.test import APIClient
+
+from core.settings import config
 
 client = APIClient()
 

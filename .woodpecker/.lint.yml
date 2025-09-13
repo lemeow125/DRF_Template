@@ -1,0 +1,27 @@
+labels:
+  platform: linux/amd64
+
+steps:
+  - name: lint
+    image: astral/uv:python3.13-trixie-slim
+    commands:
+      - uv sync --frozen
+      - export PATH=".venv/bin:$PATH"
+      - ruff check src/. --no-fix --diff --show-files --verbose
+  - name: discord
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: DISCORD_WEBHOOK_ID
+      webhook_token:
+        from_secret: DISCORD_WEBHOOK_TOKEN
+      message: >
+        {{#success build.status}}
+          {{repo.name}}: Lint step for build #{{build.number}} output {{build.status}}
+        {{/success}}
+
+when:
+  - branch: master
+    event:
+      - push
+      - manual

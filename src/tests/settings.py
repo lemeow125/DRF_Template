@@ -4,7 +4,6 @@ Minimal Django settings file for tests
 
 from core.settings import *  # noqa: F403
 
-
 # Override database to SQLite
 DATABASES = {
     "default": {

@@ -3,7 +3,7 @@ from django.core import exceptions as django_exceptions
 from django.core.cache import cache
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
-from rest_framework.serializers import ImageField, ModelSerializer
+from rest_framework.serializers import ModelSerializer
 from rest_framework.settings import api_settings
 
 from accounts.models import CustomUser

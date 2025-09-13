@@ -2,12 +2,12 @@
 Post-migrate signal handlers for creating initial data for accounts app.
 """
 
-import os
 import json
 import logging
+import os
 
 from accounts.models import CustomUser
-from core.settings import config, TESTS_DIR
+from core.settings import TESTS_DIR, config
 
 logger = logging.getLogger(__name__)
 
