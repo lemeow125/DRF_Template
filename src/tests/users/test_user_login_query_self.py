@@ -21,7 +21,8 @@ def test_user_login():
     for user in data["users"]:
         login_response = client.post(
             "/api/v1/accounts/jwt/create/",
-            {"username": user["username"], "password": config.DEBUG_USER_PASSWORD},
+            {"username": user["username"],
+                "password": config.DEBUG_USER_PASSWORD},
             format="json",
         ).json()
 

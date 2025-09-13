@@ -8,7 +8,7 @@ A barebones Django REST Framework template for personal use in projects.
 - Pre-templated emails
 - Caching via Redis
 - Debug mode profiling (via Django Silk)
-- A working Woodpecker CI/CD template for automated deployments (see [service_queue](https://github.com/lemeow125/Service_Queue) for more info)
+- Template CI/CD for automated builds/tests/linting/deployments (see [service_queue](https://github.com/lemeow125/Service_Queue) for more info)
 
 A live API demo can be found [here](https://api.template.06222001.xyz/api/v1/swagger)
 

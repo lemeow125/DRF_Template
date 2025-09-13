@@ -7,7 +7,8 @@ steps:
     commands:
       - uv sync --frozen
       - export PATH=".venv/bin:$PATH"
-      - ruff check src/. --no-fix --diff --show-files --verbose
+      - ruff check src/. --no-fix --diff
+      - isort --check --diff src/.
   - name: discord
     image: appleboy/drone-discord
     settings:
