@@ -1,7 +1,7 @@
 import pytest
+from users import generate_test_users, remove_test_users
 
 from accounts.models import CustomUser
-from users import generate_test_users, remove_test_users
 
 
 def assert_users_exist(USERS: list[CustomUser] = []):

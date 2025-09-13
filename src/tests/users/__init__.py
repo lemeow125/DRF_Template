@@ -3,6 +3,7 @@ Post-migrate signal handlers for creating initial data for accounts app.
 """
 
 import logging
+
 from faker import Faker
 
 from accounts.models import CustomUser
@@ -73,8 +74,7 @@ def generate_test_users(count=3, active: bool = False) -> list[CustomUser]:
 
 
 def remove_test_users(
-    USERS: list[CustomUser] = CustomUser.objects.filter(
-        is_superuser=False),
+    USERS: list[CustomUser] = CustomUser.objects.filter(is_superuser=False),
 ):
     """
     Function to remove test users.
