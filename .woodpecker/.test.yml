@@ -51,7 +51,7 @@ steps:
         from_secret: CACHE_PASSWORD
     commands:
       - uv sync --frozen
-      - export PATH="/app/.venv/bin:$PATH"
+      - export PATH=".venv/bin:$PATH"
       - pytest src/
   - name: discord
     image: appleboy/drone-discord
