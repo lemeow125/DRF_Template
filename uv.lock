@@ -432,6 +432,7 @@ dependencies = [
     { name = "djoser" },
     { name = "drf-spectacular" },
     { name = "drf-spectacular-sidecar" },
+    { name = "faker" },
     { name = "gunicorn" },
     { name = "isort" },
     { name = "pydantic", extra = ["email"] },
@@ -458,6 +459,7 @@ requires-dist = [
     { name = "djoser", specifier = ">=2.3.3" },
     { name = "drf-spectacular", specifier = ">=0.28.0" },
     { name = "drf-spectacular-sidecar", specifier = ">=2025.8.1" },
+    { name = "faker", specifier = ">=37.6.0" },
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "isort", specifier = ">=6.0.1" },
     { name = "pydantic", extras = ["email"], specifier = ">=2.11.7" },
@@ -481,6 +483,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f5/22/900cb125c76b7aaa450ce02fd727f452243f2e91a61af068b40adba60ea9/email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426", size = 51238, upload-time = "2025-08-26T13:09:06.831Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/de/15/545e2b6cf2e3be84bc1ed85613edd75b8aea69807a71c26f4ca6a9258e82/email_validator-2.3.0-py3-none-any.whl", hash = "sha256:80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4", size = 35604, upload-time = "2025-08-26T13:09:05.858Z" },
+]
+
+[[package]]
+name = "faker"
+version = "37.6.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/24/cd/f7679c20f07d9e2013123b7f7e13809a3450a18d938d58e86081a486ea15/faker-37.6.0.tar.gz", hash = "sha256:0f8cc34f30095184adf87c3c24c45b38b33ad81c35ef6eb0a3118f301143012c", size = 1907960, upload-time = "2025-08-26T15:56:27.419Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/7d/8b50e4ac772719777be33661f4bde320793400a706f5eb214e4de46f093c/faker-37.6.0-py3-none-any.whl", hash = "sha256:3c5209b23d7049d596a51db5d76403a0ccfea6fc294ffa2ecfef6a8843b1e6a7", size = 1949837, upload-time = "2025-08-26T15:56:25.33Z" },
 ]
 
 [[package]]

@@ -8,7 +8,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.cache import cache
 from djoser.conf import settings
 from djoser.views import UserViewSet as DjoserUserViewSet
+from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from accounts import serializers
 from accounts.models import CustomUser
@@ -23,6 +25,9 @@ class CustomUserViewSet(DjoserUserViewSet):
     token_generator = default_token_generator
 
     def get_queryset(self):
+        """
+        Overriden class function for injection of cache invalidation
+        """
         user = self.request.user
 
         if user.is_superuser:
@@ -43,6 +48,9 @@ class CustomUserViewSet(DjoserUserViewSet):
             return CustomUser.objects.none()
 
     def perform_update(self, serializer, *args, **kwargs):
+        """
+        Overriden class function for injection of cache invalidation
+        """
         user = self.request.user
 
         super().perform_update(serializer, *args, **kwargs)
@@ -51,6 +59,9 @@ class CustomUserViewSet(DjoserUserViewSet):
         cache.delete(f"users:{user.id}")
 
     def perform_create(self, serializer, *args, **kwargs):
+        """
+        Overriden class function for injection of cache invalidation
+        """
         user = serializer.save(*args, **kwargs)
 
         # Try-catch block for email sending
@@ -70,9 +81,14 @@ class CustomUserViewSet(DjoserUserViewSet):
         methods=["post"], detail=False, url_path="activation", url_name="activation"
     )
     def activation(self, request, *args, **kwargs):
+        """
+        Overriden class function for injection of cache invalidation
+        """
         user = self.request.user
         super().activation(request, *args, **kwargs)
 
         # Clear cache
         cache.delete("users")
         cache.delete(f"users:{user.id}")
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

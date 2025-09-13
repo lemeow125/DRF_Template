@@ -6,8 +6,14 @@ import re
 from datetime import timedelta
 from typing import Literal
 
-from pydantic import (BaseModel, EmailStr, Field, StrictStr, field_validator,
-                      model_validator)
+from pydantic import (
+    BaseModel,
+    EmailStr,
+    Field,
+    StrictStr,
+    field_validator,
+    model_validator,
+)
 from pydantic_extra_types.timezone_name import TimeZoneName
 
 
@@ -62,9 +68,17 @@ class Config(BaseModel):
     REFRESH_TOKEN_LIFETIME_DAYS: timedelta = Field(
         default=timedelta(days=3), description="Refresh token lifetime in days"
     )
+    DEBUG_USER_EMAIL: StrictStr = Field(
+        json_schema_extra={"required": DEBUG},
+        description="Administrator user email used for development",
+    )
+    DEBUG_USER_USERNAME: StrictStr = Field(
+        json_schema_extra={"required": DEBUG},
+        description="Administrator username used for development",
+    )
     DEBUG_USER_PASSWORD: StrictStr = Field(
-        json_schema_extra={"required": True},
-        description="Password for test users created during development",
+        json_schema_extra={"required": DEBUG},
+        description="Password for administrator and test users created during development",
     )
     CACHE_USERNAME: StrictStr = Field(
         json_schema_extra={"required": True},

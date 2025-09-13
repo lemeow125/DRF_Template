@@ -2,71 +2,89 @@
 Post-migrate signal handlers for creating initial data for accounts app.
 """
 
-import json
 import logging
-import os
+from faker import Faker
 
 from accounts.models import CustomUser
-from core.settings import TESTS_DIR, config
+from core.settings import config
 
 logger = logging.getLogger(__name__)
+fake = Faker()
 
 
-def get_users_json():
+def generate_random_user(active: bool = False):
     """
-    Function to read test user data from JSON file
+    Function to generate a single random user
+
+    Args:
+        active (bool, optional): User active status. Defaults to False.
+
+    Returns:
+        CustomUser: Newly created USER instance
     """
-    with open(os.path.join(TESTS_DIR, "users", "users.json"), "r") as f:
-        # Load JSON data
-        data = json.loads(f.read())
-        return data
+    USER = CustomUser.objects.create_user(
+        username=fake.user_name(),
+        email=fake.email(),
+        password=config.DEBUG_USER_PASSWORD,
+    )
+
+    # Additional user fields not covered by create() method
+    USER.first_name = fake.first_name()
+    USER.last_name = fake.last_name()
+    USER.is_active = active
+    USER.save()
+
+    return USER
 
 
-def generate_test_users():
+def generate_superuser():
     """
-    Function to create test users.
+    Function to generate a test superuser account
     """
-    data = get_users_json()
-
-    for user in data["users"]:
-        # Check if user already exists
-        USER = CustomUser.objects.filter(username=user["username"]).first()
-        if not USER:
-            # Create user
-            if user["is_superuser"]:
-                USER = CustomUser.objects.create_superuser(
-                    username=user["username"],
-                    email=user["email"],
-                    password=config.DEBUG_USER_PASSWORD,
-                )
-                logger.info("Created Superuser:", user["username"])
-            else:
-                USER = CustomUser.objects.create_user(
-                    username=user["username"],
-                    email=user["email"],
-                    password=config.DEBUG_USER_PASSWORD,
-                )
-                logger.info("Created User:", user["username"])
-
-            # Additional user fields not covered by create() methods
-            USER.first_name = user["first_name"]
-            USER.last_name = user["last_name"]
-            USER.is_active = True
-            USER.save()
+    USER = CustomUser.objects.filter(is_superuser=True).first()
+    if not USER:
+        CustomUser.objects.create_superuser(
+            username=config.DEBUG_USER_USERNAME,
+            email=config.DEBUG_USER_EMAIL,
+            password=config.DEBUG_USER_PASSWORD,
+        )
+    return USER
 
 
-def remove_test_users():
+def generate_test_users(count=3, active: bool = False) -> list[CustomUser]:
     """
-    Function to remove test users in DEBUG mode.
+    Function to generate a list of test users.
+
+    Args:
+        count (int, optional): Number of regular test users to generate. Defaults to 10.
+
+    Returns:
+        list[CustomUser]: List containing the test superuser and generated regular users.
     """
-    if config.DEBUG:
-        data = get_users_json()
-        for user in data["users"]:
-            # Check if user already exists
-            USER = CustomUser.objects.filter(username=user["username"]).first()
-            if USER:
-                USER.delete()
-            else:
-                logger.warning(
-                    f"Skipping user deletion for {user['username']}: Does not exist"
-                )
+    USERS = []
+
+    # Superuser
+    USERS.append(generate_superuser())
+
+    # Regular users
+    USERS.extend([generate_random_user(active=active) for _ in range(count)])
+
+    return USERS
+
+
+def remove_test_users(
+    USERS: list[CustomUser] = CustomUser.objects.filter(
+        is_superuser=False),
+):
+    """
+    Function to remove test users.
+    """
+
+    for USER in USERS:
+        USER = CustomUser.objects.filter(username=USER.username).first()
+        if USER:
+            USER.delete()
+        else:
+            logger.warning(
+                f"Skipping user deletion for {USER.username}: Does not exist"
+            )

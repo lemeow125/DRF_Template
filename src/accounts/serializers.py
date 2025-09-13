@@ -40,7 +40,7 @@ class CustomUserSerializer(BaseUserSerializer):
         return super().update(instance, validated_data)
 
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
+class CustomUserRegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
     password = serializers.CharField(

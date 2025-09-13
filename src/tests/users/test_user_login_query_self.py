@@ -1,6 +1,6 @@
 import pytest
-import users
 from rest_framework.test import APIClient
+from users import generate_test_users
 
 from core.settings import config
 
@@ -10,19 +10,15 @@ client = APIClient()
 @pytest.mark.django_db(transaction=True)
 def test_user_login():
     """
-    Test login
+    Test login with multiple user accounts
     """
 
-    data = users.get_users_json()
+    USERS = generate_test_users(active=True)
 
-    # Generate test users
-    users.generate_test_users()
-
-    for user in data["users"]:
+    for USER in USERS:
         login_response = client.post(
             "/api/v1/accounts/jwt/create/",
-            {"username": user["username"],
-                "password": config.DEBUG_USER_PASSWORD},
+            {"username": USER.username, "password": config.DEBUG_USER_PASSWORD},
             format="json",
         ).json()
 

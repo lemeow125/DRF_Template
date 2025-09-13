@@ -27,6 +27,7 @@ dependencies = [
     "pytest-django>=4.11.1",
     "pytest-cov>=7.0.0",
     "isort>=6.0.1",
+    "faker>=37.6.0",
 ]
 
 [tool.pytest.ini_options]
