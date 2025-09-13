@@ -17,6 +17,7 @@ steps:
       - docker build -t "$REGISTRY_IMAGE_TAG" .
       - echo "$FORGEJO_REGISTRY_PASSWORD" | docker login "$FORGEJO_REGISTRY_URL" --password-stdin -u "$FORGEJO_REGISTRY_USERNAME"
       - docker push "$REGISTRY_IMAGE_TAG"
+      - docker image rm "$REGISTRY_IMAGE_TAG"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   - name: discord

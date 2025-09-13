@@ -194,7 +194,7 @@ DJOSER = {
         "username_reset_confirm": ["rest_framework.permissions.IsAdminUser"],
         "set_username": ["rest_framework.permissions.IsAdminUser"],
         "set_password": ["rest_framework.permissions.IsAdminUser"],
-    },
+    }
 }
 
 SIMPLE_JWT = {

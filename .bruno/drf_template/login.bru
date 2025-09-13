@@ -1,0 +1,18 @@
+meta {
+  name: Login & Get Users
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/accounts/jwt/create/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "{{ADMIN_EMAIL}}",
+    "password": "{{USER_PASSWORD}}"
+  }
+}

@@ -1,0 +1,73 @@
+labels:
+  platform: linux/amd64
+
+steps:
+  - name: build
+    image: python:3.13.7-slim
+    environment:
+      BACKEND_SECRET_KEY:
+        from_secret: BACKEND_SECRET_KEY
+      BACKEND_DEBUG:
+        from_secret: BACKEND_DEBUG
+      BACKEND_TIMEZONE:
+        from_secret: BACKEND_TIMEZONE
+      BACKEND_CORS_ORIGINS:
+        from_secret: BACKEND_CORS_ORIGINS
+      BACKEND_ALLOWED_HOSTS:
+        from_secret: BACKEND_ALLOWED_HOSTS
+      BACKEND_USE_TZ:
+        from_secret: BACKEND_USE_TZ
+      BACKEND_ACCESS_TOKEN_LIFETIME_MINUTES:
+        from_secret: BACKEND_ACCESS_TOKEN_LIFETIME_MINUTES
+      BACKEND_REFRESH_TOKEN_LIFETIME_DAYS:
+        from_secret: BACKEND_REFRESH_TOKEN_LIFETIME_DAYS
+      BACKEND_SMTP_HOST:
+        from_secret: BACKEND_SMTP_HOST
+      BACKEND_SMTP_PORT:
+        from_secret: BACKEND_SMTP_PORT
+      BACKEND_SMTP_USE_TLS:
+        from_secret: BACKEND_SMTP_USE_TLS
+      BACKEND_SMTP_AUTH_USERNAME:
+        from_secret: BACKEND_SMTP_AUTH_USERNAME
+      BACKEND_SMTP_AUTH_PASSWORD:
+        from_secret: BACKEND_SMTP_AUTH_PASSWORD
+      BACKEND_SMTP_FROM_ADDRESS:
+        from_secret: BACKEND_SMTP_FROM_ADDRESS
+      BACKEND_PORT:
+        from_secret: BACKEND_PORT
+      BACKEND_CACHE_HOST:
+        from_secret: BACKEND_CACHE_HOST
+      BACKEND_CACHE_PORT:
+        from_secret: BACKEND_CACHE_PORT
+      BACKEND_CACHE_USERNAME:
+        from_secret: BACKEND_CACHE_USERNAME
+      BACKEND_CACHE_PASSWORD:
+        from_secret: BACKEND_CACHE_PASSWORD
+      BACKEND_DEBUG_USER_PASSWORD:
+        from_secret: BACKEND_DEBUG_USER_PASSWORD
+      CACHE_USERNAME:
+        from_secret: CACHE_USERNAME
+      CACHE_PASSWORD:
+        from_secret: CACHE_PASSWORD
+    commands:
+      - curl -LsSf https://astral.sh/uv/install.sh | sh
+      - uv sync --frozen --compile-bytecode
+      - pytest src/
+  - name: discord
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: DISCORD_WEBHOOK_ID
+      webhook_token:
+        from_secret: DISCORD_WEBHOOK_TOKEN
+      message: >
+        {{#success build.status}}
+          {{repo.name}} Test #{{build.number}} {{build.status}}
+        {{/success}}
+    depends_on: build
+
+when:
+  - branch: master
+    event:
+      - push
+      - manual

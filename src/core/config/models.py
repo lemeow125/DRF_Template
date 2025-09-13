@@ -23,7 +23,9 @@ class Config(BaseModel):
     """
 
     SECRET_KEY: StrictStr = Field(
-        min_length=32, description="Secret key for the API", required=True
+        min_length=32,
+        description="Secret key for the API",
+        json_schema_extra={"required": True},
     )
     DEBUG: bool = Field(default=False, description="API debug mode")
     TIMEZONE: TimeZoneName = "UTC"
@@ -34,7 +36,7 @@ class Config(BaseModel):
         description="Allowed hosts by the API.", default_factory=list
     )
     USE_TZ: bool = Field(
-        required=True,
+        json_schema_extra={"required": True},
         default=True,
         description="Whether the backend API defaults to using timezone-aware datetimes.",
     )
@@ -44,41 +46,45 @@ class Config(BaseModel):
         description="Whether to serve media files locally as oppossed to using a cloud storage solution.",
     )
     SMTP_HOST: StrictStr = Field(
-        required=True, description="SMTP server address")
-    SMTP_PORT: int = Field(
-        default=587, description="SMTP server port (default: 587)")
+        json_schema_extra={"required": True}, description="SMTP server address"
+    )
+    SMTP_PORT: int = Field(default=587, description="SMTP server port (default: 587)")
     SMTP_USE_TLS: bool = Field(
         default=True, description="Whether to use TLS for SMTP connections"
     )
     SMTP_AUTH_USERNAME: StrictStr = Field(
-        required=True, description="SMTP authentication username"
+        json_schema_extra={"required": True}, description="SMTP authentication username"
     )
     SMTP_AUTH_PASSWORD: StrictStr = Field(
-        required=True, description="SMTP authentication password"
+        json_schema_extra={"required": True}, description="SMTP authentication password"
     )
     SMTP_FROM_ADDRESS: EmailStr = Field(
-        required=True, description="SMTP from email address"
+        json_schema_extra={"required": True}, description="SMTP from email address"
     )
     ACCESS_TOKEN_LIFETIME_MINUTES: timedelta = Field(
-        default=timedelta(minutes=240), description="Access token lifetime in minutes"
+        default=timedelta(minutes=240),
+        description="Access token lifetime in minutes",
     )
     REFRESH_TOKEN_LIFETIME_DAYS: timedelta = Field(
         default=timedelta(days=3), description="Refresh token lifetime in days"
     )
     DEBUG_USER_PASSWORD: StrictStr = Field(
-        required=True, description="Password for test users created during development"
+        json_schema_extra={"required": True},
+        description="Password for test users created during development",
     )
     CACHE_USERNAME: StrictStr = Field(
-        required=True, description="Cache server authentication username"
+        json_schema_extra={"required": True},
+        description="Cache server authentication username",
     )
     CACHE_PASSWORD: StrictStr = Field(
-        required=True, description="Cache server authentication password"
+        json_schema_extra={"required": True},
+        description="Cache server authentication password",
     )
     CACHE_HOST: StrictStr = Field(
-        required=True, description="Server host used for caching"
+        json_schema_extra={"required": True}, description="Server host used for caching"
     )
     CACHE_PORT: int = Field(
-        required=True, description="Server port used for caching"
+        json_schema_extra={"required": True}, description="Server port used for caching"
     )
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")

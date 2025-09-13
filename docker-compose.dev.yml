@@ -7,11 +7,11 @@ services:
       dockerfile: Dockerfile
     image: drf_template:dev
     ports:
-      - "${BACKEND_PORT}:8000"
+      - "9000:8000"
     environment:
       - RUN_TYPE=api
     volumes:
-      - ./src:/app/src # NOTE: Do not hot reload the entire /app folder as it will break the .venv
+      - ./src:/app/src # WARNING: Do not hot reload the entire /app folder as it will break the .venv
     depends_on:
       - redis
 

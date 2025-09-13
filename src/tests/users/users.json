@@ -16,7 +16,7 @@
         },
         {
             "username": "testuser2",
-            "email": "user1@test.com",
+            "email": "user2@test.com",
             "is_superuser": false,
             "first_name": "Test",
             "last_name": "User 2"
