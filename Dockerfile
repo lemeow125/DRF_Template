@@ -4,7 +4,6 @@ FROM python:3.13.7-slim AS builder
 
 # UV Caching
 ENV UV_LINK_MODE=copy
-ENV UV_PYTHON_CACHE_DIR=/.cache/uv
 
 # Install uv binary from it’s official docker repository
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
