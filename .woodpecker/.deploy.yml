@@ -1,6 +1,6 @@
 steps:
   - name: deploy
-    image: alpine:3.20
+    image: dockette/ssh:latest
     environment:
       SSH_HOST:
         from_secret: SSH_HOST
@@ -15,7 +15,6 @@ steps:
       DOCKER_COMPOSE_URL:
         from_secret: DOCKER_COMPOSE_URL
     commands:
-      - apk add openssh
       - mkdir -p /root/.ssh/
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
