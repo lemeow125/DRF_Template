@@ -20,6 +20,7 @@ steps:
       - docker image rm "$REGISTRY_IMAGE_TAG"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/.uv:/.cache/uv # Optimization: Shared UV cache on local build server
   - name: discord
     image: appleboy/drone-discord
     settings:

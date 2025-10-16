@@ -16,7 +16,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock /app/
 
 # Use uv to install all project dependenies in a virtual environment
-RUN uv sync --frozen --compile-bytecode
+RUN uv sync --frozen --compile-bytecode --cache-dir /.cache/uv --link-mode=copy
 
 
 # Stage 2: Runtime
