@@ -2,6 +2,10 @@
 # Stage 1: Builder
 FROM python:3.13.7-slim AS builder
 
+# UV Caching
+ENV UV_LINK_MODE=copy
+ENV UV_PYTHON_CACHE_DIR=/.cache/uv
+
 # Install uv binary from it’s official docker repository
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
@@ -16,7 +20,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock /app/
 
 # Use uv to install all project dependenies in a virtual environment
-RUN uv sync --frozen --compile-bytecode --cache-dir /.cache/uv --link-mode=copy
+RUN uv sync --frozen --compile-bytecode
 
 
 # Stage 2: Runtime
