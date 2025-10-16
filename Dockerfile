@@ -4,6 +4,7 @@ FROM ghcr.io/astral-sh/uv:python3.13-trixie-slim AS builder
 
 # UV Caching
 ENV UV_LINK_MODE=copy
+ENV UV_CACHE_DIR=/tmp/.uv
 
 WORKDIR /app
 
