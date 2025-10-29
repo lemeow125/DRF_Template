@@ -21,7 +21,7 @@ steps:
         cd "$PROJECT_DIRECTORY";
         docker-compose down;
         docker image rm "$REGISTRY_IMAGE_TAG" || true;
-        wget -O "$DOCKER_COMPOSE_URL" docker-compose.yml;
+        wget -O docker-compose.yml ""$DOCKER_COMPOSE_URL"";
         docker pull "$REGISTRY_IMAGE_TAG";
         docker-compose up -d;
         docker image prune -af;"
