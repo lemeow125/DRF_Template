@@ -11,6 +11,7 @@ from typing import Optional
 from dotenv import find_dotenv, load_dotenv
 from faker import Faker
 from pydantic.fields import FieldInfo
+from pydantic import Field
 
 from .models import Config as ConfigModel
 
@@ -23,20 +24,26 @@ class Config:
     """
 
     def __init__(
-        self, prefix: Optional[str] = "backend", test: Optional[bool] = False
+        self, prefix: Optional[str] = "backend"
     ) -> None:
         """
         Initialize the Config class.
 
         Args:
             prefix (str, optional): Prefix for environment variables. Defaults to "backend".
-            test (bool, optional): Generate test config. Defaults to False.
         """
         load_dotenv(find_dotenv())
 
         self.prefix = prefix.upper()
 
-        if test:
+        generate_test_config_field = (
+            "GENERATE_TEST_CONFIG",
+            Field(default=False, annotation=bool)
+        )
+        self.generate_test_config = self.set_env_var(
+            generate_test_config_field)
+
+        if self.generate_test_config:
             for field_name, field_info in ConfigModel.model_fields.items():
                 setattr(
                     self, field_name, self._generate_faker_data(
@@ -67,16 +74,11 @@ class Config:
         # Fetch value, return field default value if not found
         field_value = os.getenv(field_key, field_info.default)
 
+        # Cast to boolean if the expected type is bool
+        if field_info.annotation is bool and isinstance(field_value, str):
+            field_value = field_value.lower() in ("true", "1", "yes")
+
         return field_value
-
-    def get_config(self) -> ConfigModel:
-        """
-        Get the config model.
-
-        Returns:
-            ConfigModel: The config model instance.
-        """
-        return ConfigModel(**self.__dict__)
 
     def _generate_faker_data(self, field_name: str, field_info) -> any:
         """
@@ -150,3 +152,12 @@ class Config:
             return []
 
         return None
+
+    def get_config(self) -> ConfigModel:
+        """
+        Get the config model.
+
+        Returns:
+            ConfigModel: The config model instance.
+        """
+        return ConfigModel(**self.__dict__)
