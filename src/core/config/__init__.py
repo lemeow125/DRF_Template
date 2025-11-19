@@ -10,8 +10,8 @@ from typing import Optional
 
 from dotenv import find_dotenv, load_dotenv
 from faker import Faker
-from pydantic.fields import FieldInfo
 from pydantic import Field
+from pydantic.fields import FieldInfo
 
 from .models import Config as ConfigModel
 
@@ -23,9 +23,7 @@ class Config:
     Core application config.
     """
 
-    def __init__(
-        self, prefix: Optional[str] = "backend"
-    ) -> None:
+    def __init__(self, prefix: Optional[str] = "backend") -> None:
         """
         Initialize the Config class.
 
@@ -38,16 +36,14 @@ class Config:
 
         generate_test_config_field = (
             "GENERATE_TEST_CONFIG",
-            Field(default=False, annotation=bool)
+            Field(default=False, annotation=bool),
         )
-        self.generate_test_config = self.set_env_var(
-            generate_test_config_field)
+        self.generate_test_config = self.set_env_var(generate_test_config_field)
 
         if self.generate_test_config:
             for field_name, field_info in ConfigModel.model_fields.items():
                 setattr(
-                    self, field_name, self._generate_faker_data(
-                        field_name, field_info)
+                    self, field_name, self._generate_faker_data(field_name, field_info)
                 )
         else:
             for field in ConfigModel.model_fields.items():

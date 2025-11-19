@@ -42,8 +42,7 @@ class Config(BaseModel):
     SMTP_HOST: StrictStr = Field(
         json_schema_extra={"required": True}, description="SMTP server address"
     )
-    SMTP_PORT: int = Field(
-        default=587, description="SMTP server port (default: 587)")
+    SMTP_PORT: int = Field(default=587, description="SMTP server port (default: 587)")
     SMTP_USE_TLS: bool = Field(
         default=True, description="Whether to use TLS for SMTP connections"
     )

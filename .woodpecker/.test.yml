@@ -4,6 +4,9 @@ labels:
 steps:
   - name: test
     image: astral/uv:python3.13-trixie-slim
+    environment:
+      BACKEND_GENERATE_TEST_CONFIG:
+        from_secret: BACKEND_GENERATE_TEST_CONFIG
     commands:
       - uv sync --frozen --cache-dir /.cache/uv --link-mode=copy
       - export PATH=".venv/bin:$PATH"
