@@ -37,7 +37,7 @@ class Config(BaseModel):
     DJANGO_LOG_LEVEL: Literal["INFO", "DEBUG"] = "INFO"
     SERVE_MEDIA_LOCALLY: bool = Field(
         default=False,
-        description="Whether to serve media files locally as oppossed to using a cloud storage solution.",
+        description="Whether to serve media files locally as opposed to using a cloud storage solution.",
     )
     SMTP_HOST: StrictStr = Field(
         json_schema_extra={"required": True}, description="SMTP server address"
