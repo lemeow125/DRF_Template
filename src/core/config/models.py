@@ -37,12 +37,13 @@ class Config(BaseModel):
     DJANGO_LOG_LEVEL: Literal["INFO", "DEBUG"] = "INFO"
     SERVE_MEDIA_LOCALLY: bool = Field(
         default=False,
-        description="Whether to serve media files locally as oppossed to using a cloud storage solution.",
+        description="Whether to serve media files locally as opposed to using a cloud storage solution.",
     )
     SMTP_HOST: StrictStr = Field(
         json_schema_extra={"required": True}, description="SMTP server address"
     )
-    SMTP_PORT: int = Field(default=587, description="SMTP server port (default: 587)")
+    SMTP_PORT: int = Field(
+        default=587, description="SMTP server port (default: 587)")
     SMTP_USE_TLS: bool = Field(
         default=True, description="Whether to use TLS for SMTP connections"
     )
