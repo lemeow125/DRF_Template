@@ -39,8 +39,7 @@ class Config:
             # Generate test config
             for field_name, field_info in ConfigModel.model_fields.items():
                 setattr(
-                    self, field_name, self._generate_faker_data(
-                        field_name, field_info)
+                    self, field_name, self._generate_faker_data(field_name, field_info)
                 )
         else:
             # Use real config
