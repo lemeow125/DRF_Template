@@ -3,7 +3,7 @@ Minimal Django settings file for tests
 """
 
 from core.settings import *  # noqa: F403
-from tests.settings import Config
+from core.config import Config
 
 config = Config(test=True).get_config()
 
