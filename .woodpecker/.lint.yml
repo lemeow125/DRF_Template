@@ -28,3 +28,4 @@ when:
     event:
       - push
       - manual
+      - pull_request
