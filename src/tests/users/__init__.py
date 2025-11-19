@@ -44,7 +44,7 @@ def generate_superuser():
     """
     USER = CustomUser.objects.filter(is_superuser=True).first()
     if not USER:
-        CustomUser.objects.create_superuser(
+        USER = CustomUser.objects.create_superuser(
             username=config.DEBUG_USER_USERNAME,
             email=config.DEBUG_USER_EMAIL,
             password=config.DEBUG_USER_PASSWORD,

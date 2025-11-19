@@ -5,12 +5,12 @@ For use in the immediate parent app/directory.
 """
 
 import os
+import sys
 from datetime import timedelta
 from typing import Optional
 
 from dotenv import find_dotenv, load_dotenv
 from faker import Faker
-from pydantic import Field
 from pydantic.fields import FieldInfo
 
 from .models import Config as ConfigModel
@@ -34,18 +34,16 @@ class Config:
 
         self.prefix = prefix.upper()
 
-        generate_test_config_field = (
-            "GENERATE_TEST_CONFIG",
-            Field(default=False, annotation=bool),
-        )
-        self.generate_test_config = self.set_env_var(generate_test_config_field)
-
-        if self.generate_test_config:
+        # Check if run by Pytest
+        if "pytest" in sys.modules:
+            # Generate test config
             for field_name, field_info in ConfigModel.model_fields.items():
                 setattr(
-                    self, field_name, self._generate_faker_data(field_name, field_info)
+                    self, field_name, self._generate_faker_data(
+                        field_name, field_info)
                 )
         else:
+            # Use real config
             for field in ConfigModel.model_fields.items():
                 setattr(self, field[0], self.set_env_var(field))
 
