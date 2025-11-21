@@ -42,7 +42,9 @@ steps:
           {{repo.name}}: Deployment step for build #{{build.number}} outputs {{build.status}}
         {{/success}}
     depends_on: deploy
-
+    when:
+      status: [ success, failure ]
+      
 when:
   - branch: master
     event:

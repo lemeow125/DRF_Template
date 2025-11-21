@@ -22,7 +22,9 @@ steps:
         {{#success build.status}}
           {{repo.name}}: Lint step for build #{{build.number}} output {{build.status}}
         {{/success}}
-
+    when:
+      status: [ success, failure ]
+      
 when:
   - branch: master
     event:

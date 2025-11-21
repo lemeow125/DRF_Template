@@ -32,7 +32,9 @@ steps:
           {{repo.name}}: Build step for build #{{build.number}} outputs {{build.status}}
         {{/success}}
     depends_on: build
-
+    when:
+      status: [ success, failure ]
+      
 when:
   - branch: master
     event:
