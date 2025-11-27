@@ -28,7 +28,7 @@ steps:
         docker pull "$REGISTRY_IMAGE_TAG";
         docker-compose up -d;
         docker image prune -af;
-        sleep 10;
+        sleep 60;
         docker-compose logs;"
     volumes:
       - /var/cache/apk:/var/cache/apk
