@@ -31,12 +31,12 @@ steps:
         {{#success build.status}}
           ✅ [{{repo.name}}] Successful build for build #{{build.number}}
           Branch: {{commit.branch}}
-          Commit: {{commit.sha}}
+          Commit: {{commit.sha}}:{{commit.message}}
           By: {{commit.author}}
         {{else}}
           ❌ [{{repo.name}}] Failed build for build #{{build.number}}
           Branch: {{commit.branch}}
-          Commit: {{commit.sha}}
+          Commit: {{commit.sha}}:{{commit.message}}
           By: {{commit.author}}
         {{/success}}
     depends_on: build
