@@ -30,14 +30,14 @@ steps:
       message: >
         {{#success build.status}}
           ✅ [{{repo.name}}] Successful build for build #{{build.number}}
-          Branch: {{CI_COMMIT_BRANCH}}
-          Commit: {{trimCommit CI_COMMIT_SHA 7}}
-          By: {{CI_COMMIT_AUTHOR}}
+          Branch: {{commit.branch}}
+          Commit: {{commit.sha}}
+          By: {{commit.author}}
         {{else}}
           ❌ [{{repo.name}}] Failed build for build #{{build.number}}
-          Branch: {{CI_COMMIT_BRANCH}}
-          Commit: {{trimCommit CI_COMMIT_SHA 7}}
-          By: {{CI_COMMIT_AUTHOR}}
+          Branch: {{commit.branch}}
+          Commit: {{commit.sha}}
+          By: {{commit.author}}
         {{/success}}
     depends_on: build
     when:
