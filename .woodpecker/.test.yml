@@ -22,7 +22,15 @@ steps:
         from_secret: DISCORD_WEBHOOK_TOKEN
       message: >
         {{#success build.status}}
-          {{repo.name}}: Test step for build #{{build.number}} output {{build.status}}
+          ✅ [{{repo.name}}] Successful test for build #{{build.number}}
+          Branch: {{CI_COMMIT_BRANCH}}
+          Commit: {{trimCommit CI_COMMIT_SHA 7}}
+          By: {{CI_COMMIT_AUTHOR}}
+        {{else}}
+          ❌ [{{repo.name}}] Failed test for build #{{build.number}}
+          Branch: {{CI_COMMIT_BRANCH}}
+          Commit: {{trimCommit CI_COMMIT_SHA 7}}
+          By: {{CI_COMMIT_AUTHOR}}
         {{/success}}
     when:
       status: [ success, failure ]

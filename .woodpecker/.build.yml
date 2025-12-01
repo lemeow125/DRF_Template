@@ -29,7 +29,15 @@ steps:
         from_secret: DISCORD_WEBHOOK_TOKEN
       message: >
         {{#success build.status}}
-          {{repo.name}}: Build step for build #{{build.number}} outputs {{build.status}}
+          ✅ [{{repo.name}}] Successful build for build #{{build.number}}
+          Branch: {{CI_COMMIT_BRANCH}}
+          Commit: {{trimCommit CI_COMMIT_SHA 7}}
+          By: {{CI_COMMIT_AUTHOR}}
+        {{else}}
+          ❌ [{{repo.name}}] Failed build for build #{{build.number}}
+          Branch: {{CI_COMMIT_BRANCH}}
+          Commit: {{trimCommit CI_COMMIT_SHA 7}}
+          By: {{CI_COMMIT_AUTHOR}}
         {{/success}}
     depends_on: build
     when:
