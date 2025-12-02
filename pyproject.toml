@@ -5,15 +5,15 @@ description = "A Django template for personal projects"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "black>=25.1.0",
-    "django>=5.2.5",
+    "black>=25.11.0",
+    "django>=5.2.9",
     "django-extensions>=4.1",
-    "django-rest-framework>=0.1.0",
-    "django-silk>=5.4.2",
+    "djangorestframework>=3.16.1",
+    "django-silk>=5.4.3",
     "djangorestframework-simplejwt>=5.5.1",
     "djoser>=2.3.3",
-    "drf-spectacular>=0.28.0",
-    "drf-spectacular-sidecar>=2025.8.1",
+    "drf-spectacular>=0.29.0",
+    "drf-spectacular-sidecar>=2025.12.1",
     "pydantic[email]>=2.11.7",
     "pydantic-extra-types>=2.10.5",
     "python-dotenv>=1.1.1",
@@ -21,13 +21,13 @@ dependencies = [
     "whitenoise[brotli]>=6.9.0",
     "django-unfold>=0.65.0",
     "gunicorn>=23.0.0",
-    "django-cors-headers>=4.7.0",
+    "django-cors-headers>=4.9.0",
     "django-redis>=6.0.0",
     "pytest>=8.4.2",
     "pytest-django>=4.11.1",
     "pytest-cov>=7.0.0",
     "isort>=6.0.1",
-    "faker>=37.6.0",
+    "faker>=38.2.0",
 ]
 
 [tool.pytest.ini_options]
