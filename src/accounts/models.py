@@ -2,8 +2,6 @@
 Common model schemas
 """
 
-from datetime import timedelta
-
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
@@ -14,8 +12,8 @@ class CustomUser(AbstractUser):
     # Can be used to show tooltips for newer users
     @property
     def is_new(self):
-        current_date = timezone.now()
-        return self.date_joined + timedelta(days=1) < current_date
+        """Check if user joined within the last day."""
+        return (timezone.now() - self.date_joined).days == 0
 
     @property
     def full_name(self):
