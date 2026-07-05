@@ -2,7 +2,7 @@ steps:
   - name: post-deployment-tests
     image: node:23-alpine
     environment:
-      BACKEND_URL: https://api.template.06222001.xyz
+      BACKEND_URL: https://api.template.06222001.xyz/api/v1
       ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
       USER_PASSWORD:
