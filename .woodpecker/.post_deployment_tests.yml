@@ -31,7 +31,7 @@ steps:
           Commit: {{commit.sha}}:{{commit.message}}
           By: {{commit.author}}
         {{/success}}
-    depends_on: deploy
+    depends_on: post-deployment-tests
     when:
       status: [ success, failure ]
       
