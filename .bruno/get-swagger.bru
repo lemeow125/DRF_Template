@@ -11,11 +11,7 @@ get {
 }
 
 tests {
-  test("Should return the Swagger page", () => {
-    if (res.status === 200) {
-      // pass
-    } else {
-      throw new Error(res.body);
-    }
+  test("should return the swagger page", function () {
+    expect(res.getStatus()).to.equal(200);
   });
 }

@@ -17,13 +17,17 @@ body:json {
   }
 }
 
+
 tests {
-  test("Should return success", () => {
-    if (res.status === 200) {
-      // pass
-    } else {
-      throw new Error(res.body);
-    }
+  const data = res.getBody();
+  test("should return the Swagger page", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("should return json", function () {
+    expect(data).to.have.property("access")
+    expect(data).to.have.property("refresh")
   });
 }
+
 
