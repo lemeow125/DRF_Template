@@ -10,6 +10,10 @@ get {
   auth: none
 }
 
+script:post-response {
+  console.log("Result:", res.body)
+}
+
 tests {
   test("should return 200 HTTP Response Code", () => {
     expect(res.status).to.equal(200);
