@@ -9,3 +9,9 @@ get {
   body: none
   auth: none
 }
+
+tests {
+  test("should return 200 HTTP Response Code", () => {
+    expect(res.status).to.equal(200);
+  });
+}
