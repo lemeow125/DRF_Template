@@ -3,9 +3,9 @@ steps:
     image: node:23-alpine
     environment:
       BACKEND_URL: https://api.template.06222001.xyz/api/v1
-      ADMIN_EMAIL: 
+      BACKEND_ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
-      USER_PASSWORD:
+      BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
