@@ -19,7 +19,9 @@ body:json {
 
 tests {
   try {
-    expect(res.status).to.equal(200);
+    test("Should return success", () => {
+      expect(res.status).to.equal(200);
+    });
   } catch (e) {
     console.log("Trace:", res.body);
     throw e;

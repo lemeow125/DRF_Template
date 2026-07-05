@@ -12,7 +12,9 @@ get {
 
 tests {
   try {
-    expect(res.status).to.equal(200);
+    test("Should return the Swagger page", () => {
+      expect(res.status).to.equal(200);
+    });
   } catch (e) {
     console.log("Trace:", res.body);
     throw e;
