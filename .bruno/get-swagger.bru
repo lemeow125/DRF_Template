@@ -12,10 +12,10 @@ get {
 
 tests {
   test("Should return the Swagger page", () => {
-    expect(res.status).to.equal(200);
+    if (res.status === 200) {
+      // pass
+    } else {
+      throw new Error(res.body);
+    }
   });
-
-  if (res.status !== 200) {
-    console.log("Trace:", res.body);
-  }
 }
