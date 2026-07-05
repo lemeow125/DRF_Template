@@ -9,6 +9,7 @@ steps:
         from_secret: DEV_PASSWORD
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
+      - cd .bruno
       - bru run --env drf_template
     volumes:
       - /tmp/.npm:/tmp/.npm
