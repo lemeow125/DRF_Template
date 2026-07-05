@@ -10,12 +10,11 @@ get {
   auth: none
 }
 
-script:post-response {
-  console.log("Result:", res.body)
-}
-
 tests {
-  test("should return 200 HTTP Response Code", () => {
+  try {
     expect(res.status).to.equal(200);
-  });
+  } catch (e) {
+    console.log("Trace:", res.body);
+    throw e;
+  }
 }
