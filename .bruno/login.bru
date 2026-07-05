@@ -20,7 +20,7 @@ body:json {
 
 tests {
   const data = res.getBody();
-  test("should return the Swagger page", function () {
+  test("should return success", function () {
     expect(res.getStatus()).to.equal(200);
   });
 
@@ -28,6 +28,13 @@ tests {
     expect(data).to.have.property("access")
     expect(data).to.have.property("refresh")
   });
+
+  const hasFailures = bru.getTestResults().some(t => t.status === "fail");
+
+  if (hasFailures) {
+    console.error("Trace:", res.getBody());
+  }
+
 }
 
 
