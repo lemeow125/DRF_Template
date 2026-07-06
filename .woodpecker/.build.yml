@@ -14,7 +14,7 @@ steps:
       REGISTRY_IMAGE_TAG:
         from_secret: REGISTRY_IMAGE_TAG
     commands:
-      - docker build -t "$REGISTRY_IMAGE_TAG" .
+      - docker buildx build -t "$REGISTRY_IMAGE_TAG" --platform linux/amd64,linux/arm64 .
       - echo "$FORGEJO_REGISTRY_PASSWORD" | docker login "$FORGEJO_REGISTRY_URL" --password-stdin -u "$FORGEJO_REGISTRY_USERNAME"
       - docker push "$REGISTRY_IMAGE_TAG"
       - docker image rm "$REGISTRY_IMAGE_TAG"
