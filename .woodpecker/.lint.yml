@@ -1,6 +1,3 @@
-labels:
-  platform: linux/amd64
-
 steps:
   - name: lint
     image: astral/uv:python3.13-trixie-slim
@@ -10,28 +7,7 @@ steps:
       - ruff check src/. --no-fix --diff
       - isort --check --diff src/.
     volumes:
-      - /tmp/.uv:/.cache/uv # Optimization: Shared UV cache on local build server
-  - name: discord
-    image: appleboy/drone-discord
-    settings:
-      webhook_id:
-        from_secret: DISCORD_WEBHOOK_ID
-      webhook_token:
-        from_secret: DISCORD_WEBHOOK_TOKEN
-      message: >
-        {{#success build.status}}
-          ✅ [{{repo.name}}] Successful lint for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{else}}
-          ❌ [{{repo.name}}] Failed lint for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{/success}}
-    when:
-      status: [ success, failure ]
+      - /tmp/.uv:/.cache/uv
       
 when:
   - branch: master
