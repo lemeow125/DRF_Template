@@ -7,7 +7,7 @@ steps:
       REGISTRY_IMAGE_TAG:
         from_secret: REGISTRY_IMAGE_TAG
       SSH_HOST: root@10.0.10.115
-      PROJECT_DIRECTORY: /mnt/nvme/docker projects/drf_template
+      PROJECT_DIRECTORY: /mnt/nvme/docker\ projects/drf_template
       DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/refs/heads/master/docker-compose.yml
     commands:
       - apk add openssh
