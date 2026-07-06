@@ -20,28 +20,6 @@ steps:
       - docker image rm "$REGISTRY_IMAGE_TAG"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  - name: discord
-    image: appleboy/drone-discord
-    settings:
-      webhook_id:
-        from_secret: DISCORD_WEBHOOK_ID
-      webhook_token:
-        from_secret: DISCORD_WEBHOOK_TOKEN
-      message: >
-        {{#success build.status}}
-          ✅ [{{repo.name}}] Successful build for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{else}}
-          ❌ [{{repo.name}}] Failed build for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{/success}}
-    depends_on: build
-    when:
-      status: [ success, failure ]
       
 when:
   - branch: master

@@ -2,19 +2,14 @@ steps:
   - name: deploy
     image: alpine:latest
     environment:
-      SSH_HOST:
-        from_secret: SSH_HOST
-      PROJECT_DIRECTORY:
-        from_secret: PROJECT_DIRECTORY
       SSH_KEY:
         from_secret: SSH_KEY
       REGISTRY_IMAGE_TAG:
         from_secret: REGISTRY_IMAGE_TAG
-      DOCKER_COMPOSE_URL:
-        from_secret: DOCKER_COMPOSE_URL
+      SSH_HOST: root@10.0.10.115
+      PROJECT_DIRECTORY: /mnt/nvme/docker projects/drf_template
+      DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/refs/heads/master/docker-compose.yml
     commands:
-      - mkdir -p /var/cache/apk
-      - ln -s /var/cache/apk /etc/apk/cache
       - apk add openssh
       - mkdir -p /root/.ssh/
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
@@ -31,29 +26,7 @@ steps:
         sleep 60;
         docker-compose logs;"
     volumes:
-      - /var/cache/apk:/var/cache/apk
-  - name: discord
-    image: appleboy/drone-discord
-    settings:
-      webhook_id:
-        from_secret: DISCORD_WEBHOOK_ID
-      webhook_token:
-        from_secret: DISCORD_WEBHOOK_TOKEN
-      message: >
-        {{#success build.status}}
-          ✅ [{{repo.name}}] Successful deployment for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{else}}
-          ❌ [{{repo.name}}] Failed deployment for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{/success}}
-    depends_on: deploy
-    when:
-      status: [ success, failure ]
+      - /var/cache/apk:/etc/apk/cache
       
 when:
   - branch: master

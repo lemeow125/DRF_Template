@@ -13,28 +13,6 @@ steps:
       - bru run --env drf_template
     volumes:
       - /tmp/.npm:/tmp/.npm
-  - name: discord
-    image: appleboy/drone-discord
-    settings:
-      webhook_id:
-        from_secret: DISCORD_WEBHOOK_ID
-      webhook_token:
-        from_secret: DISCORD_WEBHOOK_TOKEN
-      message: >
-        {{#success build.status}}
-          ✅ [{{repo.name}}] Successful post-deployment tests for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{else}}
-          ❌ [{{repo.name}}] Failed post-deployment tests for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{/success}}
-    depends_on: post-deployment-tests
-    when:
-      status: [ success, failure ]
       
 when:
   - branch: master

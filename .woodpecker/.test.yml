@@ -1,39 +1,14 @@
-labels:
-  platform: linux/amd64
-
 steps:
   - name: test
     image: astral/uv:python3.13-trixie-slim
     environment:
-      BACKEND_GENERATE_TEST_CONFIG:
-        from_secret: BACKEND_GENERATE_TEST_CONFIG
+      BACKEND_GENERATE_TEST_CONFIG: True
     commands:
       - uv sync --frozen --cache-dir /.cache/uv --link-mode=copy
       - export PATH=".venv/bin:$PATH"
       - pytest --cov
     volumes:
-      - /tmp/.uv:/.cache/uv # Optimization: Shared UV cache on local build server
-  - name: discord
-    image: appleboy/drone-discord
-    settings:
-      webhook_id:
-        from_secret: DISCORD_WEBHOOK_ID
-      webhook_token:
-        from_secret: DISCORD_WEBHOOK_TOKEN
-      message: >
-        {{#success build.status}}
-          ✅ [{{repo.name}}] Successful test for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{else}}
-          ❌ [{{repo.name}}] Failed test for build #{{build.number}}
-          Branch: {{commit.branch}}
-          Commit: {{commit.sha}}:{{commit.message}}
-          By: {{commit.author}}
-        {{/success}}
-    when:
-      status: [ success, failure ]
+      - /tmp/.uv:/.cache/uv
       
 when:
   - branch: master
