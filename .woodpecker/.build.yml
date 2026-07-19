@@ -14,17 +14,15 @@ steps:
       REGISTRY_IMAGE_TAG: git.06222001.xyz/keannu125/drf_template
     commands:
       - echo "$FORGEJO_REGISTRY_PASSWORD" | docker login "$FORGEJO_REGISTRY_URL" --password-stdin -u "$FORGEJO_REGISTRY_USERNAME"
-      # Check if the image already exists
-      - if docker manifest inspect "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA" > /dev/null 2>&1; then
+      - |
+        if docker manifest inspect "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA" > /dev/null 2>&1; then
           echo "Image $REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA already exists – skipping build."
           exit 0
         fi
-      - docker buildx build -t "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA" --platform linux/amd64,linux/arm64 .
-      - docker push "$REGISTRY_IMAGE_TAG"
-      - docker image rm "$REGISTRY_IMAGE_TAG"
+      - docker buildx build --push --platform linux/amd64,linux/arm64 -t "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA" .
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      
+
 when:
   - branch: master
     event:
