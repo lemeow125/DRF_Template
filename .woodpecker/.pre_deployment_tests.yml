@@ -30,4 +30,5 @@ services:
         from_secret: DEV_EMAIL
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
+      RUN_TYPE: api
 
