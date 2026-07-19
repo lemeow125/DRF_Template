@@ -1,5 +1,5 @@
 steps:
-  - name: run post-deployment tests
+  - name: run pre-deployment tests
     image: node:23-alpine
     environment:
       BACKEND_ADMIN_EMAIL: 
@@ -9,7 +9,7 @@ steps:
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
       - cd .bruno
-      - bru run --env dev
+      - bru run --env docker
     volumes:
       - /tmp/.npm:/tmp/.npm
       
@@ -21,3 +21,13 @@ when:
 
 depends_on:
   - deploy
+
+services:
+  api:
+    image: git.06222001.xyz/keannu125/goapi:latest
+    environment:
+      BACKEND_ADMIN_EMAIL: 
+        from_secret: DEV_EMAIL
+      BACKEND_PASSWORD:
+        from_secret: DEV_PASSWORD
+

@@ -5,7 +5,7 @@ services:
     image: git.06222001.xyz/keannu125/drf_template:${VERSION:-:latest}
     restart: always
     ports:
-      - "${BACKEND_PORT}:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     environment:
       - RUN_TYPE=api
     volumes:
