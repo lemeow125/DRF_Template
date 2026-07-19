@@ -42,7 +42,7 @@ when:
 
 depends_on:
   - build
-  - test
+  - unit_tests
   - pre_deployment_tests
 
 skip_clone: true

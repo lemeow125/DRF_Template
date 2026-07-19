@@ -20,7 +20,7 @@ when:
       - manual
 
 depends_on:
-  - deploy
+  - unit_tests
 
 services:
   api:

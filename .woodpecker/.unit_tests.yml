@@ -1,5 +1,5 @@
 steps:
-  - name: test
+  - name: run unit tests
     image: astral/uv:python3.13-trixie-slim
     environment:
       BACKEND_GENERATE_TEST_CONFIG: True
