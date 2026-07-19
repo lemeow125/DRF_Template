@@ -24,7 +24,7 @@ depends_on:
 
 services:
   api:
-    image: git.06222001.xyz/keannu125/goapi:latest
+    image: git.06222001.xyz/keannu125/goapi:${CI_COMMIT_SHA}
     environment:
       BACKEND_ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
