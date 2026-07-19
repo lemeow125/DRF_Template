@@ -4,8 +4,7 @@ steps:
     environment:
       SSH_KEY:
         from_secret: SSH_KEY
-      REGISTRY_IMAGE_TAG:
-        from_secret: REGISTRY_IMAGE_TAG
+      REGISTRY_IMAGE_TAG: git.06222001.xyz/keannu125/drf_template
       SSH_HOST: root@10.0.10.115
       PROJECT_DIRECTORY: /mnt/nvme/files/docker\ projects/drf_template
       DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/refs/heads/master/docker-compose.yml
@@ -18,9 +17,10 @@ steps:
       - ssh "$SSH_HOST" "
         cd "$PROJECT_DIRECTORY";
         docker-compose down;
-        docker image rm "$REGISTRY_IMAGE_TAG" || true;
         wget -O docker-compose.yml "$DOCKER_COMPOSE_URL";
-        docker pull "$REGISTRY_IMAGE_TAG";
+        sed -i \"s|^VERSION=.*|VERSION=$CI_COMMIT_SHA|\" .env;
+        grep -q '^VERSION=' .env || echo 'VERSION=$CI_COMMIT_SHA' >> .env;
+        docker pull "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA";
         docker-compose up -d;
         docker image prune -af;
         sleep 60;

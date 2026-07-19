@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: drf_template:dev
+    image: drf_template:${VERSION:-:latest}
     ports:
       - "9000:8000"
     environment:

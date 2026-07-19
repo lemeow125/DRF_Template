@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: git.06222001.xyz/keannu125/drf_template:latest
+    image: git.06222001.xyz/keannu125/drf_template:${VERSION:-:latest}
     restart: always
     ports:
       - "${BACKEND_PORT}:8000"
