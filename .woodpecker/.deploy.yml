@@ -7,27 +7,34 @@ steps:
       REGISTRY_IMAGE_TAG: git.06222001.xyz/keannu125/drf_template
       SSH_HOST: root@10.0.10.115
       PROJECT_DIRECTORY: /mnt/nvme/files/docker\ projects/drf_template
-      DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/refs/heads/master/docker-compose.yml
+      DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/${CI_COMMIT_SHA}/docker-compose.yml
     commands:
       - apk add openssh
       - mkdir -p /root/.ssh/
       - echo "$SSH_KEY" | tr -d '\r' > /root/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
-      - ssh "$SSH_HOST" "
-        cd "$PROJECT_DIRECTORY";
-        docker-compose down;
-        wget -O docker-compose.yml "$DOCKER_COMPOSE_URL";
-        sed -i \"s|^VERSION=.*|VERSION=$CI_COMMIT_SHA|\" .env;
-        grep -q '^VERSION=' .env || echo 'VERSION=$CI_COMMIT_SHA' >> .env;
-        docker pull "$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA";
-        docker-compose up -d;
-        docker image prune -af;
-        sleep 60;
-        docker-compose logs;"
+      - |
+        ssh "$SSH_HOST" "
+          cd \"$PROJECT_DIRECTORY\"
+          docker-compose down
+          wget -O docker-compose.yml '$DOCKER_COMPOSE_URL'
+
+          if grep -q '^VERSION=' .env; then
+            sed -i \"s|^VERSION=.*|VERSION=$CI_COMMIT_SHA|\" .env
+          else
+            echo \"VERSION=$CI_COMMIT_SHA\" >> .env
+          fi
+
+          docker pull '$REGISTRY_IMAGE_TAG:$CI_COMMIT_SHA'
+          docker-compose up -d
+          docker image prune -af
+          sleep 60
+          docker-compose logs
+        "
     volumes:
       - /var/cache/apk:/etc/apk/cache
-      
+
 when:
   - branch: master
     event:
