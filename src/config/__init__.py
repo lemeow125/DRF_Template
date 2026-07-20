@@ -1,7 +1,5 @@
 """
-Common service functions and classes imported elsewhere.
-
-For use in the immediate parent app/directory.
+Common service functions for configuration
 """
 
 import os

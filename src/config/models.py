@@ -1,5 +1,5 @@
 """
-Common model schemas
+Config model schemas
 """
 
 import re
