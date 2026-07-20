@@ -30,5 +30,7 @@ services:
         from_secret: DEV_EMAIL
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
+      DJANGO_SETTINGS_MODULE: tests.settings
+      BACKEND_GENERATE_CONFIG: true
       RUN_TYPE: api
 
