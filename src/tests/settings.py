@@ -19,4 +19,4 @@ CACHES = {
     }
 }
 
-MIDDLEWARE.append('debug_auth_middleware.DebugAuthMiddleware')
+MIDDLEWARE.append('tests.debug_auth_middleware.DebugAuthMiddleware')
