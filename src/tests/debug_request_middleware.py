@@ -4,7 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Fields whose values should be fully masked in logs
-SENSITIVE_BODY_KEYS = {"username", "password"}
+SENSITIVE_BODY_KEYS = {"username", "password", "refresh", "access"}
 
 
 def _sanitize_auth_header(header_value: str) -> str:
