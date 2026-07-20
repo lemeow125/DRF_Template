@@ -33,7 +33,8 @@ services:
         from_secret: DEV_EMAIL
       BACKEND_DEBUG_USER_PASSWORD:
         from_secret: DEV_PASSWORD
-      DJANGO_SETTINGS_MODULE: tests.settings
+      BACKEND_DEBUG: true
       BACKEND_GENERATE_CONFIG: true
+      DJANGO_SETTINGS_MODULE: tests.settings
       RUN_TYPE: api
 

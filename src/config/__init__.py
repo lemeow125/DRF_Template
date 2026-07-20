@@ -134,7 +134,7 @@ class Config:
         elif field_name == "CACHE_PASSWORD":
             return fake.password(length=16, special_chars=True)
         elif field_name == "CACHE_HOST":
-            return "localhost"
+            return "redis"
         elif field_name == "CACHE_PORT":
             return 6379
 
