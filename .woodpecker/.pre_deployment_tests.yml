@@ -1,15 +1,20 @@
 steps:
   - name: run pre-deployment tests
-    image: ghcr.io/usebruno/cli:3.5.1-alpine
+    image: node:23-alpine
     environment:
       BACKEND_ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
     commands:
+      - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
+      - apk add curl
       - curl --retry 30 --retry-connrefused --retry-delay 2 --fail http://api:8000/api/v1/swagger
       - cd .bruno
       - bru run --env docker
+    volumes:
+      - /tmp/.npm:/tmp/.npm
+      - /var/cache/apk:/etc/apk/cache
 
 when:
   - branch: master
