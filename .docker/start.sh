@@ -18,7 +18,7 @@ if [ "$RUN_TYPE" = "api" ]; then
     if [ "$BACKEND_DEBUG" = 'True' ]; then   
         python manage.py runserver "0.0.0.0:8000"
     else
-        gunicorn --workers 8 --bind 0.0.0.0:8000 config.wsgi:application
+        gunicorn --workers 8 --bind 0.0.0.0:8000 core.wsgi:application
     fi
 # TODO: Add in other runtypes (i.e. Celery Worker, Beat, Flower, etc)
 else
