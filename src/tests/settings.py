@@ -18,3 +18,5 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     }
 }
+
+MIDDLEWARE.append('debug_auth_middleware.DebugAuthMiddleware')
