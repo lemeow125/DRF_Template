@@ -38,8 +38,8 @@ class Config:
                 setattr(self, field_name, self._generate_faker_data(field_name, field_info))
 
         elif os.getenv("BACKEND_GENERATE_CONFIG", "false").lower() == "true":
-            # Skip these from being mocked/randomized, as this will be used in CI
-            SKIPPED_FAKER_ENVS = ["DEBUG_USER_EMAIL","DEBUG_USER_USERNAME", "DEBUG_USER_PASSWORD", "DEBUG"]
+            # Skip these from being mocked/randomized, as these will be used in CI
+            SKIPPED_FAKER_ENVS = ["DEBUG_USER_EMAIL", "DEBUG_USER_USERNAME", "DEBUG_USER_PASSWORD", "DEBUG", "SECRET_KEY"]
 
             for field_name, field_info in ConfigModel.model_fields.items():
                 if field_name in SKIPPED_FAKER_ENVS:
