@@ -94,23 +94,23 @@ class DebugRequestResponseMiddleware:
         if not request.path.startswith("/api/"):
             return self.get_response(request)
 
-        # ---- Incoming request ----
         auth_header = request.META.get("HTTP_AUTHORIZATION", "NO HEADER")
         sanitized_auth = _sanitize_auth_header(auth_header)
 
         content_type = request.META.get("CONTENT_TYPE", "")
         req_body_str = _mask_sensitive_body(request.body, content_type)
 
-        # ---- Get response ----
         response = self.get_response(request)
 
-        # ---- Outgoing response ----
-        resp_content_type = response.get("Content-Type", "")
-        resp_body_str = (
-            _mask_sensitive_body(response.content, resp_content_type)
-            if hasattr(response, "content")
-            else "(streaming)"
-        )
+        # ---- Decide how to log response body ----
+        if hasattr(response, "content"):
+            resp_content_type = response.get("Content-Type", "")
+            resp_body_str = _mask_sensitive_body(response.content, resp_content_type)
+            # If the body is huge (likely HTML) replace with a short placeholder
+            if len(response.content) > 2000:
+                resp_body_str = f"(body {len(response.content)} bytes, {resp_content_type.split(';')[0]})"
+        else:
+            resp_body_str = "(streaming)"
 
         logger.info(
             "REQ %s %s | Auth: '%s' | User: %s (auth=%s) | ReqBody: %s | "
