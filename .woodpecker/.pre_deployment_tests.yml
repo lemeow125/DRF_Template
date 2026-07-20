@@ -29,6 +29,8 @@ services:
   api:
     image: git.06222001.xyz/keannu125/drf_template:${CI_COMMIT_SHA}
     environment:
+      BACKEND_DEBUG_USER_EMAIL:
+        from_secret: BACKEND_DEBUG_USER_EMAIL
       BACKEND_DEBUG_USER_USERNAME: 
         from_secret: BACKEND_DEBUG_USER_USERNAME
       BACKEND_DEBUG_USER_PASSWORD:
