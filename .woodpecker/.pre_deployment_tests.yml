@@ -7,10 +7,13 @@ steps:
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
     commands:
-      - sleep 10
+      - apk add curl
+      - curl --retry 30 --retry-connrefused --retry-delay 2 --fail http://api:8000/health
       - cd .bruno
       - bru run --env docker
-      
+    volumes:
+      - /var/cache/apk:/etc/apk/cache
+
 when:
   - branch: master
     event:
