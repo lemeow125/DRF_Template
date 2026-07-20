@@ -1,7 +1,6 @@
 """
 Minimal Django settings file for tests
 """
-
 from core.settings import *  # noqa: F403
 
 # Override database to SQLite
@@ -20,3 +19,10 @@ CACHES = {
 }
 
 MIDDLEWARE.append("tests.debug_request_middleware.DebugRequestResponseMiddleware")  # noqa: F405
+
+
+LOGGING["loggers"]["tests.debug_request_middleware"] = {  # noqa: F405
+    "handlers": ["console"],
+    "level": "INFO",
+    "propagate": False,
+}
