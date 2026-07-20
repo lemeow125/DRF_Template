@@ -11,7 +11,7 @@ steps:
       - apk add curl
       - curl --retry 60 --retry-connrefused --retry-delay 5 --fail http://api:8000/api/v1/swagger/
       - cd .bruno
-      - bru run --env docker
+      - bru run --env docker --parallel
     volumes:
       - /tmp/.npm:/tmp/.npm
       - /var/cache/apk:/etc/apk/cache
