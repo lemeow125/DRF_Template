@@ -28,3 +28,9 @@ tests {
     expect(data).to.have.property("refresh")
   });  
 }
+
+script:post-response {
+  const data = res.getBody();
+  bru.setVar("accessToken", data.access);
+  bru.setVar("refreshToken", data.refresh);
+}

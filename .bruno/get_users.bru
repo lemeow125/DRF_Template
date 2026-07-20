@@ -1,0 +1,34 @@
+meta {
+  name: Get Users
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/accounts/users/me/
+  body: json
+  auth: inherit
+}
+
+tests {
+  const data = res.getBody();
+  
+  test("should return success", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("should return a single user object", function () {
+    expect(data).to.be.an('object');
+    expect(data).to.not.be.an('array');
+  });
+  
+  test("user should have required fields", function () {
+    expect(data).to.have.all.keys('id', 'username', 'email', 'first_name', 'is_new', 'last_name');
+    expect(data.id).to.be.a('number');
+    expect(data.username).to.be.a('string');
+    expect(data.email).to.be.a('string');
+    expect(data.first_name).to.be.a('string');
+    expect(data.is_new).to.be.a('boolean');
+    expect(data.last_name).to.be.a('string');
+  });
+}
