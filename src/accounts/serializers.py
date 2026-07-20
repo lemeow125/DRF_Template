@@ -19,7 +19,7 @@ class SimpleCustomUserSerializer(ModelSerializer):
 
 class CustomUserSerializer(BaseUserSerializer):
     is_new = serializers.BooleanField(read_only=True)
-    
+
     class Meta(BaseUserSerializer.Meta):
         model = CustomUser
         fields = (

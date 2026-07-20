@@ -6,8 +6,14 @@ import re
 from datetime import timedelta
 from typing import Literal
 
-from pydantic import (BaseModel, EmailStr, Field, StrictStr, field_validator,
-                      model_validator)
+from pydantic import (
+    BaseModel,
+    EmailStr,
+    Field,
+    StrictStr,
+    field_validator,
+    model_validator,
+)
 from pydantic_extra_types.timezone_name import TimeZoneName
 
 

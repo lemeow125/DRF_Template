@@ -19,4 +19,4 @@ CACHES = {
     }
 }
 
-MIDDLEWARE.append('tests.debug_Request_middleware.DebugRequestResponseMiddleware')
+MIDDLEWARE.append("tests.debug_request_middleware.DebugRequestResponseMiddleware")

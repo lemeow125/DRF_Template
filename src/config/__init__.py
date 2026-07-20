@@ -35,11 +35,19 @@ class Config:
         if "pytest" in sys.modules:
             # Generate fakes for everything if running via Pytest
             for field_name, field_info in ConfigModel.model_fields.items():
-                setattr(self, field_name, self._generate_faker_data(field_name, field_info))
+                setattr(
+                    self, field_name, self._generate_faker_data(field_name, field_info)
+                )
 
         elif os.getenv("BACKEND_GENERATE_CONFIG", "false").lower() == "true":
             # Skip these from being mocked/randomized, as these will be used in CI
-            SKIPPED_FAKER_ENVS = ["DEBUG_USER_EMAIL", "DEBUG_USER_USERNAME", "DEBUG_USER_PASSWORD", "DEBUG", "SECRET_KEY"]
+            SKIPPED_FAKER_ENVS = [
+                "DEBUG_USER_EMAIL",
+                "DEBUG_USER_USERNAME",
+                "DEBUG_USER_PASSWORD",
+                "DEBUG",
+                "SECRET_KEY",
+            ]
 
             for field_name, field_info in ConfigModel.model_fields.items():
                 if field_name in SKIPPED_FAKER_ENVS:
@@ -100,9 +108,15 @@ class Config:
         elif field_name == "TIMEZONE":
             return "Asia/Manila"
         elif field_name == "CORS_ORIGINS":
-            return ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:8000", "http://127.0.0.1:8000", "http://api"]
+            return [
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "http://localhost:8000",
+                "http://127.0.0.1:8000",
+                "http://api",
+            ]
         elif field_name == "ALLOWED_HOSTS":
-            return [] # Uses defaults above
+            return []  # Uses defaults above
         elif field_name == "USE_TZ":
             return True
         elif field_name == "DJANGO_LOG_LEVEL":

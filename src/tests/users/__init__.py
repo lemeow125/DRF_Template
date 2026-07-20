@@ -50,7 +50,7 @@ def generate_superuser():
             password=config.DEBUG_USER_PASSWORD,
         )
         logger.info("Admin user generated")
-    else:  
+    else:
         logger.info("Admin user already exists")
     return USER
 
