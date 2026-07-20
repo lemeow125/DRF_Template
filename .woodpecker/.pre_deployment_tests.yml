@@ -29,9 +29,9 @@ services:
   api:
     image: git.06222001.xyz/keannu125/drf_template:${CI_COMMIT_SHA}
     environment:
-      DEBUG_USER_EMAIL: 
+      BACKEND_DEBUG_USER_EMAIL: 
         from_secret: DEV_EMAIL
-      DEBUG_USER_PASSWORD:
+      BACKEND_DEBUG_USER_PASSWORD:
         from_secret: DEV_PASSWORD
       DJANGO_SETTINGS_MODULE: tests.settings
       BACKEND_GENERATE_CONFIG: true
