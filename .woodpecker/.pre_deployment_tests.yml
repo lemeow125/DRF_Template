@@ -9,7 +9,7 @@ steps:
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
       - apk add curl
-      - curl -v --retry 60 --retry-connrefused --retry-delay 5 --fail http://api:8000/api/v1/swagger/
+      - curl --retry 60 --retry-connrefused --retry-delay 5 --fail http://api:8000/api/v1/swagger/
       - cd .bruno
       - bru run --env docker
     volumes:
@@ -29,9 +29,9 @@ services:
   api:
     image: git.06222001.xyz/keannu125/drf_template:${CI_COMMIT_SHA}
     environment:
-      BACKEND_ADMIN_EMAIL: 
+      DEBUG_USER_EMAIL: 
         from_secret: DEV_EMAIL
-      BACKEND_PASSWORD:
+      DEBUG_USER_PASSWORD:
         from_secret: DEV_PASSWORD
       DJANGO_SETTINGS_MODULE: tests.settings
       BACKEND_GENERATE_CONFIG: true
