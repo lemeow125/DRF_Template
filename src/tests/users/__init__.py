@@ -49,6 +49,9 @@ def generate_superuser():
             email=config.DEBUG_USER_EMAIL,
             password=config.DEBUG_USER_PASSWORD,
         )
+        logger.info("Admin user generated")
+    else:  
+        logger.info("Admin user already exists")
     return USER
 
 

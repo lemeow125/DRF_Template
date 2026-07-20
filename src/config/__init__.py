@@ -98,9 +98,9 @@ class Config:
         elif field_name == "TIMEZONE":
             return "Asia/Manila"
         elif field_name == "CORS_ORIGINS":
-            return ["http://localhost:3000", "http://127.0.0.1:3000"]
+            return ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:8000", "http://127.0.0.1:8000", "http://api"]
         elif field_name == "ALLOWED_HOSTS":
-            return ["localhost", "127.0.0.1", "api"]
+            return [] # Uses defaults above
         elif field_name == "USE_TZ":
             return True
         elif field_name == "DJANGO_LOG_LEVEL":

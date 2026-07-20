@@ -19,4 +19,4 @@ services:
     image: redis:latest
     restart: always
     environment:
-      - REDIS_PASSWORD=${CACHE_PASSWORD}
+      - REDIS_PASSWORD=${BACKEND_CACHE_PASSWORD}
