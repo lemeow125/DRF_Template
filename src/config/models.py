@@ -90,16 +90,18 @@ class Config(BaseModel):
     )
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")
-    def parse_list(self):
+    @classmethod
+    def parse_list(cls, v):
         """
         Splits a comma-separated string into a list.
         """
         if isinstance(v, str):
-            return self.split(",")
+            return v.split(",")
         return v
 
     @field_validator("ACCESS_TOKEN_LIFETIME_MINUTES", mode="before")
-    def parse_timedelta_minutes(self):
+    @classmethod
+    def parse_timedelta_minutes(cls, v):
         """
         Parse integer values into timedelta objects.
         """
@@ -108,7 +110,8 @@ class Config(BaseModel):
         return v
 
     @field_validator("REFRESH_TOKEN_LIFETIME_DAYS", mode="before")
-    def parse_timedelta_days(self):
+    @classmethod
+    def parse_timedelta_days(cls, v):
         """
         Parse integer values into timedelta objects.
         """
@@ -125,32 +128,20 @@ class Config(BaseModel):
             self.DJANGO_LOG_LEVEL = "DEBUG"
         else:
             self.DJANGO_LOG_LEVEL = "INFO"
-        return v
+        return self
 
     @model_validator(mode="after")
     def derive_allowed_hosts(self):
         """
         Extracts additional hostnames from CORS_ORIGINS to append to ALLOWED_HOSTS.
         """
-
         cors_origins = self.CORS_ORIGINS
         allowed_hosts = set(self.ALLOWED_HOSTS or [])
 
         for origin in cors_origins:
             match = re.match(r"https?://([^/]+)", origin)
-            if match and match.group(1):  # Ensure match.group(1) is not empty
+            if match and match.group(1):
                 allowed_hosts.add(match.group(1))
 
         self.ALLOWED_HOSTS = list(allowed_hosts)
-        return v
-
-    @model_validator(mode="after")
-    def derive_log_level(self):
-        """
-        Sets the appropriate log level based on the DEBUG setting.
-        """
-        if self.DEBUG:
-            self.DJANGO_LOG_LEVEL = "DEBUG"
-        else:
-            self.DJANGO_LOG_LEVEL = "INFO"
-        return v
+        return self
