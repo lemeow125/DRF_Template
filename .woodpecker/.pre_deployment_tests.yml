@@ -39,4 +39,5 @@ services:
       BACKEND_GENERATE_CONFIG: true
       DJANGO_SETTINGS_MODULE: tests.settings
       RUN_TYPE: api
+      SKIP_STATIC: true
 

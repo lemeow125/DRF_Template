@@ -10,9 +10,14 @@ if [ "$RUN_TYPE" = "api" ]; then
     echo "Applying database migrations"
     python manage.py migrate
 
-    if [ ! -d "static" ]; then
-        echo "Generating static files"
-        python manage.py collectstatic --noinput
+    # Skip static collection if SKIP_STATIC is set (any value)
+    if [ -z "${SKIP_STATIC+x}" ]; then
+        if [ ! -d "static" ]; then
+            echo "Generating static files"
+            python manage.py collectstatic --noinput
+        fi
+    else
+        echo "Skipping static file collection (SKIP_STATIC is set)"
     fi
 
     if [ "$BACKEND_DEBUG" = 'True' ]; then   
