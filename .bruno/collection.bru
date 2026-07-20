@@ -11,5 +11,10 @@ auth:bearer {
 }
 
 script:pre-request {
-  const token = bru.getVar("accessToken");  
+  const token = bru.getVar("accessToken");
+  console.log("--- DEBUG:", req.getUrl());
+  console.log("accessToken value:", token ? token.substring(0, 20) + "..." : "UNDEFINED");
+  console.log("All request headers:", JSON.stringify(req.getHeaders(), null, 2));
+  console.log("--- END DEBUG ---");
+  
 }
