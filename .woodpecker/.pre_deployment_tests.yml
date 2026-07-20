@@ -9,7 +9,7 @@ steps:
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
       - apk add curl
-      - curl --retry 60 --retry-connrefused --retry-delay 5 --fail http://api:8000/api/v1/swagger
+      - curl -v --retry 60 --retry-connrefused --retry-delay 5 --fail http://api:8000/api/v1/swagger/
       - cd .bruno
       - bru run --env docker
     volumes:
