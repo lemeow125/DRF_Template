@@ -1,6 +1,8 @@
 #!/bin/bash
 # Startup script for Docker container
 
+trap 'echo "Received SIGTERM, exiting..."; exit 0' TERM
+
 echo "Running as: $RUN_TYPE"
 cd /app/src/
 if [ "$RUN_TYPE" = "api" ]; then
