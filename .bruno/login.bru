@@ -1,5 +1,5 @@
 meta {
-  name: Login & Get Users
+  name: Login & Test Authenticated Endpoints
   type: http
   seq: 1
 }
@@ -18,19 +18,66 @@ body:json {
 }
 
 tests {
+  // These will still run as usual, but we'll add the other tests below.
   const data = res.getBody();
   test("should return success", function () {
     expect(res.getStatus()).to.equal(200);
   });
-  
   test("should return json", function () {
-    expect(data).to.have.property("access")
-    expect(data).to.have.property("refresh")
-  });  
+    expect(data).to.have.property("access");
+    expect(data).to.have.property("refresh");
+  });
 }
 
 script:post-response {
   const data = res.getBody();
-  bru.setVar("accessToken", data.access);
-  bru.setVar("refreshToken", data.refresh);
+  const token = data.access;
+
+  // --- Make GET /accounts/users/me/ (formerly get_me) ---
+  const meRes = await bru.fetch({
+    method: 'GET',
+    url: bru.getVar('BASE_URL') + '/accounts/users/me/',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  });
+  const meData = JSON.parse(meRes.body);
+
+  // --- Make GET /accounts/users/ (formerly get_users) ---
+  const usersRes = await bru.fetch({
+    method: 'GET',
+    url: bru.getVar('BASE_URL') + '/accounts/users/',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  });
+  const usersData = JSON.parse(usersRes.body);
+
+  // Now run all the tests, keeping the same naming for CI visibility.
+  test("get_me: should return success", function () {
+    expect(meRes.status).to.equal(200);
+  });
+  test("get_me: should return a single user object", function () {
+    expect(meData).to.be.an('object');
+    expect(meData).to.not.be.an('array');
+  });
+  test("get_me: user should have required fields", function () {
+    expect(meData).to.have.all.keys('id','username','email','first_name','is_new','last_name');
+    expect(meData.id).to.be.a('number');
+    expect(meData.username).to.be.a('string');
+    // … etc
+  });
+
+  test("get_users: should return success", function () {
+    expect(usersRes.status).to.equal(200);
+  });
+  test("get_users: should return an array of users", function () {
+    expect(Array.isArray(usersData)).to.be.true;
+  });
+  test("get_users: each user should have required fields", function () {
+    usersData.forEach(user => {
+      expect(user).to.have.all.keys('id','username','email','first_name','is_new','last_name');
+      // … etc
+    });
+  });
 }
