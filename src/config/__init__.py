@@ -100,7 +100,7 @@ class Config:
         elif field_name == "CORS_ORIGINS":
             return ["http://localhost:3000", "http://127.0.0.1:3000"]
         elif field_name == "ALLOWED_HOSTS":
-            return ["localhost", "127.0.0.1"]
+            return ["localhost", "127.0.0.1", "api"]
         elif field_name == "USE_TZ":
             return True
         elif field_name == "DJANGO_LOG_LEVEL":
