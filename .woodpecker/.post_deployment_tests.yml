@@ -2,10 +2,10 @@ steps:
   - name: run post-deployment tests
     image: ghcr.io/usebruno/cli:3.5.1-alpine
     environment:
-      BACKEND_ADMIN_EMAIL: 
-        from_secret: DEV_EMAIL
-      BACKEND_PASSWORD:
-        from_secret: DEV_PASSWORD
+      BACKEND_DEBUG_USER_USERNAME: 
+        from_secret: BACKEND_DEBUG_USER_USERNAME
+      BACKEND_DEBUG_USER_PASSWORD:
+        from_secret: BACKEND_DEBUG_USER_PASSWORD
     commands:
       - cd .bruno
       - bru run --env dev
