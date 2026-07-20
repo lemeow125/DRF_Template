@@ -19,4 +19,4 @@ CACHES = {
     }
 }
 
-MIDDLEWARE.append("tests.debug_request_middleware.DebugRequestResponseMiddleware")
+MIDDLEWARE.append("tests.debug_request_middleware.DebugRequestResponseMiddleware")  # noqa: F405

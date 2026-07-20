@@ -6,8 +6,6 @@ steps:
         from_secret: BACKEND_DEBUG_USER_USERNAME
       BACKEND_DEBUG_USER_PASSWORD:
         from_secret: BACKEND_DEBUG_USER_PASSWORD
-      BACKEND_SECRET_KEY: 
-        from_secret: BACKEND_SECRET_KEY
     commands:
       - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
       - apk add curl
@@ -37,6 +35,8 @@ services:
         from_secret: BACKEND_DEBUG_USER_USERNAME
       BACKEND_DEBUG_USER_PASSWORD:
         from_secret: BACKEND_DEBUG_USER_PASSWORD
+      BACKEND_SECRET_KEY: 
+        from_secret: BACKEND_SECRET_KEY
       BACKEND_DEBUG: true
       BACKEND_GENERATE_CONFIG: true
       DJANGO_SETTINGS_MODULE: tests.settings
