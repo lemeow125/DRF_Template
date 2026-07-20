@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-from core.config import Config
+from config import Config
 
 # Config initialization
 config = Config().get_config()
