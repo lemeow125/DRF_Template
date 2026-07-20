@@ -28,7 +28,6 @@ depends_on:
 services:
   api:
     image: git.06222001.xyz/keannu125/drf_template:${CI_COMMIT_SHA}
-    stop_timeout: 60
     environment:
       BACKEND_DEBUG_USER_EMAIL:
         from_secret: BACKEND_DEBUG_USER_EMAIL
