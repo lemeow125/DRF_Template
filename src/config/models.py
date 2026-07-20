@@ -90,16 +90,16 @@ class Config(BaseModel):
     )
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")
-    def parse_list(cls, v):
+    def parse_list(self):
         """
         Splits a comma-separated string into a list.
         """
         if isinstance(v, str):
-            return v.split(",")
+            return self.split(",")
         return v
 
     @field_validator("ACCESS_TOKEN_LIFETIME_MINUTES", mode="before")
-    def parse_timedelta_minutes(cls, v):
+    def parse_timedelta_minutes(self):
         """
         Parse integer values into timedelta objects.
         """
@@ -108,7 +108,7 @@ class Config(BaseModel):
         return v
 
     @field_validator("REFRESH_TOKEN_LIFETIME_DAYS", mode="before")
-    def parse_timedelta_days(cls, v):
+    def parse_timedelta_days(self):
         """
         Parse integer values into timedelta objects.
         """
@@ -117,40 +117,40 @@ class Config(BaseModel):
         return v
 
     @model_validator(mode="after")
-    def derive_token_lifetimes(cls, v):
+    def derive_token_lifetimes(self):
         """
         Sets the appropriate log level based on the DEBUG setting.
         """
-        if v.DEBUG:
-            v.DJANGO_LOG_LEVEL = "DEBUG"
+        if self.DEBUG:
+            self.DJANGO_LOG_LEVEL = "DEBUG"
         else:
-            v.DJANGO_LOG_LEVEL = "INFO"
+            self.DJANGO_LOG_LEVEL = "INFO"
         return v
 
     @model_validator(mode="after")
-    def derive_allowed_hosts(cls, v):
+    def derive_allowed_hosts(self):
         """
         Extracts additional hostnames from CORS_ORIGINS to append to ALLOWED_HOSTS.
         """
 
-        cors_origins = v.CORS_ORIGINS
-        allowed_hosts = set(v.ALLOWED_HOSTS or [])
+        cors_origins = self.CORS_ORIGINS
+        allowed_hosts = set(self.ALLOWED_HOSTS or [])
 
         for origin in cors_origins:
             match = re.match(r"https?://([^/]+)", origin)
             if match and match.group(1):  # Ensure match.group(1) is not empty
                 allowed_hosts.add(match.group(1))
 
-        v.ALLOWED_HOSTS = list(allowed_hosts)
+        self.ALLOWED_HOSTS = list(allowed_hosts)
         return v
 
     @model_validator(mode="after")
-    def derive_log_level(cls, v):
+    def derive_log_level(self):
         """
         Sets the appropriate log level based on the DEBUG setting.
         """
-        if v.DEBUG:
-            v.DJANGO_LOG_LEVEL = "DEBUG"
+        if self.DEBUG:
+            self.DJANGO_LOG_LEVEL = "DEBUG"
         else:
-            v.DJANGO_LOG_LEVEL = "INFO"
+            self.DJANGO_LOG_LEVEL = "INFO"
         return v
