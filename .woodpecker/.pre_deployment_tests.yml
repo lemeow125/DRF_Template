@@ -8,7 +8,7 @@ steps:
         from_secret: DEV_PASSWORD
     commands:
       - apk add curl
-      - curl --retry 30 --retry-connrefused --retry-delay 2 --fail http://api:8000/health
+      - curl --retry 30 --retry-connrefused --retry-delay 2 --fail http://api:8000/api/v1/swagger
       - cd .bruno
       - bru run --env docker
     volumes:
