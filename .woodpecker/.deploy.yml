@@ -28,7 +28,7 @@ steps:
 
           docker-compose up -d
           docker image prune -af
-          sleep 60
+          sleep 120
           docker-compose logs
         "
     volumes:
