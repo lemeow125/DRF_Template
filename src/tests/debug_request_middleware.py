@@ -89,39 +89,40 @@ class DebugRequestResponseMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
+
     def __call__(self, request):
         if not request.path.startswith("/api/"):
             return self.get_response(request)
 
-        # ---------- Incoming request ----------
+        # ---- Incoming request ----
         auth_header = request.META.get("HTTP_AUTHORIZATION", "NO HEADER")
         sanitized_auth = _sanitize_auth_header(auth_header)
-        msg_parts = [
-            f"--- DEBUG REQUEST --- {request.method} {request.path}",
-            f"Authorization header: '{sanitized_auth}'",
-            f"User: {request.user}  (authenticated: {request.user.is_authenticated})",
-        ]
 
-        # Sanitize request body
         content_type = request.META.get("CONTENT_TYPE", "")
-        body_str = _mask_sensitive_body(request.body, content_type)
-        msg_parts.append(f"Body: {body_str}")
+        req_body_str = _mask_sensitive_body(request.body, content_type)
 
-        # Get response
+        # ---- Get response ----
         response = self.get_response(request)
 
-        # ---------- Outgoing response ----------
-        msg_parts.append(
-            f"--- DEBUG RESPONSE --- {response.status_code} {response.reason_phrase}"
+        # ---- Outgoing response ----
+        resp_content_type = response.get("Content-Type", "")
+        resp_body_str = (
+            _mask_sensitive_body(response.content, resp_content_type)
+            if hasattr(response, "content")
+            else "(streaming)"
         )
 
-        # Sanitize response body (response content is safe to read in debug)
-        if hasattr(response, "content"):
-            resp_content_type = response.get("Content-Type", "")
-            resp_body_str = _mask_sensitive_body(response.content, resp_content_type)
-            msg_parts.append(f"Body: {resp_body_str}")
-        else:
-            msg_parts.append("Body: (streaming or not available)")
-
-        logger.info("\n".join(msg_parts))
+        logger.info(
+            "REQ %s %s | Auth: '%s' | User: %s (auth=%s) | ReqBody: %s | "
+            "Resp: %s %s | RespBody: %s",
+            request.method,
+            request.path,
+            sanitized_auth,
+            request.user,
+            request.user.is_authenticated,
+            req_body_str,
+            response.status_code,
+            response.reason_phrase,
+            resp_body_str,
+        )
         return response

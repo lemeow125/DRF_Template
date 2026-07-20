@@ -22,7 +22,7 @@ MIDDLEWARE.append("tests.debug_request_middleware.DebugRequestResponseMiddleware
 
 
 LOGGING["loggers"]["tests.debug_request_middleware"] = {  # noqa: F405
-    "handlers": ["console"],
+    "handlers": ["console_compact"],
     "level": "INFO",
     "propagate": False,
 }
