@@ -1,17 +1,15 @@
 steps:
   - name: run pre-deployment tests
-    image: node:23-alpine
+    image: ghcr.io/usebruno/cli:3.5.1-alpine
     environment:
       BACKEND_ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
     commands:
-      - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
+      - sleep 10
       - cd .bruno
       - bru run --env docker
-    volumes:
-      - /tmp/.npm:/tmp/.npm
       
 when:
   - branch: master

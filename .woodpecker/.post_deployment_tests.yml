@@ -1,17 +1,14 @@
 steps:
   - name: run post-deployment tests
-    image: node:23-alpine
+    image: ghcr.io/usebruno/cli:3.5.1-alpine
     environment:
       BACKEND_ADMIN_EMAIL: 
         from_secret: DEV_EMAIL
       BACKEND_PASSWORD:
         from_secret: DEV_PASSWORD
     commands:
-      - npm install -g @usebruno/cli --cache /tmp/.npm --prefer-offline
       - cd .bruno
       - bru run --env dev
-    volumes:
-      - /tmp/.npm:/tmp/.npm
       
 when:
   - branch: master
