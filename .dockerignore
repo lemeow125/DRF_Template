@@ -1,6 +1,6 @@
 uploads/
 static/
-bruno/
+.bruno/
 .assets/
 .env
 .venv/
