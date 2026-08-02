@@ -23,6 +23,7 @@ when:
       - manual
 
 depends_on:
+  - build
   - unit_tests
 
 services:
