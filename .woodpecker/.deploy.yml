@@ -41,7 +41,6 @@ when:
       - manual
 
 depends_on:
-  - build
   - unit_tests
   - pre_deployment_tests
 
