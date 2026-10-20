@@ -5,7 +5,7 @@ steps:
       SSH_KEY:
         from_secret: SSH_KEY
       REGISTRY_IMAGE_TAG: git.06222001.xyz/keannu125/drf_template
-      SSH_HOST: root@10.0.10.115
+      SSH_HOST: root@10.0.10.222
       PROJECT_DIRECTORY: "/mnt/nvme/files/docker projects/drf_template"
       DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/lemeow125/DRF_Template/${CI_COMMIT_SHA}/docker-compose.yml
     commands:
